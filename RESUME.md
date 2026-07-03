@@ -2,16 +2,16 @@
 
 <table>
   <tr>
-    <td><strong>Birth date</strong> 1997.06.24</td>
     <td><strong>Phone</strong> 010-2010-3068</td>
-  </tr>
-  <tr>
     <td><strong>Email</strong> mraz3068@gmail.com</td>
-    <td><strong>GitHub</strong> <a href="https://github.com/easyhooon">github.com/easyhooon</a></td>
   </tr>
   <tr>
+    <td><strong>GitHub</strong> <a href="https://github.com/easyhooon">github.com/easyhooon</a></td>
     <td><strong>Tech Blog</strong> <a href="https://velog.io/@mraz3068">velog.io/@mraz3068</a></td>
+  </tr>
+  <tr>
     <td><strong>Portfolio</strong> <a href="https://app.notion.com/p/mraz3068/Android-Developer-12a1067917dc4885bb5570bf5fda9f86?source=copy_link">Notion</a></td>
+    <td><strong>LinkedIn</strong> <a href="https://www.linkedin.com/in/easyhooon/">linkedin.com/in/easyhooon</a></td>
   </tr>
 </table>
 
