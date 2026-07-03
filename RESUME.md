@@ -35,37 +35,37 @@ Android 앱에서 제품 요구사항을 네이티브 기능과 웹뷰 브릿지
 
 HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 
-- 웹뷰-네이티브 간 요청/응답 규격과 에러 처리 방식 정의, 외주 개발사 연동 가이드와 이슈 대응
-- 서비스 내 웹 프론트엔드 업무 병행, 웹뷰-네이티브 연동 이슈를 양쪽 코드 흐름에서 추적·대응
-- Dari 기반 WebView 브릿지 통신 디버깅 환경 구축, 요청/응답 payload와 성공·실패 상태를 Android·프론트엔드 개발자가 함께 확인
+- 웹뷰-네이티브 간 요청/응답 규격과 에러 처리 방식 정의, 외주 개발사가 동일한 기준으로 연동하고 이슈를 재현·분류할 수 있도록 가이드 제공
+- 서비스 내 웹 프론트엔드 업무 병행, 웹뷰-네이티브 연동 이슈를 Android와 웹 양쪽 코드 흐름에서 추적·수정
+- Dari 기반 WebView 브릿지 통신 디버깅 환경 구축, 요청/응답 payload와 성공·실패 상태를 Android·프론트엔드 개발자가 함께 확인하도록 개선
 - BLE Glucose/Blood Pressure Profile 기반 혈당계·혈압계 연동, 측정 데이터 동기화, 연동 해제 구현
 - Samsung Health Data SDK 연동으로 Health Connect 경유 시 발생하던 걸음 수 미갱신 이슈 보완, 걸음 수·심박수·소모 칼로리 수집 경로 안정화
-- 웹뷰 오디오 재생 상태를 MediaSession과 동기화, 백그라운드 재생과 미디어 알림 컨트롤 지원
-- GitHub Actions 기반 Play Console 내부 테스트 트랙 CD 환경 구축, 테스트 배포 자동화
+- 웹뷰 오디오 재생 상태를 MediaSession과 동기화, 백그라운드 재생과 미디어 알림 컨트롤을 지원해 웹뷰 앱의 오디오 사용성 보완
+- GitHub Actions 기반 Play Console 내부 테스트 트랙 CD 환경 구축, 반복되는 테스트 배포 작업 자동화
 
 ### 세컨드 윈드/닥터 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
 
 만성질환자와 암 수술 환자를 위한 맞춤 건강관리·재활 서비스
 
-- ExoPlayer2 기반 운동 영상 플레이어를 Media3로 마이그레이션, 관련 레거시 코드 Kotlin 전환
-- Media3 기반 단계별 다운로드와 연속 재생 기능 도입, 운동 영상 시청 흐름 개선
+- ExoPlayer2 기반 운동 영상 플레이어를 Media3로 마이그레이션, 다운로드·재생 기능 확장을 위한 레거시 구조 정리
+- Media3 기반 단계별 다운로드와 연속 재생 기능 도입, 운동 영상 대기와 재시작으로 끊기던 시청 흐름 개선
 - TensorFlow Lite + CameraX 기반 어깨 움직임 측정 기능 개발, 팔벌림 각도 정확도 오차범위 ±5도 이내로 개선
-- Android OS 정책 변경에 맞춘 BLE 연동 SDK 수정과 AAR 재배포, 웨어러블 기기 연동 중단 이슈 대응
+- Android OS 정책 변경에 맞춘 BLE 연동 SDK 수정과 AAR 재배포, 웨어러블 기기 연동 중단 이슈 해결
 
 ### 브리시드 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
 
 사용자 맞춤 명상 경험을 지원하는 웰니스 서비스
 
-- Google Play 인앱 결제 연동, 일회성 결제 플로우 구현
-- 명상 음악 플레이어의 Activity-Service 통신을 Broadcast Receiver에서 Flow 기반 구조로 전환, XML UI를 Compose로 이전
-- KISA 보안취약점 점검 대응, Play Integrity API 기반 앱 무결성 검증, 루팅 탐지, 백그라운드 오버레이 방어 도입
+- Google Play 인앱 결제 연동, 일회성 결제 플로우를 구현해 유료 콘텐츠 구매 경로 추가
+- 명상 음악 플레이어의 Activity-Service 통신을 Broadcast Receiver에서 Flow 기반 구조로 전환, 상태 동기화 복잡도 완화
+- KISA 보안취약점 점검 항목 반영, Play Integrity API 기반 앱 무결성 검증, 루팅 탐지, 백그라운드 오버레이 방어 도입
 - 전역 싱글톤에 의존하던 플레이어·결제 객체를 Hilt 기반 의존성 주입으로 전환, 생명주기 관리와 테스트 용이성 개선
 
 ### 마이밸런스 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
 
 직장인의 건강한 습관 형성을 지원하는 건강관리·리워드 서비스
 
-- Health Connect 연동, 걸음 수·소모 칼로리·평균 심박수·수면시간 데이터 수집
+- Health Connect 연동, 걸음 수·소모 칼로리·평균 심박수·수면시간 데이터 수집 경로 통합
 - Bamboo 기반 CI/CD 배포 환경 구축, 수동 빌드 과정에서 발생하던 빌드 넘버 충돌 제거
 - 클래스 사진 업로드 로직을 갤러리 저장 방식에서 임시 파일 생성/제거 방식으로 전환, 디바이스 리소스 사용 개선
 
@@ -78,7 +78,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 - Naver Map Compose 클러스터링 적용, 축제 지도 내 부스·행사 정보 가독성 개선
 - MVI 패턴과 구글 권장 아키텍처 기반 모듈화 적용, 상태/이벤트 처리 흐름 정리
 - QR 기반 부스 행사 참여 인증 기능 구현, 학생들의 축제 이벤트 참여 흐름 개선
-- Firebase Remote Config 기반 강제 업데이트와 API 커스텀 에러 처리 적용, 앱 버전 관리와 예외 상황 대응 강화
+- Firebase Remote Config 기반 강제 업데이트와 API 커스텀 에러 처리 적용, 앱 버전 관리와 예외 상황 처리 강화
 - Firebase App Distribution CD와 Room Migration Test 도입, 테스트 배포와 데이터베이스 스키마 변경 안정성 확보
 
 ### 반다라트 - 부담 없는 만다라트 계획표 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~</span>
@@ -98,7 +98,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 
 ## Other Experience
 
-- 브리시드 심리상담센터: React Native 기반 사내 상담 예약 앱 유지보수, OS 호환성 대응, 생체인증 로그인 정보 자동 완성 도입, 네트워크 디버깅 환경 구축
+- 브리시드 심리상담센터: React Native 기반 사내 상담 예약 앱 유지보수, OS 호환성 이슈 수정, 생체인증 로그인 정보 자동 완성 도입, 네트워크 디버깅 환경 구축
 - YAPP 26기: Reed 프로젝트 Android 파트 리드로 구조 설계·기술 스택 검토·코드 리뷰 담당, Android Manifest Interview 도서/기술 블로그 작성 스터디 운영, 최우수상 수상, 27·28기 Android 개발자 선발 면접 참여
 - Nexters 23·24·26기: 반다라트, I'lab, Ziine 프로젝트 Android 구조 설계·기술 스택 선정·코드 리뷰, 출시 후 코드 품질 개선과 성능 최적화
 
