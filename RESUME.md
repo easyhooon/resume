@@ -75,7 +75,9 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 
 - Naver Map Compose 클러스터링 적용, 축제 지도 내 부스·행사 정보 가독성 개선
 - MVI 패턴과 구글 권장 아키텍처 기반 모듈화 적용, 상태/이벤트 처리 흐름 정리
-- QR 기반 부스 행사 참여 인증, Remote Config 강제 업데이트, API 커스텀 에러 처리, Firebase App Distribution CD, Room Migration Test 구현
+- QR 기반 부스 행사 참여 인증 기능 구현, 학생들의 축제 이벤트 참여 흐름 개선
+- Firebase Remote Config 기반 강제 업데이트와 API 커스텀 에러 처리 적용, 앱 버전 관리와 예외 상황 대응 강화
+- Firebase App Distribution CD와 Room Migration Test 도입, 테스트 배포와 데이터베이스 스키마 변경 안정성 확보
 
 ### 반다라트 - 부담 없는 만다라트 계획표 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~</span>
 
