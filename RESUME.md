@@ -17,13 +17,19 @@
 
 ## Introduce
 
-헬스케어·웰니스 도메인 Android 개발자입니다. BLE 의료기기 연동, Samsung Health Data SDK, Health Connect, Media3, CameraX/TensorFlow Lite 기반 기능을 구현했습니다.
+Android 앱에서 제품 요구사항을 네이티브 기능과 웹뷰 브릿지로 구현하고, 문제 재현과 원인 분석을 위한 디버깅 환경까지 정비합니다. BLE 의료기기 연동, Samsung Health Data SDK, Health Connect, Media3, CameraX/TensorFlow Lite 기반 기능을 실무에 적용했습니다.
 
-Android를 중심으로 웹뷰 브릿지, 프론트엔드, 디버깅 도구 개발까지 다루며 하이브리드 앱의 문제를 끝까지 추적했습니다. 사이드 프로젝트로 Android 앱 9개와 iOS 앱 1개를 출시·운영했고, 대학 축제 공식 앱 선정, Play Store 다운로드 2,000+, Android/iOS 통합 WAU 5,000+를 경험했습니다.
+사이드 프로젝트로 Android 앱 9개와 iOS 앱 1개를 출시·운영하며 문제를 제품으로 풀어왔습니다. 개발 블로그와 팀 내 기술 공유로 학습 내용을 정리하고, 반복 배포·리뷰 준비 작업은 AI 도구로 보조해 1인 Android 개발 환경의 운영 부담을 줄였습니다.
 
 ## Work Experience
 
-**메디플러스솔루션 (HD현대 계열사)** <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~ 재직 중</span> · Android Developer, 연구개발부문 매니저
+<table>
+  <tr>
+    <td><strong>메디플러스솔루션 (HD현대 계열사)</strong></td>
+    <td>2024.05 ~ 재직 중</td>
+    <td>Android Developer</td>
+  </tr>
+</table>
 
 ## Projects
 
