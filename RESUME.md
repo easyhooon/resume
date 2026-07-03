@@ -23,13 +23,9 @@ Android 앱에서 제품 요구사항을 네이티브 기능과 웹뷰 브릿지
 
 ## Work Experience
 
-<table>
-  <tr>
-    <td><strong>메디플러스솔루션 (HD현대 계열사)</strong></td>
-    <td>2024.05 ~ 재직 중</td>
-    <td>Android Developer</td>
-  </tr>
-</table>
+| 회사 | 기간 | 직무 |
+| --- | --- | --- |
+| 메디플러스솔루션 (HD현대 계열사) | 2024.05 ~ 재직 중 | Android Developer |
 
 ## Projects
 
