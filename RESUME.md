@@ -95,12 +95,13 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 ## Other Experience
 
 - 브리시드 심리상담센터: React Native 기반 사내 상담 예약 앱 유지보수, OS 호환성 대응, 생체인증 로그인 정보 자동 완성 도입, 네트워크 디버깅 환경 구축
-- YAPP 26기: Android Manifest Interview 도서/기술 블로그 작성 스터디 운영, Reed 프로젝트 Android 구조 설계·기술 스택 검토·코드 리뷰, 최우수상 수상, 27·28기 Android 개발자 선발 면접 참여
+- YAPP 26기: Reed 프로젝트 Android 파트 리드로 구조 설계·기술 스택 검토·코드 리뷰 담당, Android Manifest Interview 도서/기술 블로그 작성 스터디 운영, 최우수상 수상, 27·28기 Android 개발자 선발 면접 참여
 - Nexters 23·24·26기: 반다라트, I'lab, Ziine 프로젝트 Android 구조 설계·기술 스택 선정·코드 리뷰, 출시 후 코드 품질 개선과 성능 최적화
 
 ## Awards
 
-**한국관광공사 X 카카오 2024 관광데이터 활용 공모전** <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.11</span> · 트립메이트 앱 개발 및 출시, 장려상 및 강원관광재단 특별상 수상
+**한국관광공사 X 카카오 2024 관광데이터 활용 공모전** <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.11</span><br>
+트립메이트 앱 개발 및 출시, 장려상 및 강원관광재단 특별상 수상
 
 ## Certificates
 
