@@ -1,7 +1,11 @@
 # 이지훈 Android Developer
 
-**Birth date** 1997.06.24 · **Phone** 010-2010-3068 · **Email** mraz3068@gmail.com
-**GitHub** [github.com/easyhooon](https://github.com/easyhooon) · **Tech Blog** [velog.io/@mraz3068/posts](https://velog.io/@mraz3068/posts) · **Portfolio** [Android Developer](https://app.notion.com/p/mraz3068/Android-Developer-12a1067917dc4885bb5570bf5fda9f86?source=copy_link)
+**Birth date** 1997.06.24
+**Phone** 010-2010-3068
+**Email** mraz3068@gmail.com
+**GitHub** [github.com/easyhooon](https://github.com/easyhooon)
+**Tech Blog** [velog.io/@mraz3068/posts](https://velog.io/@mraz3068/posts)
+**Portfolio** [Android Developer](https://app.notion.com/p/mraz3068/Android-Developer-12a1067917dc4885bb5570bf5fda9f86?source=copy_link)
 
 ## Introduce
 
