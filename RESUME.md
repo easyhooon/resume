@@ -17,9 +17,9 @@
 
 ## Introduce
 
-저는 Android 앱에서 제품 요구사항을 단순히 구현하는 데 그치지 않고, 네이티브 기능과 웹뷰 브릿지를 연결하며 문제를 빠르게 재현하고 분석할 수 있는 기반까지 함께 만들어왔습니다. BLE 의료기기 연동, 헬스 데이터, 미디어, 카메라, 온디바이스 AI 기능을 실제 서비스에 적용하며 안정적인 사용자 경험을 만드는 데 집중했습니다.
+웹뷰와 네이티브가 맞물리는 Android 제품에서 브릿지 규격, 디버깅 도구, 헬스·미디어·카메라 기능을 구현하며 안정적인 사용자 경험을 만들어왔습니다.
 
-AI 도구로 commit/PR 생성, 배포, 코드 리뷰 보조를 자동화해 1인 Android 개발 환경의 한계를 보완하고 운영 효율을 높였습니다.
+반복되는 commit/PR, 배포, 코드 리뷰 보조 흐름은 개인 자동화 skill로 정리해 1인 Android 개발 환경의 빈틈을 줄였습니다.
 
 사이드 프로젝트로 Android 앱 9개와 iOS 앱 1개를 출시·운영하며 사용자가 겪는 문제를 제품 기능으로 해결해왔습니다.\
 개발 블로그와 팀 내 기술 공유를 통해 학습 내용을 정리하고, 실무 적용 관점의 기술 선택 과정을 공유합니다.
@@ -30,14 +30,15 @@ AI 도구로 commit/PR 생성, 배포, 코드 리뷰 보조를 자동화해 1인
 | --- | --- | --- |
 | 메디플러스솔루션 (HD현대 계열사) | 2024.05 ~ 재직 중 | Android Developer |
 
+Hi-me 신규 헬스케어 서비스 개발을 주력으로, 기존 건강관리·재활·명상 서비스의 Android 운영과 고도화를 함께 담당했습니다.
+
 ## Projects
 
 ### Hi-me <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2025.10 ~</span>
 
 HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 
-- 웹뷰-네이티브 간 요청/응답 규격과 에러 처리 방식 정의, 외주 개발사가 동일한 기준으로 연동하고 이슈를 재현·분류할 수 있도록 가이드 제공
-- 서비스 내 웹 프론트엔드 업무 병행, 웹뷰-네이티브 연동 이슈를 Android와 웹 양쪽 코드 흐름에서 추적·수정
+- 웹뷰-네이티브 요청/응답 규격과 에러 처리 기준을 정의하고, 샘플 payload·상태값·재현 케이스를 표준화해 Android·웹·외주 개발사 간 이슈 분류 기준 통일
 - Dari 기반 WebView 브릿지 통신 디버깅 환경 구축, 요청/응답 payload와 성공·실패 상태를 Android·프론트엔드 개발자가 함께 확인하도록 개선
 - BLE Glucose/Blood Pressure Profile 기반 혈당계·혈압계 연동, 측정 데이터 동기화와 연동 해제까지 포함한 의료기기 데이터 수집 흐름 제공
 - Samsung Health Data SDK 연동으로 Health Connect 경유 시 발생하던 걸음 수 미갱신 이슈 보완, 걸음 수·심박수·소모 칼로리 수집 경로 안정화
@@ -48,8 +49,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 
 만성질환자와 암 수술 환자를 위한 맞춤 건강관리·재활 서비스
 
-- ExoPlayer2 기반 운동 영상 플레이어를 Media3로 마이그레이션, 다운로드·연속 재생 기능을 확장할 수 있는 재생 구조로 개선
-- Media3 기반 단계별 다운로드와 연속 재생 기능 도입, 운동 영상 대기와 재시작으로 끊기던 시청 흐름 개선
+- ExoPlayer2 기반 운동 영상 플레이어를 Media3로 마이그레이션하고 긴 영상을 구간 단위로 내려받는 단계별 다운로드를 도입해, 전체 다운로드 완료를 기다려야 하던 운동 영상 시작 대기 흐름 개선
 - TensorFlow Lite + CameraX 기반 어깨 움직임 측정 기능 개발, 팔벌림 각도 정확도 오차범위 ±5도 이내로 개선
 - Android OS 정책 변경에 맞춘 BLE 연동 SDK 수정과 AAR 재배포, 웨어러블 기기 연동 중단 이슈 해결
 
@@ -59,7 +59,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 
 - Google Play 인앱 결제 연동, 일회성 결제 플로우를 구현해 유료 콘텐츠 구매 경로 추가
 - 명상 음악 플레이어의 Activity-Service 통신을 Broadcast Receiver에서 Flow 기반 구조로 전환, 상태 동기화 복잡도 완화
-- KISA 보안취약점 점검 항목 반영, Play Integrity API 기반 앱 무결성 검증과 루팅·백그라운드 오버레이 방어로 보안 점검 항목 해소
+- KISA 보안취약점 점검에서 지적된 앱 위변조·루팅·백그라운드 오버레이 항목을 Play Integrity API와 런타임 탐지 로직으로 대응
 - 전역 싱글톤에 의존하던 플레이어·결제 객체를 Hilt 기반 의존성 주입으로 전환, 생명주기 관리와 테스트 용이성 개선
 
 ### 마이밸런스 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
@@ -87,14 +87,14 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 <span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월, 현재 운영 중</span>
 
 - Android 앱을 Compose Multiplatform으로 마이그레이션, 기존 Android 코드 기반으로 iOS 앱까지 배포
-- Slack Circuit 도입으로 상태 관리와 이벤트 처리 복잡도 감소
+- Slack Circuit 기반으로 계획표 화면의 상태 생성과 이벤트 처리를 분리해 UI 컴포저블의 책임을 단순화
 - 서버 API 의존 구조를 로컬 Room Database 기반으로 전환, 서버 중단 이후에도 서비스 유지
 - Jetpack Compose 기반 Custom UI와 공통 컴포넌트 정의, 화면 구성 일관성 확보와 Google Play In-App Update 기반 업데이트 유도 흐름 제공
 - Room Database, Repository, ViewModel 테스트 코드와 GitHub Actions CI 도입, 데이터 변경과 화면 로직 회귀 검증 자동화
 
 ## Libraries
 
-- [Dari](https://github.com/easyhooon/dari): WebView JavaScript bridge 메시지의 요청·응답·상태를 실시간으로 확인하는 Android 디버깅 라이브러리. 프론트엔드 개발자도 브릿지 호출 흐름과 실패 지점을 확인할 수 있어 웹뷰 연동 이슈 디버깅에 기여. debug/release 분리를 위한 no-op 모듈 제공.
+- [Dari](https://github.com/easyhooon/dari): 실무 WebView 연동 디버깅 문제에서 출발해 만든 Android 라이브러리. 특정 WebView 브릿지 구현체에 묶이지 않도록 설계했으며, JavaScript bridge 메시지의 요청·응답·상태를 실시간으로 확인해 프론트엔드 개발자도 호출 흐름과 실패 지점을 함께 추적할 수 있도록 지원. debug/release 분리를 위한 no-op 모듈 제공.
 - [RoutePeek](https://github.com/easyhooon/routepeek): WebView의 현재 route와 SPA route 변경을 Compose overlay로 확인하는 Android debug 라이브러리. 웹뷰 화면의 현재 경로를 앱 안에서 바로 확인해 라우팅 이슈 재현과 공유를 쉽게 개선.
 
 ## Other Experience
