@@ -19,9 +19,9 @@
 
 실무에서 BLE 의료기기 연동, 헬스 데이터 수집, Media3 기반 운동 영상 플레이어, CameraX/TensorFlow Lite 기반 관절 움직임 측정 기능을 제품에 적용해왔습니다. 웹뷰 기반 제품에서는 브릿지 연동과 프론트엔드 개발까지 병행하며, 문제 재현과 원인 분석을 위한 디버깅 도구를 직접 개발했습니다.
 
-반복되는 commit/PR 생성, 배포 체크리스트, 코드 리뷰 반영 보조를 AI 기반 자동화 skill로 정리해 1인 Android 개발 환경의 한계를 보완했습니다.
+1인 Android 개발의 한계를 보완하기 위해, commit/PR 생성, 배포 전 검증 절차, AI 코드 리뷰와 리뷰 반영 보조를 자동화 skill로 체계화했습니다.
 
-사이드 프로젝트로 Android 앱 9개와 iOS 앱 1개를 출시·운영하며 사용자가 겪는 문제를 제품 기능으로 해결해왔습니다.\
+사이드 프로젝트로 **Android 앱 9개와 iOS 앱 1개**를 출시·운영하며 사용자가 겪는 문제를 제품 기능으로 해결해왔습니다.\
 개발 블로그와 팀 내 기술 공유를 통해 학습 내용을 정리하고, 실무 적용 관점의 기술 선택 과정을 공유합니다.
 
 ## Work Experience
@@ -50,7 +50,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 만성질환자와 암 수술 환자를 위한 맞춤 건강관리·재활 서비스
 
 - ExoPlayer2 기반 운동 영상 플레이어를 Media3로 마이그레이션하고 긴 영상을 구간 단위로 내려받는 단계별 다운로드를 도입해, 전체 다운로드 완료를 기다려야 하던 운동 영상 시작 대기 흐름 개선
-- TensorFlow Lite + CameraX 기반 어깨 움직임 측정 기능 개발, 팔벌림 각도 정확도 오차범위 ±5도 이내로 개선
+- TensorFlow Lite + CameraX 기반 어깨 움직임 측정 기능 개발, 팔벌림 각도 정확도 **오차범위 ±5도 이내**로 개선
 - Android OS 정책 변경에 맞춘 BLE 연동 SDK 수정과 AAR 재배포, 웨어러블 기기 연동 중단 이슈 해결
 
 ### 브리시드 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
@@ -74,7 +74,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 
 ### 유니페스 : 대학축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
 
-<span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월, 현재 운영 중</span> · 고려대·가천대·상명대·한국교통대 축제 공식 앱 선정, Play Store 다운로드 2,000+, Android/iOS 통합 WAU 5,000+
+<span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월, 현재 운영 중</span> · 고려대·가천대·상명대·한국교통대 축제 공식 앱 선정, Play Store 다운로드 **2,000+**, Android/iOS 통합 **WAU 5,000+**
 
 - Naver Map Compose 클러스터링 적용, 축제 지도 내 부스·행사 정보 가독성 개선
 - MVI 패턴과 구글 권장 아키텍처 기반 모듈화 적용, 화면 상태와 이벤트 처리 책임을 분리해 기능 단위 변경이 가능한 구조로 개선
@@ -106,7 +106,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 ## Awards
 
 **한국관광공사 X 카카오 2024 관광데이터 활용 공모전** <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.11</span><br>
-트립메이트 앱 개발 및 출시, 장려상 및 강원관광재단 특별상 수상
+트립메이트 앱 개발 및 출시, **장려상 및 강원관광재단 특별상 수상**
 
 ## Certificates
 
