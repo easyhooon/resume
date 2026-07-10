@@ -10,7 +10,7 @@
     <td><strong>Tech Blog</strong> <a href="https://velog.io/@mraz3068">velog.io/@mraz3068</a></td>
   </tr>
   <tr>
-    <td><strong>Portfolio</strong> <a href="./PORTFOLIO.md">PORTFOLIO.md</a></td>
+    <td><strong>Portfolio</strong> <a href="https://github.com/easyhooon/resume/blob/main/PORTFOLIO.md">PORTFOLIO.md</a></td>
     <td><strong>LinkedIn</strong> <a href="https://www.linkedin.com/in/easyhooon/">linkedin.com/in/easyhooon</a></td>
   </tr>
 </table>
