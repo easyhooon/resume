@@ -1,5 +1,9 @@
 # 이지훈 Android Developer Portfolio
 
+<p align="right">
+  <img src="./assets/portfolio/profile-image.jpeg" alt="이지훈 프로필 이미지" width="180">
+</p>
+
 <table>
   <tr>
     <td><strong>Phone</strong> 010-2010-3068</td>
@@ -69,7 +73,30 @@
 
 ## Team Projects
 
+### YeoBee(여비) - 여행 비용 기록과 정산을 돕는 여행 가계부 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2026.01 ~</span>
+
+<p>
+  <img src="./assets/portfolio/yeobee-thumbnail.png" alt="YeoBee 프로젝트 대표 이미지" width="100%">
+</p>
+
+여행 동행자와 함께 지출을 기록하고 공동경비·개인경비·정산 내역을 관리하는 서비스
+
+<span style="font-size: 0.9em;">Android 개발 · Kotlin · Jetpack Compose · Navigation3 · Metro · Multi-module · Firebase</span> · [Play Store](https://play.google.com/store/apps/details?id=com.yeobee)
+
+- **문제 해결**: Hilt/Dagger 기반 DI가 Android component와 KSP 생성 코드에 묶여 있어 멀티 모듈 graph 경계와 ViewModel 생성 경로를 프로젝트가 직접 통제하기 어려웠음. `AppGraph`, `DataScope`, `ActivityRetainedScope`, 프로젝트 소유 qualifier, MetroX ViewModel factory를 정의하고 Hilt Gradle plugin·compiler·annotation을 제거해 Metro 기반 DI로 전환
+- **성과**: 앱·data layer·activity-retained scope의 dependency lifetime과 contribution 위치를 명시하고, `metroViewModel()` / `assistedMetroViewModel()` 기반 ViewModel 생성 경로로 통일해 기능 모듈 확장 시 DI 규칙을 문서화된 컨벤션으로 유지
+- **문제 해결**: 초대 수락 버튼 클릭 시점에 서버 상태를 변경하면 사용자가 이름 선택 화면에서 이탈했을 때 서버에는 수락 완료 상태가 남고 클라이언트 플로우는 끝나지 않는 불일치가 발생할 수 있었음. 초대장 조회 단계에서는 만료·중복 참여를 사전 검증하고, 이름 선택 완료 시점에만 최종 수락 API를 호출하도록 플로우를 재설계
+- **성과**: 딥링크·수동 코드 입력·비로그인 진입·warm start 경로에서도 동일한 초대 수락 흐름을 유지하고, 만료/중복/정원 마감/여행 삭제 케이스를 일관된 에러 UI로 처리
+- **문제 해결**: 공동 가계부에서 단체 여행 여부, 공동경비 예산 존재 여부, 개인/공동 항목 타입, 정산 방식이 섞이면서 추가·수정·상세·통계 화면 간 금액 표시 기준이 달라질 위험이 있었음. `LedgerType`과 `ExpenseType`을 분리하고 최신 동행자 정보를 재조회해 기존 항목 복원, 균등/커스텀 분배, 공동경비 결제자 옵션 노출 기준을 정리
+- **성과**: 공동경비 예산, 개인 지출, 공동 지출, 정산 상세, 통계 상세의 금액 표시와 검증 기준을 통일해 여행 비용 기록·정산 흐름의 예외 케이스를 줄임
+- **문제 해결**: Firebase App Distribution과 Play Store 배포 과정에서 versionCode 관리와 릴리즈 노트 작성이 반복 작업으로 남아 있었음. Firebase 배포 스크립트와 Play Store 배포 workflow, versionCode override, Discord 알림 흐름을 정리
+- **성과**: QA 배포와 운영 배포 전 검증 과정을 자동화해 반복 배포 작업의 실수를 줄이고, 최신 앱 버전 운영 속도를 높임
+
 ### Reed(리드) - 문장과 감정을 함께 담는 독서 기록 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2025.05 ~ 2026.04</span>
+
+<p>
+  <img src="./assets/portfolio/reed-thumbnail.png" alt="Reed 프로젝트 대표 이미지" width="100%">
+</p>
 
 독서 중 만난 문장과 감정을 함께 기록하고 공유하는 서비스
 
@@ -89,6 +116,10 @@
 - 팀원에게 Circuit 도입 필요성과 장점을 설명하며 Android 구조 설계와 기술 선택을 리딩
 
 ### 유니페스 : 대학 축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
+
+<p>
+  <img src="./assets/portfolio/unifest-thumbnail.png" alt="유니페스 프로젝트 대표 이미지" width="100%">
+</p>
 
 대학 축제 통합 플랫폼으로 지도 기반 행사 정보, 부스 웨이팅, QR 인증 이벤트, 알림 기능을 제공하는 서비스
 
@@ -127,6 +158,10 @@
 
 ### 반다라트 - 부담 없는 만다라트 계획표 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~</span>
 
+<p>
+  <img src="./assets/portfolio/bandalart-image.png" alt="반다라트 프로젝트 대표 이미지" width="100%">
+</p>
+
 기존 9x9 만다라트 계획표를 모바일 환경에 맞게 5x5 구조로 줄인 목표 관리 앱
 
 <span style="font-size: 0.9em;">Android 개발 · Kotlin · Jetpack Compose · Compose Multiplatform · Circuit(MVI) · Room</span> · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.bandalart.android) · [GitHub](https://github.com/Nexters/BandalArt-Android) · **다운로드 1,000+**
@@ -145,6 +180,10 @@
 
 ### I'Lab - 나만의 AI 프로필 연구소 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.01 ~ 2024.04</span>
 
+<p>
+  <img src="./assets/portfolio/ilab-image.jpeg" alt="I'Lab 프로젝트 대표 이미지" width="100%">
+</p>
+
 생성형 AI 기반으로 취향에 맞는 프로필 사진을 만들고 공유할 수 있는 카메라 앱
 
 <span style="font-size: 0.9em;">Android 앱 개발 · Kotlin · Jetpack Compose · Clean Architecture · Orbit(MVI) · Firebase</span> · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.ilab.android) · [GitHub](https://github.com/Nexters/ilab-android)
@@ -159,22 +198,38 @@
 - Gradle Convention Plugin 적용으로 모듈 간 빌드 설정 중복 제거
 - MaterialTheme 기반 다크모드 지원과 복구 가능한 에러 UI로 앱 안정성 보완
 
-### ImagePicker <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.12 ~ 2024.01</span>
-
-Compose Multiplatform 기반 갤러리 사진 피커 앱
-
-<span style="font-size: 0.9em;">Android/iOS 개발 · Kotlin · Compose Multiplatform · expect/actual · PHPicker · Coil3 · Decompose</span> · [GitHub](https://github.com/KwonDae/ImagePicker)
-
-- expect/actual 패턴을 통해 iOS 환경의 PHPicker를 호출하고 갤러리 사진 선택 기능 구현
-- Coil3로 Android/iOS 플랫폼의 이미지 타입(Network Uri, ByteArray)을 통합 처리
-- Decompose 기반 메인·상세 화면 상태 관리와 화면 전환 로직 통합
-
 ## Other Projects
+
+### 이끔 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~ 2024.04</span>
+
+<p>
+  <img src="./assets/portfolio/eggeum-image.png" alt="이끔 프로젝트 대표 이미지" width="100%">
+</p>
+
+카페에서 공부하는 사용자를 위한 맞춤 카페 탐색 앱
+
+<span style="font-size: 0.9em;">Android 개발 · Kotlin · Naver Map · Flow · Paging</span>
+
+- 페이징 API 결과를 Naver Map에 마킹하고 검색 결과와 지도 상태를 연결
+- Flow flatMapLatest 기반으로 검색 조건 변경 시 최신 검색 결과만 반영
+- 검색어 디바운스와 Navigator 모듈을 도입해 검색 경험과 화면 전환 구조 개선
+
+### 나나공 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2021.09 ~ 2023.04</span>
+
+<p>
+  <img src="./assets/portfolio/nanagong-image.png" alt="나나공 프로젝트 대표 이미지" width="100%">
+</p>
+
+인강 수강 독려 서비스 앱
+
+<span style="font-size: 0.9em;">Android 개발 · Kotlin · MVVM · Hilt · Flow · FCM</span>
+
+- MVVM·Hilt 기반 구조를 도입하고 LiveData 중심 흐름을 Flow로 전환
+- Navigation 기반 Single Activity 구조로 화면 전환 책임을 정리
+- FCM 기반 주기적 알림으로 수강 독려 경험 제공
 
 | 프로젝트 | 기간 | 설명 | 주요 기여 |
 | --- | --- | --- | --- |
-| 이끔 | 2023.07 ~ 2024.04 | 카페에서 공부하는 사용자를 위한 맞춤 카페 탐색 앱 | 페이징 API 결과를 Naver Map에 마킹, Flow flatMapLatest 기반 최신 검색 결과 처리, 검색어 디바운스, Navigator 모듈 도입 |
-| 나나공 | 2021.09 ~ 2023.04 | 인강 수강 독려 서비스 앱 | MVVM·Hilt 도입, LiveData를 Flow로 전환, Navigation 기반 Single Activity 구조 전환, FCM 기반 주기적 알림 |
 | GalleryApp | - | 갤러리 앱 | 이미지 목록과 상세 화면 구성, 로컬 미디어 접근 경험 확보 |
 | MyVoca | - | 영어 단어 학습 앱 | 단어장 CRUD와 학습 흐름 구현 |
 | PsyChat | - | 정신 건강 케어 앱 서비스 | 상담·채팅형 기능 구현 경험 |
