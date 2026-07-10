@@ -19,16 +19,12 @@
 
 실무에서 BLE 의료기기 연동, 헬스 데이터 수집, Media3 기반 운동 영상 플레이어, CameraX/TensorFlow Lite 기반 관절 움직임 측정 기능을 제품에 적용해왔습니다. 웹뷰 기반 제품에서는 브릿지 연동과 프론트엔드 개발까지 병행하며, 문제 재현과 원인 분석을 위한 디버깅 도구를 직접 개발했습니다.
 
-1인 Android 개발의 한계를 보완하기 위해, commit/PR 생성, 배포 전 검증 절차, AI 코드 리뷰와 리뷰 반영 보조를 자동화 skill로 체계화했습니다.
-
 사이드 프로젝트로 **Android 앱 9개와 iOS 앱 1개**를 출시·운영하며 사용자가 겪는 문제를 제품 기능으로 해결해왔습니다.\
 개발 블로그와 팀 내 기술 공유를 통해 학습 내용을 정리하고, 실무 적용 관점의 기술 선택 과정을 공유해왔습니다.
 
 ## Work Experience
 
-| 회사 | 기간 | 직무 |
-| --- | --- | --- |
-| 메디플러스솔루션 (HD현대 계열사) | 2024.05 ~ 재직 중 | Android Developer |
+**메디플러스솔루션 (HD현대 계열사)** · Android Developer · 2024.05 ~ 재직 중
 
 총 2년+ 경력으로, Hi-me 신규 헬스케어 서비스 개발을 주력으로 기존 건강관리·재활·명상 서비스의 Android 운영과 고도화를 함께 담당했습니다.
 
@@ -38,7 +34,7 @@
 
 HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 
-- 웹뷰-네이티브 요청/응답 규격과 에러 처리 기준을 표준화하고, Dari 라이브러리 기반 디버깅 환경을 구축해 Android·프론트엔드 개발자가 브릿지 호출 흐름과 실패 지점을 함께 확인할 수 있도록 개선
+- 웹뷰-네이티브 요청/응답 규격과 에러 처리 기준을 표준화하고, [Dari](https://github.com/easyhooon/dari) 라이브러리 기반 디버깅 환경을 구축해 Android·프론트엔드 개발자가 브릿지 호출 흐름과 실패 지점을 함께 확인할 수 있도록 개선
 - BLE Glucose/Blood Pressure Profile 기반 혈당계·혈압계 연동, 측정 데이터 동기화와 연동 해제까지 포함한 의료기기 데이터 수집 흐름 제공
 - Samsung Health Data SDK 연동으로 Health Connect 경유 시 발생하던 걸음 수 미갱신 이슈 보완, 걸음 수·심박수·소모 칼로리 수집 경로 안정화
 - 웹뷰 오디오 재생 상태를 MediaSession과 동기화, 백그라운드 재생과 미디어 알림 컨트롤을 지원해 웹뷰 앱의 오디오 사용성 보완
@@ -94,10 +90,11 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스
 ## Libraries
 
 - [Dari](https://github.com/easyhooon/dari): 실무 WebView 연동 디버깅 문제에서 출발해 만든 Android 라이브러리. 특정 WebView 브릿지 구현체에 묶이지 않도록 설계했으며, JavaScript bridge 메시지의 요청·응답·상태를 실시간으로 확인해 프론트엔드 개발자도 호출 흐름과 실패 지점을 함께 추적할 수 있도록 지원. debug/release 분리를 위한 no-op 모듈 제공.
-- [RoutePeek](https://github.com/easyhooon/routepeek): WebView의 현재 route와 SPA route 변경을 Compose overlay로 확인하는 Android debug 라이브러리. 웹뷰 화면의 현재 경로를 앱 안에서 바로 확인해 라우팅 이슈 재현과 공유를 쉽게 개선.
+- [RoutePeek](https://github.com/easyhooon/routepeek): WebView의 현재 route와 SPA route 변경을 Compose overlay로 확인하는 Android 디버깅 라이브러리. 웹뷰 화면의 현재 경로를 앱 안에서 바로 확인해 라우팅 이슈를 재현하고 공유하기 쉽게 지원.
 
 ## Other Experience
 
+- 개발 워크플로 자동화: **AI 코딩 에이전트용 스킬**을 제작해 커밋·PR 생성, 배포 전 검증, 코드 리뷰 반영 절차를 표준화하고 반복 작업과 검증 누락 감소
 - 브리시드 심리상담센터: React Native 기반 사내 상담 예약 앱 유지보수, OS 호환성 이슈 수정, 생체인증 로그인 정보 자동 완성 도입, 네트워크 이슈 재현 경로 확보
 - YAPP 26기: Reed 프로젝트 Android 파트 리드로 구조 설계·기술 스택 검토·코드 리뷰 담당, Android Manifest Interview 도서/기술 블로그 작성 스터디 운영, 최우수상 수상, 27·28기 Android 개발자 선발 면접 참여
 - Nexters 23·24·26기: 반다라트, I'lab, Ziine 프로젝트 Android 구조 설계·기술 스택 선정·코드 리뷰, 출시 후 코드 품질 개선과 성능 최적화
