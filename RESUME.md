@@ -10,7 +10,7 @@
     <td><strong>Tech Blog</strong> <a href="https://velog.io/@mraz3068">velog.io/@mraz3068</a></td>
   </tr>
   <tr>
-    <td><strong>Portfolio</strong> <a href="https://app.notion.com/p/mraz3068/Android-Developer-12a1067917dc4885bb5570bf5fda9f86?source=copy_link">Notion</a></td>
+    <td><strong>Portfolio</strong> <a href="./PORTFOLIO.md">PORTFOLIO.md</a></td>
     <td><strong>LinkedIn</strong> <a href="https://www.linkedin.com/in/easyhooon/">linkedin.com/in/easyhooon</a></td>
   </tr>
 </table>
