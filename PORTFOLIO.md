@@ -19,7 +19,7 @@
 
 출시까지 이어진 **Android 앱 9개와 iOS 앱 1개**를 중심으로, 제품 운영 중 마주한 문제를 기능·구조·도구로 해결한 경험을 정리했습니다.
 
-제품 요구사항과 운영 제약을 출발점으로 화면 상태 관리, 모듈 간 의존성, 화면 전환, 플랫폼 확장 문제를 구조적으로 풀어왔습니다. 그 과정에서 Circuit(MVI), Metro DI, Navigation3, Compose Multiplatform을 적용했고, 일부 해결 경험을 오픈소스 기여로 확장했습니다.
+제품 요구사항과 운영 제약에서 출발해 상태 관리와 의존성, 화면 전환, 플랫폼 확장 문제를 풀어왔습니다. 그 과정에서 **Circuit(MVI), Metro DI, Compose Multiplatform** 등 필요한 기술을 상황에 맞게 선택하고, 해결 경험을 라이브러리 개발과 오픈소스 기여로 확장했습니다.
 
 ## Team Projects
 
@@ -31,7 +31,7 @@
 
 여행 동행자와 함께 지출을 기록하고 공동경비·개인경비·정산 내역을 관리하는 서비스
 
-<span style="font-size: 0.9em;">Android 개발 · Kotlin · Jetpack Compose · Navigation3 · Metro · Multi-module · Firebase</span> · [Play Store](https://play.google.com/store/apps/details?id=com.yeobee)
+**Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.yeobee)
 
 - Kotlin compiler plugin 기반 빌드 성능과 compile-time graph 검증을 활용하기 위해 Hilt를 **Metro 기반 DI로 전환**, 프로젝트 graph·scope·qualifier를 정의해 의존성 오류를 컴파일 단계에서 검증
 - 다양한 진입 경로에서 초대 유효성과 참여 가능 여부를 일관되게 검증하고, **사용자 선택 완료 이후에만 수락 요청을 실행**하도록 플로우를 재설계해 중복·잘못된 참여 요청 방지
@@ -46,14 +46,28 @@
 
 독서 중 만난 문장과 감정을 함께 기록하고 공유하는 서비스
 
-<span style="font-size: 0.9em;">Android 파트 리드 · Kotlin · Jetpack Compose · Circuit(MVI) · Multi-module · Firebase</span> · **YAPP 26기 최우수상**
+**Android 파트 리드** · **YAPP 26기 최우수상**
 
-- Google 권장 아키텍처와 **Circuit(MVI) 기반 구조**로 상태 생성과 이벤트 처리 책임을 분리해 화면별 상태 관리 규칙 통일
+- 상태 관리 일관성과 Compose 중심 구조를 위해 Circuit(MVI) 도입을 제안하고, Presenter가 상태·이벤트 처리를 전담하도록 화면 구조 표준화
+- Screen 기반 Circuit Navigation으로 복잡한 객체 전달과 동적 시작 화면을 모델링해 화면 전환 규칙 단순화
 - 커스텀 Pagination 기반 도서 검색·상세 조회 화면으로 긴 검색 결과에서도 안정적인 탐색 경험 제공
-- 복잡한 객체 전달과 시작 화면 동적 변경으로 인한 오류를 줄이기 위해 Circuit Navigation을 적용해 화면 전환 규칙 명확화
-- Guest Mode로 로그인 전에도 앱을 먼저 체험할 수 있게 해 초기 진입 장벽 완화
+- Guest Mode 지원으로 로그인 전에도 앱을 체험할 수 있게 해 초기 진입 장벽 완화
+- Compose UI를 직접 공유할 수 없는 제약을 `GraphicsLayer` 기반 `Bitmap` 변환으로 해결해 도서 기록 카드 저장·공유 지원
 - OCR 지원과 도서 기록 템플릿 제공으로 사용자가 수기로 입력해야 하는 부분을 줄여 기록 피로도 완화
-- 팀원에게 Circuit 도입 필요성과 장점을 설명하며 **Android 구조 설계와 기술 선택을 리딩**
+
+### 트립메이트 - 강원도 여행 정보 및 동행 찾기 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.06 ~ 2024.11</span>
+
+강원도 여행 동행 플랫폼으로 현위치 기반 여행지 탐색, 개인 여행 스타일 분석, 동행 매칭을 제공하는 서비스
+
+**Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.tripmate.android) · [GitHub](https://github.com/TeamTripmate/tripmate-android)
+
+한국관광공사 X 카카오 2024 관광데이터 활용 공모전 **장려상 및 강원관광재단 특별상**
+
+- 여행 스타일 분석 결과를 사용자 프로필과 연결해 개인화된 동행 매칭의 기반 마련
+- 여행 스타일 온보딩, 여행 목록 필터링, 마이페이지를 연결해 탐색부터 개인 설정까지 이어지는 사용자 흐름 제공
+- Room 기반 로컬 저장소로 네트워크 단절 시에도 관심 여행지 조회가 끊기지 않는 오프라인 경험 제공
+- 서버 좋아요 상태와 로컬 관심 목록의 불일치를 `Flow.combine`으로 해소해 화면 재진입 후에도 동일한 선택 상태 유지
+- ViewModel 스코프 내 **인메모리 캐싱 전략**을 적용해 카테고리 변경 시 불필요한 API 호출 감소
 
 ### 유니페스 : 대학 축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
 
@@ -63,45 +77,16 @@
 
 대학 축제 통합 플랫폼으로 지도 기반 행사 정보, 부스 웨이팅, QR 인증 이벤트, 알림 기능을 제공하는 서비스
 
-<span style="font-size: 0.9em;">Android 개발 · Kotlin · Jetpack Compose · Naver Map Compose · MVI · Room</span> · [Play Store](https://play.google.com/store/apps/details?id=com.unifest.android)
+**Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.unifest.android)
 
 고려대·가천대·상명대·한국교통대 축제 공식 앱 선정, Play Store 다운로드 **2,000+**, Android/iOS 통합 **WAU 5,000+**
 
-- **Naver Map Compose 기반 지도 화면**에 위치 권한·커스텀 마커·클러스터링을 적용해 축제 부스와 행사 정보 탐색성 개선
+- **Naver Map Compose 기반 지도 화면**에 위치 권한·커스텀 마커·클러스터링을 적용해 밀집된 축제 부스와 행사 정보를 쉽게 찾을 수 있도록 개선
 - 구글 권장 아키텍처와 **MVI 패턴 기반 모듈 구조**로 화면 상태와 이벤트 처리 책임을 분리해 축제 기능 변경 범위 감소
 - QR 기반 부스 행사 참여 인증 방식을 적용해 현장 이벤트 참여를 앱 안에서 처리
+- Room과 DataStore로 관심 축제·부스와 사용자 설정을 유지해 앱 재실행 후에도 탐색·설정 상태 복원
+- Firebase Remote Config 기반 강제 업데이트와 API 커스텀 에러 처리를 적용해 앱 버전 차이와 예외 상황 대응 강화
 - **Room Migration Test**로 데이터베이스 스키마 변경 시 회귀 위험 감소
-
-### 트립메이트 - 강원도 여행 정보 및 동행 찾기 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.06 ~ 2024.11</span>
-
-강원도 여행 동행 플랫폼으로 현위치 기반 여행지 탐색, 개인 여행 스타일 분석, 동행 매칭을 제공하는 서비스
-
-<span style="font-size: 0.9em;">Android 앱 개발 · Kotlin · Jetpack Compose · Clean Architecture · MVI · Kakao Map · Room</span> · [Play Store](https://play.google.com/store/apps/details?id=com.tripmate.android) · [GitHub](https://github.com/TeamTripmate/tripmate-android)
-
-한국관광공사 X 카카오 2024 관광데이터 활용 공모전 **장려상 및 강원관광재단 특별상**
-
-- 여행 스타일 분석 결과를 사용자 프로필과 연결해 개인화된 동행 매칭의 기반 마련
-- **Composable 기반 화면을 Bitmap으로 변환**해 여행 스타일 결과를 이미지로 저장·공유할 수 있는 확산 경로 제공
-- Room 기반 관심 여행지 로컬 저장소로 네트워크 상태와 관계없이 관심 목록 확인 가능
-- **Flow combine**을 활용해 Remote/Local 좋아요 상태를 실시간 동기화
-- ViewModel 스코프 내 **인메모리 캐싱 전략**을 적용해 카테고리 변경 시 불필요한 API 호출 감소
-
-### 반다라트 - 부담 없는 만다라트 계획표 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~</span>
-
-<p>
-  <img src="./assets/portfolio/bandalart-image.png" alt="반다라트 프로젝트 대표 이미지" width="100%">
-</p>
-
-기존 9x9 만다라트 계획표를 모바일 환경에 맞게 5x5 구조로 줄인 목표 관리 앱
-
-<span style="font-size: 0.9em;">Android 개발 · Kotlin · Jetpack Compose · Compose Multiplatform · Circuit(MVI) · Room</span> · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.bandalart.android) · [GitHub](https://github.com/Nexters/BandalArt-Android) · **다운로드 1,000+**
-
-- Jetpack Compose 기반 반다라트 계획표 Custom UI와 공통 컴포넌트로 5x5 목표 관리 경험을 일관되게 구성
-- Clean Architecture와 MVVM 구조를 MVI 기반 구조로 전환하고 Circuit을 도입해 상태 관리와 이벤트 처리 흐름 단순화
-- 서버 API 의존 구조를 **Room 로컬 저장소 기반 offline-first 구조**로 전환해 서버 중단 이후에도 서비스 유지
-- Android 앱을 **Compose Multiplatform으로 마이그레이션해 iOS 앱까지 배포**
-- Room Database, Repository, ViewModel 테스트 코드와 **GitHub Actions CI**로 주요 로직 회귀 검증 자동화
-- 태블릿·가로 모드 대응을 통해 다양한 화면 환경에서 사용성 개선
 
 ### I'Lab - 나만의 AI 프로필 연구소 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.01 ~ 2024.04</span>
 
@@ -111,11 +96,29 @@
 
 생성형 AI 기반으로 취향에 맞는 프로필 사진을 만들고 공유할 수 있는 카메라 앱
 
-<span style="font-size: 0.9em;">Android 앱 개발 · Kotlin · Jetpack Compose · Clean Architecture · Orbit(MVI) · Firebase</span> · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.ilab.android) · [GitHub](https://github.com/Nexters/ilab-android)
+**Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.ilab.android) · [GitHub](https://github.com/Nexters/ilab-android)
 
 - Clean Architecture와 Orbit 기반 MVI 구조로 이미지 생성 과정의 상태와 사이드 이펙트 책임 분리
 - Version Catalog와 Gradle Convention Plugin 방식을 적용해 모듈별 공통 빌드 설정 중복 감소
 - 카메라·앨범에서 사진을 선택하고 스타일 적용부터 **AI 이미지 생성·저장·공유까지 앱 안에서 완료**할 수 있는 프로필 제작 경험 제공
+
+### 반다라트 - 부담 없는 만다라트 계획표 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~</span>
+
+<p>
+  <img src="./assets/portfolio/bandalart-image.png" alt="반다라트 프로젝트 대표 이미지" width="100%">
+</p>
+
+기존 9x9 만다라트 계획표를 모바일 환경에 맞게 5x5 구조로 줄인 목표 관리 앱
+
+**Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.bandalart.android) · [GitHub](https://github.com/Nexters/BandalArt-Android) · **다운로드 1,000+**
+
+- Jetpack Compose 기반 반다라트 계획표 Custom UI와 공통 컴포넌트로 5x5 목표 관리 경험을 일관되게 구성
+- Clean Architecture와 MVVM 구조를 MVI 기반 구조로 전환하고 Circuit을 도입해 상태 관리와 이벤트 처리 흐름 단순화
+- 서버 API 의존 구조를 **Room 로컬 저장소 기반 offline-first 구조**로 전환해 서버 중단 이후에도 서비스 유지
+- Android 앱을 **Compose Multiplatform으로 마이그레이션해 iOS 앱까지 배포**
+- Google Play In-App Update API로 구버전 사용자의 업데이트 유도 흐름 제공
+- Room Database, Repository, ViewModel 테스트 코드와 **GitHub Actions CI**로 주요 로직 회귀 검증 자동화
+- 태블릿·가로 모드 대응을 통해 다양한 화면 환경에서 사용성 개선
 
 ## Other Projects
 
@@ -127,8 +130,6 @@
 
 카페에서 공부하는 사용자를 위한 맞춤 카페 탐색 앱
 
-<span style="font-size: 0.9em;">Android 개발 · Kotlin · Naver Map · Flow · Paging</span>
-
 - 검색 결과와 Naver Map 마커 상태를 연결해 카페 목록과 지도 탐색 흐름을 일관되게 유지
 - Flow flatMapLatest와 검색어 디바운스로 조건 변경 시 최신 검색 결과만 반영해 검색 반응성 개선
 
@@ -139,8 +140,6 @@
 </p>
 
 인강 수강 독려 서비스 앱
-
-<span style="font-size: 0.9em;">Android 개발 · Kotlin · MVVM · Hilt · Flow · FCM</span>
 
 - FCM 기반 주기적 알림으로 사용자의 인강 수강 독려 경험 제공
 - LiveData 중심 흐름을 Flow로 전환해 알림·수강 상태 변경의 화면 반영 일관성 개선
