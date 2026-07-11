@@ -15,11 +15,11 @@
   </tr>
 </table>
 
-## Highlights
+## Overview
 
 출시까지 이어진 **Android 앱 9개와 iOS 앱 1개**를 중심으로, 제품 운영 중 마주한 문제를 기능·구조·도구로 해결한 경험을 정리했습니다.
 
-제품 요구사항과 운영 제약에서 출발해 상태 관리와 의존성, 화면 전환, 플랫폼 확장 문제를 풀어왔습니다. 그 과정에서 **Circuit(MVI), Metro DI, Compose Multiplatform** 등 필요한 기술을 상황에 맞게 선택하고, 해결 경험을 라이브러리 개발과 오픈소스 기여로 확장했습니다.
+제품 요구사항을 구현하고 서비스를 운영하며 마주한 상태 관리와 의존성, 화면 전환, 플랫폼 확장 문제를 풀어왔습니다. 기술 선택은 해결할 문제와 프로젝트 상황을 기준으로 판단했으며, 그 경험을 라이브러리 개발과 오픈소스 기여로 확장했습니다.
 
 ## Team Projects
 
@@ -33,8 +33,9 @@
 
 **Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.yeobee)
 
-- Kotlin compiler plugin 기반 빌드 성능과 compile-time graph 검증을 활용하기 위해 Hilt를 **Metro 기반 DI로 전환**, 프로젝트 graph·scope·qualifier를 정의해 의존성 오류를 컴파일 단계에서 검증
-- 다양한 진입 경로에서 초대 유효성과 참여 가능 여부를 일관되게 검증하고, **사용자 선택 완료 이후에만 수락 요청을 실행**하도록 플로우를 재설계해 중복·잘못된 참여 요청 방지
+- Hilt의 KSP/KAPT 기반 코드 생성 오버헤드를 줄이기 위해 Kotlin compiler plugin의 FIR/IR에서 직접 코드를 생성하는 **Metro 기반 DI로 전환**, 프로젝트 graph·scope·qualifier를 재정의해 의존 구조를 유지하면서 DI 빌드 경로 단순화
+- 딥링크·수동 코드 입력·비로그인·warm start 등 진입 경로마다 분기되던 초대 수락 흐름을 통합하고, 만료·중복 참여·정원 마감·여행 삭제를 동일한 검증과 에러 UI로 처리
+- 초대 조회와 참여 확정 API 호출 시점을 분리해 **사용자 입력이 완료된 뒤에만 서버 상태를 변경**하도록 재설계하고, 화면 이탈 시 서버·클라이언트 상태 불일치와 중복 요청 방지
 - 공동경비 예산, 개인 지출, 공동 지출, 정산 상세, 통계 상세의 **금액 표시와 검증 기준을 통일**해 화면별 계산·입력 규칙의 불일치 제거
 - Firebase 배포 스크립트와 Play Store 배포 workflow, versionCode override, Discord 알림 흐름을 정리해 **QA 배포와 운영 배포 전 검증 과정을 자동화**
 
@@ -46,28 +47,14 @@
 
 독서 중 만난 문장과 감정을 함께 기록하고 공유하는 서비스
 
-**Android 파트 리드** · **YAPP 26기 최우수상**
+**Android 개발** · **YAPP 26기 최우수상**
 
 - 상태 관리 일관성과 Compose 중심 구조를 위해 Circuit(MVI) 도입을 제안하고, Presenter가 상태·이벤트 처리를 전담하도록 화면 구조 표준화
 - Screen 기반 Circuit Navigation으로 복잡한 객체 전달과 동적 시작 화면을 모델링해 화면 전환 규칙 단순화
 - 커스텀 Pagination 기반 도서 검색·상세 조회 화면으로 긴 검색 결과에서도 안정적인 탐색 경험 제공
 - Guest Mode 지원으로 로그인 전에도 앱을 체험할 수 있게 해 초기 진입 장벽 완화
 - Compose UI를 직접 공유할 수 없는 제약을 `GraphicsLayer` 기반 `Bitmap` 변환으로 해결해 도서 기록 카드 저장·공유 지원
-- OCR 지원과 도서 기록 템플릿 제공으로 사용자가 수기로 입력해야 하는 부분을 줄여 기록 피로도 완화
-
-### 트립메이트 - 강원도 여행 정보 및 동행 찾기 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.06 ~ 2024.11</span>
-
-강원도 여행 동행 플랫폼으로 현위치 기반 여행지 탐색, 개인 여행 스타일 분석, 동행 매칭을 제공하는 서비스
-
-**Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.tripmate.android) · [GitHub](https://github.com/TeamTripmate/tripmate-android)
-
-한국관광공사 X 카카오 2024 관광데이터 활용 공모전 **장려상 및 강원관광재단 특별상**
-
-- 여행 스타일 분석 결과를 사용자 프로필과 연결해 개인화된 동행 매칭의 기반 마련
-- 여행 스타일 온보딩, 여행 목록 필터링, 마이페이지를 연결해 탐색부터 개인 설정까지 이어지는 사용자 흐름 제공
-- Room 기반 로컬 저장소로 네트워크 단절 시에도 관심 여행지 조회가 끊기지 않는 오프라인 경험 제공
-- 서버 좋아요 상태와 로컬 관심 목록의 불일치를 `Flow.combine`으로 해소해 화면 재진입 후에도 동일한 선택 상태 유지
-- ViewModel 스코프 내 **인메모리 캐싱 전략**을 적용해 카테고리 변경 시 불필요한 API 호출 감소
+- Google Cloud Vision API 기반 OCR과 기록 템플릿으로 도서 문장 입력 부담 완화
 
 ### 유니페스 : 대학 축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
 
@@ -130,6 +117,8 @@
 
 카페에서 공부하는 사용자를 위한 맞춤 카페 탐색 앱
 
+**Android 개발**
+
 - 검색 결과와 Naver Map 마커 상태를 연결해 카페 목록과 지도 탐색 흐름을 일관되게 유지
 - Flow flatMapLatest와 검색어 디바운스로 조건 변경 시 최신 검색 결과만 반영해 검색 반응성 개선
 
@@ -140,6 +129,8 @@
 </p>
 
 인강 수강 독려 서비스 앱
+
+**Android 개발**
 
 - FCM 기반 주기적 알림으로 사용자의 인강 수강 독려 경험 제공
 - LiveData 중심 흐름을 Flow로 전환해 알림·수강 상태 변경의 화면 반영 일관성 개선
