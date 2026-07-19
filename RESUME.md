@@ -42,7 +42,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 ### 세컨드 윈드/닥터 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
 
-만성질환자와 암 수술 환자를 위한 맞춤 건강관리·재활 서비스 · [세컨드 윈드](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.secondwindforpatentkr)·[세컨드 닥터 질환별 앱](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.breastcancer) 6종 Google Play 누적 다운로드 합산 **13,000+**
+만성질환자와 암 수술 환자를 위한 맞춤 건강관리·재활 서비스 · [세컨드 윈드](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.secondwindforpatentkr)와 [세컨드 닥터 대표 앱](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.breastcancer)을 포함한 질환별 앱 5종, 총 6종 Google Play 누적 다운로드 합산 **13,000+**
 
 - ExoPlayer2 기반 운동 영상 플레이어를 Media3로 마이그레이션하고 긴 영상을 구간 단위로 내려받아, 전체 파일 다운로드 완료 전에도 내려받은 첫 구간부터 영상을 재생할 수 있도록 변경
 - TensorFlow Lite + CameraX 기반 어깨 움직임 측정 기능 개발, 팔벌림 각도 정확도 **오차범위 ±5도 이내**로 개선
