@@ -32,7 +32,7 @@
 
 ### Hi-me <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2025.10 ~</span>
 
-HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Google Play](https://play.google.com/store/apps/details?id=com.mediplussolution.hime) 다운로드 **1,000+**
+HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Google Play](https://play.google.com/store/apps/details?id=com.mediplussolution.hime) 다운로드 **2,000+**
 
 - 웹뷰-네이티브 요청/응답 규격과 에러 처리 기준을 표준화하고, [Dari](https://github.com/easyhooon/dari) 라이브러리 기반 디버깅 환경을 구축해 Android·프론트엔드 개발자가 브릿지 호출 흐름과 실패 지점을 같은 화면에서 확인하도록 구성
 - BLE Glucose/Blood Pressure Profile 기반 혈당계·혈압계 연동, 측정 데이터 동기화와 연동 해제까지 포함한 의료기기 데이터 수집 흐름 제공
