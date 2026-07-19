@@ -64,7 +64,7 @@
 
 **Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.unifest.android)
 
-고려대·가천대·상명대·한국교통대 축제 공식 앱 선정, Play Store 다운로드 **1,000+**, 축제 운영 기간 Android/iOS 통합 최고 **WAU 5,000+**
+고려대·가천대·상명대·한국교통대 축제 공식 앱 선정, Play Store 다운로드 **2,000+**, 축제 운영 기간 Android/iOS 통합 최고 **WAU 5,000+**
 
 - **Naver Map Compose 기반 지도 화면**에 위치 권한·커스텀 마커·클러스터링을 적용해 줌 레벨에 따라 밀집된 부스·행사 마커를 묶고 펼쳐서 표시해 지도 정보 가독성 개선
 - 구글 권장 아키텍처와 **MVI 패턴 기반 모듈 구조**로 화면 상태와 이벤트 처리 책임을 기능 모듈 안으로 분리
