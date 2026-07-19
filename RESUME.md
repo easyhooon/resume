@@ -44,7 +44,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 만성질환자와 암 수술 환자를 위한 맞춤 건강관리·재활 서비스 · [세컨드 윈드](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.secondwindforpatentkr)와 [세컨드 닥터 대표 앱](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.breastcancer)을 포함한 질환별 앱 5종, 총 6종 Google Play 누적 다운로드 합산 **13,000+**
 
-- ExoPlayer2 기반 운동 영상 플레이어를 Media3로 마이그레이션하고 긴 영상을 구간 단위로 내려받아, 전체 파일 다운로드 완료 전에도 내려받은 첫 구간부터 영상을 재생할 수 있도록 변경
+- ExoPlayer2 기반 운동 영상 플레이어를 Media3로 마이그레이션하고 긴 영상을 구간 단위로 내려받아, 전체 파일 다운로드 완료 전에도 내려받은 첫 구간부터 영상을 재생할 수 있도록 변경해 재생 시작 대기 완화
 - TensorFlow Lite + CameraX 기반 어깨 움직임 측정 기능 개발, 팔벌림 각도 정확도 **오차범위 ±5도 이내**로 개선
 - Android OS 정책 변경에 맞춘 BLE 연동 SDK 수정과 AAR 재배포, 웨어러블 기기 연동 중단 이슈 해결
 
@@ -54,7 +54,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 - Google Play 인앱 결제 연동, 일회성 결제 플로우를 구현해 유료 콘텐츠 구매 경로 추가
 - 명상 음악 플레이어의 Activity-Service 통신을 Broadcast Receiver에서 Flow 기반 스트림으로 전환해 재생 상태의 생산·소비 경로 통합
-- KISA 보안취약점 점검에서 지적된 앱 위변조·루팅·백그라운드 오버레이 항목을 Play Integrity API와 런타임 탐지 로직으로 대응
+- KISA 보안취약점 점검에서 지적된 앱 위변조·루팅·백그라운드 오버레이 항목에 Play Integrity API와 런타임 탐지 로직을 적용해 보안 대응 강화
 - 전역 싱글톤에 의존하던 플레이어·결제 객체를 Hilt가 생성·제공하도록 전환해 전역 접근 제거
 
 ### 마이밸런스 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
@@ -71,11 +71,11 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 <span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월, 현재 운영 중</span> · 고려대·가천대·상명대·한국교통대 축제 공식 앱 선정, Play Store 다운로드 **1,000+**, 축제 운영 기간 Android/iOS 통합 최고 **WAU 5,000+**
 
-- Naver Map Compose 클러스터링을 적용해 줌 레벨에 따라 밀집된 부스·행사 마커를 묶고 펼쳐서 표시
+- Naver Map Compose 클러스터링을 적용해 줌 레벨에 따라 밀집된 부스·행사 마커를 묶고 펼쳐서 표시해 지도 정보 가독성 개선
 - MVI 패턴과 구글 권장 아키텍처 기반 모듈화를 적용하고 화면 상태·이벤트 처리 책임을 기능 모듈 안으로 분리
 - QR 스캔 결과를 부스 참여 상태와 연결해 현장 행사 인증을 앱 안에서 완료하도록 구현
-- Firebase Remote Config로 지원 앱 버전 기준을 원격에서 제어하고, API 에러 코드를 앱의 예외 처리 흐름에 연결
-- Firebase App Distribution으로 테스트 빌드를 배포하고, Room Migration Test로 이전 데이터베이스 스키마에서 현재 버전까지의 마이그레이션 검증
+- Firebase Remote Config로 지원 앱 버전 기준을 원격에서 제어하고, API 에러 코드를 앱의 예외 처리 흐름에 연결해 버전·예외 상황 대응 강화
+- Firebase App Distribution으로 테스트 빌드를 배포하고, Room Migration Test로 이전 데이터베이스 스키마에서 현재 버전까지의 마이그레이션 회귀 검증 강화
 
 ### 반다라트 - 부담 없는 만다라트 계획표 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~</span>
 
