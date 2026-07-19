@@ -79,7 +79,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 ### 반다라트 - 부담 없는 만다라트 계획표 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~</span>
 
-<span style="font-size: 0.9em;">Kotlin Multiplatform 개발자 2명, 배포까지 2개월, 현재 운영 중</span>
+<span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월, 현재 운영 중</span>
 
 - Android 앱을 Compose Multiplatform으로 마이그레이션, 기존 Android 코드 기반으로 iOS 앱까지 배포
 - Slack Circuit Presenter가 계획표 상태 생성과 이벤트 처리를 담당하고, UI 컴포저블은 상태 소비와 이벤트 전달만 맡도록 구성
