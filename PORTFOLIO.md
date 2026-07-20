@@ -143,6 +143,8 @@
 - FCM 기반 주기적 알림으로 사용자의 인강 수강 독려 경험 제공
 - LiveData 기반 알림·수강 상태를 Flow 스트림으로 전환해 화면이 동일한 상태 흐름을 구독하도록 해 화면 반영 흐름 일원화
 
+> **배운 점**: 1년 3개월 동안 서비스를 운영·리팩토링하며 Jetpack Navigation, StateFlow, DataStore 등으로 단계적으로 전환하는 과정에서 Android 개발 방식의 변화를 직접 경험함
+
 ## Libraries
 
 ### Dari - WebView Bridge Inspector
