@@ -33,9 +33,9 @@
 
 **Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.yeobee)
 
-- Hilt의 KSP/KAPT 코드 생성 경로를 Kotlin compiler plugin의 FIR/IR에서 직접 코드를 생성하는 **Metro 기반 DI로 전환**하고, project graph·scope·qualifier를 재정의해 기존 의존 구조를 유지하면서 DI 빌드 경로에서 KSP/KAPT 의존 제거
-- **back stack을 앱 상태로 직접 관리하는 Navigation3**를 적용해 딥링크·수동 코드·비로그인·warm start별 stack 구성을 통일하고, 초대 수락과 오류 처리 흐름 일원화
-- Firebase App Distribution 배포 스크립트와 GitHub Actions 기반 Play Store workflow에 versionCode override와 Discord 알림을 연결해 QA·운영 배포 절차 자동화
+- **Metro 전환**: 기존 Hilt의 graph·scope·qualifier 기반 의존 구조를 유지하면서 KSP/KAPT 코드 생성 경로를 제거하기 위해, Kotlin compiler plugin의 FIR/IR에서 직접 코드를 생성하는 Metro를 선택하고 DI 설정 재정의
+- **Navigation3 도입**: 딥링크·앱 내부 화면 전환·비로그인·warm start마다 달라지는 stack 구성을 하나의 상태에서 관리하기 위해, back stack을 앱 상태로 직접 다루는 Navigation3를 선택. 진입 경로별 stack 구성과 초대 수락·오류 처리 흐름 일원화
+- **배포 자동화**: QA 배포와 Play Store 운영 배포 때마다 빌드·업로드·versionCode·알림 단계를 반복해야 했던 흐름을 줄이기 위해 Firebase App Distribution 배포 스크립트와 versionCode override를 포함한 GitHub Actions workflow를 구성하고 Discord 알림까지 연결
 
 ### Reed(리드) - 문장과 감정을 함께 담는 독서 기록 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2025.05 ~ 2026.04</span>
 
@@ -47,9 +47,9 @@
 
 **Android 개발** · **YAPP 26기 최우수상**
 
-- Circuit(MVI)을 공통 화면 계약으로 도입하고, Presenter가 상태를 생성하고 이벤트를 처리하며 UI는 상태 소비와 이벤트 전달만 담당하도록 해 화면 구조 표준화
-- Screen 기반 Circuit Navigation으로 **기록·감정 데이터를 묶은 화면 인자와 동적 복귀 경로**를 타입으로 전달해 route·custom `NavType` 보일러플레이트 제거
-- 커스텀 Pagination으로 검색 결과를 페이지 단위로 요청해 전체 결과를 기다리지 않고 첫 페이지부터 화면에 표시해 초기 검색 대기 완화
+- **Circuit 도입**: 여러 화면의 상태 생성과 이벤트 처리를 동일한 계약으로 관리하기 위해 Presenter와 UI의 역할을 프레임워크 수준에서 분리하는 Circuit(MVI)을 선택. Presenter는 상태 생성·이벤트 처리를, UI는 상태 소비·이벤트 전달을 담당하도록 해 화면 구조 표준화
+- **타입 기반 화면 전환**: 기록·감정 데이터와 동적 복귀 경로를 안전하게 함께 전달하기 위해 Screen 기반 Circuit Navigation을 선택. 화면 인자를 타입으로 정의해 route·custom `NavType` 보일러플레이트 제거
+- **Pagination 적용**: 검색 결과 전체를 기다리는 초기 대기를 줄이기 위해 페이지 단위 요청 방식을 구현하고 첫 페이지부터 화면에 표시
 - Guest Mode 지원으로 로그인 전에도 앱을 체험할 수 있게 해 초기 진입 장벽 완화
 - Compose UI를 직접 공유할 수 없는 제약을 `GraphicsLayer` 기반 `Bitmap` 변환으로 해결해 도서 기록 카드 저장·공유 지원
 - Google Cloud Vision API 기반 OCR로 촬영한 문장을 텍스트로 변환해 기록 템플릿에 바로 입력할 수 있도록 연결하고 문장 입력 부담 완화
@@ -66,12 +66,12 @@
 
 고려대·가천대·상명대·한국교통대 축제 공식 앱 선정, Play Store 다운로드 **2,000+**, 축제 운영 기간 Android/iOS 통합 최고 **WAU 5,000+**
 
-- **Naver Map Compose 기반 지도 화면**에 위치 권한·커스텀 마커·클러스터링을 적용해 줌 레벨에 따라 밀집된 부스·행사 마커를 묶고 펼쳐서 표시해 지도 정보 가독성 개선
-- 구글 권장 아키텍처와 **MVI 패턴 기반 모듈 구조**로 화면 상태와 이벤트 처리 책임을 기능 모듈 안으로 분리
+- **지도 클러스터링**: 축제 현장에 밀집된 부스·행사 마커를 제한된 화면에서 구분하기 위해 Naver Map Compose 기반 지도에 클러스터링을 적용. 줌 레벨에 따라 마커를 묶고 펼쳐서 표시해 지도 정보 가독성 개선
+- **MVI 기반 모듈화**: 축제 기능별 상태와 이벤트를 분리해 관리하기 위해 구글 권장 아키텍처와 MVI 패턴을 선택. 화면 상태와 이벤트 처리 책임을 기능 모듈 안으로 분리
 - QR 기반 부스 행사 참여 인증 방식을 적용해 현장 이벤트 참여를 앱 안에서 처리
 - Room과 DataStore로 관심 축제·부스와 사용자 설정을 유지해 앱 재실행 후에도 탐색·설정 상태 복원
 - Firebase Remote Config로 지원 앱 버전 기준을 원격에서 제어하고, API 에러 코드를 앱의 예외 처리 흐름에 연결해 버전·예외 상황 대응 강화
-- **Room Migration Test**로 이전 데이터베이스 스키마에서 현재 버전까지의 마이그레이션 회귀 검증 강화
+- **Room Migration Test**: 스키마 변경 후에도 기존 관심 축제·부스 데이터가 유지되는지 확인하기 위해, 이전 스키마에서 현재 버전까지의 마이그레이션 테스트 구성
 
 ### I'Lab - 나만의 AI 프로필 연구소 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.01 ~ 2024.04</span>
 
@@ -83,8 +83,8 @@
 
 **Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.ilab.android) · [GitHub](https://github.com/Nexters/ilab-android)
 
-- Clean Architecture와 Orbit 기반 MVI 구조로 이미지 생성 과정의 상태와 사이드 이펙트 책임 분리
-- Version Catalog와 Gradle Convention Plugin으로 모듈마다 반복되던 플러그인·Android·의존성 설정을 공통 빌드 로직으로 이동해 빌드 설정 중복 감소
+- **Orbit MVI 도입**: 이미지 선택·스타일 적용·생성·저장으로 이어지는 비동기 과정의 상태와 일회성 이벤트를 구분하기 위해 Orbit 기반 MVI를 선택. Orbit Container에서 상태와 사이드 이펙트를 분리하고 Clean Architecture 계층과 연결
+- **빌드 설정 공통화**: 모듈을 추가할 때마다 플러그인·Android·의존성 설정을 반복해야 했던 지점을 줄이기 위해 Version Catalog와 Gradle Convention Plugin을 도입. 공통 설정을 빌드 로직으로 이동해 중복 감소
 - 카메라·앨범에서 사진을 선택하고 스타일 적용부터 **AI 이미지 생성·저장·공유까지 앱 안에서 완료**할 수 있는 프로필 제작 경험 제공
 
 ### 반다라트 - 부담 없는 만다라트 계획표 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~</span>
@@ -98,11 +98,11 @@
 **Kotlin Multiplatform 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.bandalart) · [GitHub](https://github.com/Nexters/BandalArt-Android) · 다운로드 **500+**
 
 - Jetpack Compose 기반 반다라트 계획표 Custom UI와 공통 컴포넌트로 5x5 목표 관리 경험을 일관되게 구성
-- Clean Architecture와 MVVM 구조를 MVI 기반 구조로 전환하고 Circuit Presenter가 상태 생성과 이벤트 처리를 담당하도록 해 상태 관리와 이벤트 처리 흐름 단순화
+- **Circuit 전환**: 계획표 화면의 상태 생성과 이벤트 처리를 UI에서 분리하기 위해 기존 MVVM 구조를 Circuit 기반 MVI로 전환. Presenter가 상태 생성과 이벤트 처리를 담당하도록 해 UI의 상태 관리 흐름 단순화
 - 서버 API 의존 구조를 **Room 로컬 저장소 기반 offline-first 구조**로 전환해 서버 중단 이후에도 서비스 유지
-- Android 앱을 **Compose Multiplatform으로 마이그레이션해 iOS 앱까지 배포**
+- **Compose Multiplatform 전환**: 기존 Android Compose 코드와 화면 구성 경험을 재사용하면서 iOS로 확장하기 위해 Compose Multiplatform을 선택하고 iOS 앱까지 배포
 - Google Play In-App Update API로 구버전 사용자의 업데이트 유도 흐름 제공
-- Room Database, Repository, ViewModel 테스트 코드와 **GitHub Actions CI**로 주요 로직 회귀 검증 자동화
+- **CI 도입**: Room Database·Repository·ViewModel 변경 때마다 주요 데이터·화면 로직을 반복 검증해야 했던 과정을 자동화하기 위해 테스트 코드를 GitHub Actions에서 실행하도록 구성
 - 태블릿·가로 모드에서 화면 크기에 맞는 계획표 레이아웃 제공
 
 ## Other Projects
