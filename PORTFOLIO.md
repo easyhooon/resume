@@ -36,7 +36,7 @@
 - **Metro 전환**: 기존 Hilt의 graph·scope·qualifier 기반 의존 구조를 유지하면서 KSP/KAPT 코드 생성 경로를 제거하기 위해, Kotlin compiler plugin의 FIR/IR에서 직접 코드를 생성하는 Metro를 선택하고 DI 설정 재정의
 - **Navigation3 도입**: 딥링크·앱 내부 화면 전환·비로그인·warm start마다 달라지는 stack 구성을 하나의 상태에서 관리하기 위해, back stack을 앱 상태로 직접 다루는 Navigation3를 선택. 진입 경로별 stack 구성과 초대 수락·오류 처리 흐름 일원화
 - **초대 수락 흐름 재설계**: 딥링크·코드 입력·비로그인·warm start에서도 초대 만료·중복 참여·정원 마감·여행 삭제를 같은 규칙으로 검증하고, 이름 선택이 끝난 시점에만 최종 수락 API를 호출하도록 구성해 중복·잘못된 참여 요청 방지
-- **AI 에이전트 중심 개발 워크플로 설계**: Figma MCP, Task·Lesson 기록, AI가 참조할 개발 문서, `start-workflow` 스킬과 PR Review Bot을 연결해 이슈 생성부터 구현·검증·PR까지 자동화. 기능 구현 대부분은 에이전트에 맡기고 요구사항 분해·컨텍스트 설계·변경 리뷰·실행 검증에 집중
+- **AI 에이전트 중심 개발 워크플로 설계**: Figma MCP, Task·Lesson 기록, AI가 참조할 개발 문서, `start-workflow` 스킬과 PR Review Bot을 연결해 이슈 생성부터 구현·검증·PR까지 자동화. AI 에이전트가 일관된 기준으로 작업할 수 있도록 요구사항 분해·컨텍스트 설계·변경 리뷰·실행 검증 체계 구축
 - **배포 자동화**: QA 배포와 Play Store 운영 배포 때마다 빌드·업로드·versionCode·알림 단계를 반복해야 했던 흐름을 줄이기 위해 Firebase App Distribution 배포 스크립트와 versionCode override를 포함한 GitHub Actions workflow를 구성하고 Discord 알림까지 연결
 
 > **배운 점**
