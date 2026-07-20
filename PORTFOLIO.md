@@ -35,7 +35,7 @@
 
 - Hilt의 KSP/KAPT 코드 생성 경로를 Kotlin compiler plugin의 FIR/IR에서 직접 코드를 생성하는 **Metro 기반 DI로 전환**하고, project graph·scope·qualifier를 재정의해 기존 의존 구조를 유지하면서 DI 빌드 경로에서 KSP/KAPT 의존 제거
 - **back stack을 앱 상태로 직접 관리하는 Navigation3**를 적용해 딥링크·수동 코드·비로그인·warm start별 stack 구성을 통일하고, 초대 수락과 오류 처리 흐름 일원화
-- Firebase App Distribution 배포 스크립트와 GitHub Actions 기반 Play Store workflow에 versionCode override와 Discord 알림을 연결해 QA·운영 배포 절차를 같은 워크플로에서 실행하도록 구성
+- Firebase App Distribution 배포 스크립트와 GitHub Actions 기반 Play Store workflow에 versionCode override와 Discord 알림을 연결해 QA·운영 배포 절차 자동화
 
 ### Reed(리드) - 문장과 감정을 함께 담는 독서 기록 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2025.05 ~ 2026.04</span>
 
@@ -47,10 +47,10 @@
 
 **Android 개발** · **YAPP 26기 최우수상**
 
-- Circuit(MVI)을 공통 화면 계약으로 도입하고, Presenter가 상태를 생성하고 이벤트를 처리하며 UI는 상태 소비와 이벤트 전달만 담당하도록 구성
+- Circuit(MVI)을 공통 화면 계약으로 도입하고, Presenter가 상태를 생성하고 이벤트를 처리하며 UI는 상태 소비와 이벤트 전달만 담당하도록 해 화면 구조 표준화
 - Screen 기반 Circuit Navigation으로 **기록·감정 데이터를 묶은 화면 인자와 동적 복귀 경로**를 타입으로 전달해 route·custom `NavType` 보일러플레이트 제거
 - 커스텀 Pagination으로 검색 결과를 페이지 단위로 요청해 전체 결과를 기다리지 않고 첫 페이지부터 화면에 표시해 초기 검색 대기 완화
-- Guest Mode를 제공해 로그인 전에도 앱을 체험할 수 있는 진입 흐름을 구성하고 초기 진입 장벽 완화
+- Guest Mode 지원으로 로그인 전에도 앱을 체험할 수 있게 해 초기 진입 장벽 완화
 - Compose UI를 직접 공유할 수 없는 제약을 `GraphicsLayer` 기반 `Bitmap` 변환으로 해결해 도서 기록 카드 저장·공유 지원
 - Google Cloud Vision API 기반 OCR로 촬영한 문장을 텍스트로 변환해 기록 템플릿에 바로 입력할 수 있도록 연결하고 문장 입력 부담 완화
 
@@ -98,11 +98,11 @@
 **Kotlin Multiplatform 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.bandalart.android) · [GitHub](https://github.com/Nexters/BandalArt-Android) · 다운로드 **1,000+**
 
 - Jetpack Compose 기반 반다라트 계획표 Custom UI와 공통 컴포넌트로 5x5 목표 관리 경험을 일관되게 구성
-- Clean Architecture와 MVVM 구조를 MVI 기반 구조로 전환하고 Circuit Presenter가 상태 생성과 이벤트 처리를 담당하도록 구성
+- Clean Architecture와 MVVM 구조를 MVI 기반 구조로 전환하고 Circuit Presenter가 상태 생성과 이벤트 처리를 담당하도록 해 상태 관리와 이벤트 처리 흐름 단순화
 - 서버 API 의존 구조를 **Room 로컬 저장소 기반 offline-first 구조**로 전환해 서버 중단 이후에도 서비스 유지
 - Android 앱을 **Compose Multiplatform으로 마이그레이션해 iOS 앱까지 배포**
 - Google Play In-App Update API로 구버전 사용자의 업데이트 유도 흐름 제공
-- Room Database, Repository, ViewModel 테스트를 **GitHub Actions CI**에서 실행해 주요 로직의 회귀 여부 검증
+- Room Database, Repository, ViewModel 테스트 코드와 **GitHub Actions CI**로 주요 로직 회귀 검증 자동화
 - 태블릿·가로 모드에서 화면 크기에 맞는 계획표 레이아웃 제공
 
 ## Other Projects
@@ -131,7 +131,7 @@
 **Android 개발**
 
 - FCM 기반 주기적 알림으로 사용자의 인강 수강 독려 경험 제공
-- LiveData 기반 알림·수강 상태를 Flow 스트림으로 전환해 화면이 동일한 상태 흐름을 구독하도록 구성
+- LiveData 기반 알림·수강 상태를 Flow 스트림으로 전환해 화면이 동일한 상태 흐름을 구독하도록 해 화면 반영 흐름 일원화
 
 ## Libraries
 

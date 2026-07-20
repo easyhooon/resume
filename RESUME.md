@@ -19,7 +19,7 @@
 
 운영 중 재현하기 어려운 Android 문제를 끝까지 추적해 원인을 찾고 일회성 수정에 그치지 않는 해결책을 만들어왔습니다. BLE 의료기기·헬스 데이터·Media3·CameraX/TensorFlow Lite 기능을 제품에 적용하고, 웹뷰 제품에서는 브릿지와 프론트엔드까지 함께 개발했습니다.
 
-사이드 프로젝트로 **Android 앱 9개와 iOS 앱 1개**를 출시·운영하며 사용자가 겪는 문제를 제품 기능으로 해결해왔습니다.
+사이드 프로젝트로 **Android 앱 9개와 iOS 앱 1개**를 출시·운영하며 사용자가 겪는 문제를 제품 기능으로 해결해왔습니다.\
 개발 블로그와 팀 내 기술 공유를 통해 학습 내용을 정리하고, 실무 적용 관점의 기술 선택 과정을 공유해왔습니다.
 
 ## Work Experience
@@ -38,7 +38,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 - BLE Glucose/Blood Pressure Profile 기반 혈당계·혈압계 연동, 측정 데이터 동기화와 연동 해제까지 포함한 의료기기 데이터 수집 흐름 제공
 - Health Connect 경유 시 걸음 수가 갱신되지 않는 경우를 위해 Samsung Health Data SDK 수집 경로를 추가하고, 걸음 수·심박수·소모 칼로리를 직접 동기화
 - 웹뷰 오디오 재생 상태를 MediaSession과 동기화해 백그라운드 재생, 잠금화면·미디어 알림 컨트롤 제공
-- Play Console 내부 테스트 트랙 배포를 GitHub Actions 워크플로로 옮겨 동일한 절차로 반복 실행 가능한 테스트 배포 경로 구축
+- GitHub Actions 기반 Play Console 내부 테스트 트랙 CD 환경 구축, 반복되는 테스트 배포 작업 자동화
 
 ### 세컨드 윈드/닥터 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
 
