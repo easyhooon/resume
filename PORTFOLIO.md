@@ -107,7 +107,7 @@
 - Google Play In-App Update API로 구버전 사용자의 업데이트 유도 흐름 제공
 - **CI 도입**: Room Database·Repository·ViewModel 변경 때마다 주요 데이터·화면 로직을 반복 검증해야 했던 과정을 자동화하기 위해 테스트 코드를 GitHub Actions에서 실행하도록 구성
 - 태블릿·가로 모드에서 화면 크기에 맞는 계획표 레이아웃 제공
-- **배운 점**: iOS 확장은 전체 코드를 옮기는 작업보다 기존 Android Compose 코드의 재사용 범위를 먼저 정하는 데서 시작했음
+- **배운 점**: iOS로 확장할 때는 전체 코드를 옮기기보다 기존 Android Compose 코드에서 공통화할 범위를 먼저 정하는 것이 중요했음
 
 ## Other Projects
 
