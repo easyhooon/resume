@@ -63,8 +63,9 @@
 
 > **배운 점**
 >
-> - Circuit으로 Presenter·UI·Screen 계약을 통일해도 화면 재진입 시 분석 로그를 다시 남길지, 화면 이탈로 취소된 코루틴을 오류로 다룰지까지 프레임워크가 대신 결정해주지는 않았음. 생명주기와 이벤트의 의미를 먼저 정한 뒤 `ImpressionEffect`와 `CancellationException` 처리 방식을 선택해야 했음
-> - Hilt에서 Metro로 전환하던 중 public API에 노출된 `Preferences` 의존성을 `implementation`으로 숨겨 컴파일러가 타입을 해석하지 못하는 문제를 겪음. 최소 재현 프로젝트로 원인을 좁히며 `api`와 `implementation`은 관례가 아니라 외부에 노출되는 타입 경계를 기준으로 선택해야 함을 배움
+> - **일회성 이벤트 모델링**: 이벤트 유실을 피하려 State로 관리했지만, 소비 상태를 초기화하지 않으면 화면 복원 시 같은 스낵바가 다시 노출됐음. 자료형보다 이벤트의 유실·소비·복원 시점을 먼저 정의하는 것이 중요
+> - **화면 이탈과 코루틴 취소**: 화면 이탈로 Presenter의 작업이 취소되는 것은 실패가 아니라 생명주기에 따른 정상 종료일 수 있었음. `CancellationException`을 일반 오류와 구분하며 정상 취소와 실제 실패를 나누는 오류 처리 기준 정립
+> - **모듈 간 의존성 경계**: Hilt에서 Metro로 전환하던 중 public API에 노출된 `Preferences` 의존성을 `implementation`으로 숨겨 컴파일러가 타입을 해석하지 못하는 문제를 겪음. 최소 재현 프로젝트로 원인을 좁히며 `api`와 `implementation`의 선택 기준은 관례가 아니라 외부에 노출되는 타입 경계임을 확인
 
 ### 유니페스 : 대학 축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
 
