@@ -57,9 +57,9 @@
 - **기술 도입 리딩**: Circuit 적용 전 기대 효과와 제약, 일회성 이벤트 처리의 우려를 팀에 공유하고 Presenter·UI·Screen의 책임 규칙을 함께 합의해 구조 전환의 기준 정립
 - **타입 기반 화면 전환**: 기록·감정 데이터와 동적 복귀 경로를 안전하게 함께 전달하기 위해 Screen 기반 Circuit Navigation을 선택. 화면 인자를 타입으로 정의해 route·custom `NavType` 보일러플레이트 제거
 - **Pagination 적용**: 검색 결과 전체를 기다리는 초기 대기를 줄이기 위해 페이지 단위 요청 방식을 구현하고 첫 페이지부터 화면에 표시
-- Guest Mode 지원으로 로그인 전에도 앱을 체험할 수 있게 해 초기 진입 장벽 완화
-- Compose UI를 직접 공유할 수 없는 제약을 `GraphicsLayer` 기반 `Bitmap` 변환으로 해결해 도서 기록 카드 저장·공유 지원
-- Google Cloud Vision API 기반 OCR로 촬영한 문장을 텍스트로 변환해 기록 템플릿에 바로 입력할 수 있도록 연결하고 문장 입력 부담 완화
+- **로그인 전 탐색 지원**: 가입 전에 서비스의 기록 방식을 확인할 수 있도록 Guest Mode로 주요 기능 체험 경로 제공
+- **기록 카드 공유**: Compose UI를 이미지로 바로 공유할 수 없어 `GraphicsLayer`로 화면을 `Bitmap`으로 변환하고, 완성한 도서 기록 카드의 저장·공유 지원
+- **OCR 문장 입력**: 책 속 문장을 직접 옮겨 적는 부담을 줄이기 위해 촬영 이미지를 Google Cloud Vision API로 텍스트로 변환하고, 인식 결과를 기록 템플릿에서 바로 편집·저장할 수 있도록 연결
 
 > **배운 점**
 >
@@ -81,9 +81,9 @@
 - **지도 클러스터링**: 축제 현장에 밀집된 부스·행사 마커를 제한된 화면에서 구분하기 위해 Naver Map Compose 기반 지도에 클러스터링을 적용. 줌 레벨에 따라 마커를 묶고 펼쳐서 표시해 지도 정보 가독성 개선
 - **MVI 기반 모듈화**: 축제 기능별 상태와 이벤트를 분리해 관리하기 위해 구글 권장 아키텍처와 MVI 패턴을 선택. 화면 상태와 이벤트 처리 책임을 기능 모듈 안으로 분리
 - **Type-safe 중첩 Navigation**: 문자열 route와 argument key 불일치를 줄이기 위해 sealed route 기반 Navigation으로 전환하고, 중첩 graph에서도 data class property와 `SavedStateHandle` key를 연결해 부스 상세·위치 화면의 인자 전달 규칙 정리
-- QR 기반 부스 행사 참여 인증 방식을 적용해 현장 이벤트 참여를 앱 안에서 처리
-- Room과 DataStore로 관심 축제·부스와 사용자 설정을 유지해 앱 재실행 후에도 탐색·설정 상태 복원
-- Firebase Remote Config로 지원 앱 버전 기준을 원격에서 제어하고, API 에러 코드를 앱의 예외 처리 흐름에 연결해 버전·예외 상황 대응 강화
+- **QR 기반 현장 인증**: 부스의 QR 스캔 결과를 참여 상태에 연결해 현장 이벤트 인증을 앱 안에서 완료
+- **탐색 상태 복원**: 앱 재실행 후에도 관심 축제·부스와 사용자 설정을 유지하도록 Room과 DataStore에 데이터 성격별로 저장
+- **운영 중 버전·예외 대응**: 축제 기간에 지원 버전 기준을 새 빌드 없이 바꿀 수 있도록 Firebase Remote Config로 원격 관리하고, API 에러 코드를 상황별 안내 흐름에 연결
 - **Room Migration Test**: 스키마 변경 후에도 기존 관심 축제·부스 데이터가 유지되는지 확인하기 위해, 이전 스키마에서 현재 버전까지의 마이그레이션 테스트 구성
 
 > **배운 점**
@@ -104,7 +104,7 @@
 
 - **Orbit MVI 도입**: 이미지 선택·스타일 적용·생성·저장으로 이어지는 비동기 과정의 상태와 일회성 이벤트를 구분하기 위해 Orbit 기반 MVI를 선택. Orbit Container에서 상태와 사이드 이펙트를 분리하고 Clean Architecture 계층과 연결
 - **빌드 설정 공통화**: 모듈을 추가할 때마다 플러그인·Android·의존성 설정을 반복해야 했던 지점을 줄이기 위해 Version Catalog와 Gradle Convention Plugin을 도입. 공통 설정을 빌드 로직으로 이동해 중복 감소
-- 카메라·앨범에서 사진을 선택하고 스타일 적용부터 **AI 이미지 생성·저장·공유까지 앱 안에서 완료**할 수 있는 프로필 제작 경험 제공
+- **프로필 제작 흐름 연결**: 카메라·앨범의 사진 선택부터 스타일 적용, AI 이미지 생성, 결과 저장·공유까지 하나의 흐름으로 연결
 
 > **배운 점**
 >
@@ -124,12 +124,12 @@
 [iOS 출시기](https://velog.io/@mraz3068/Bandalart-iOS-App-Deployment-Complete) · [Koin·expect/actual 기반 네이티브 기능 전환기](https://velog.io/@mraz3068/KMP-Koin-Expect-Actual-Pattern-For-Native-Image-Handling)
 
 - **Compose Multiplatform 전환**: 기존 Android Compose 코드의 재사용 범위를 넓혀 iOS로 확장하기 위해 Compose Multiplatform을 선택. 공통 UI를 구성해 Android 앱을 유지하면서 iOS 앱까지 배포
-- 서버 API 의존 구조를 **Room 로컬 저장소 기반 offline-first 구조**로 전환해 서버 중단 이후에도 서비스 유지
-- Jetpack Compose 기반 반다라트 계획표 Custom UI와 공통 컴포넌트로 5x5 목표 관리 경험을 일관되게 구성
-- 기존 MVVM 구조를 Circuit 기반 MVI로 전환해 계획표 상태·이벤트 처리 책임을 UI에서 분리하고 상태 관리 흐름 단순화
-- Google Play In-App Update API로 구버전 사용자의 업데이트 유도 흐름 제공
+- **offline-first 전환**: 서버 운영 중단 뒤에도 사용자가 작성한 목표를 계속 조회·편집할 수 있어야 했기 때문에 서버 API 의존 구조를 Room 로컬 저장소 중심으로 바꾸고 서비스 유지
+- **모바일 계획표 UI**: 9x9 표를 작은 화면에 그대로 옮겼을 때 생기는 탐색 부담을 줄이기 위해 핵심 목표와 하위 목표를 5x5로 재구성하고, Jetpack Compose Custom UI와 공통 컴포넌트로 계획표 조작 방식 통일
+- **계획표 상태 관리**: 목표 조회·편집·완료 과정의 상태 생성과 이벤트 처리가 UI에 섞이지 않도록 기존 MVVM 구조를 Circuit 기반 MVI로 전환하고 Presenter와 UI의 책임 분리
+- **업데이트 경로 제공**: 새 버전이 배포돼도 사용자가 스토어에서 업데이트 여부를 따로 확인하지 않도록 Google Play In-App Update API로 앱 안에서 새 버전을 안내하고 업데이트하는 흐름 구성
 - **CI 도입**: Room Database·Repository·ViewModel 변경 때마다 주요 데이터·화면 로직을 반복 검증해야 했던 과정을 자동화하기 위해 테스트 코드를 GitHub Actions에서 실행하도록 구성
-- 태블릿·가로 모드에서 화면 크기에 맞는 계획표 레이아웃 제공
+- **다양한 화면 대응**: 5x5 계획표가 태블릿·가로 모드에서 휴대전화 기준 크기로 고정되지 않도록 가용 영역에 맞춰 셀과 레이아웃을 조정해 화면 크기별 조작 공간 확보
 
 > **배운 점**
 >
@@ -149,8 +149,8 @@
 
 **Android 개발** · [GitHub](https://github.com/Wedemy/eggeum-android)
 
-- 검색 결과와 Naver Map 마커 상태를 연결해 카페 목록과 지도 탐색 흐름을 일관되게 유지
-- Flow `flatMapLatest`와 검색어 디바운스로 조건이 바뀌면 이전 검색 결과를 폐기해 오래된 결과가 최신 검색 화면을 덮어쓰는 상황 방지
+- **지도·목록 상태 동기화**: 지도에서 선택한 카페와 목록에서 강조되는 항목이 달라지지 않도록 검색 결과와 Naver Map 마커가 같은 선택 상태를 사용하게 해 두 탐색 방식의 맥락 유지
+- **검색 결과 최신성**: 조건이 바뀐 뒤 늦게 도착한 이전 응답이 최신 화면을 덮어쓰지 않도록 검색어 디바운스와 Flow `flatMapLatest`로 이전 검색 작업 취소
 
 > **배운 점**
 >
@@ -167,8 +167,8 @@
 
 **Android 개발** · [GitHub](https://github.com/depromeet/sloth-android) · [트러블슈팅 기록](https://github.com/depromeet/sloth-android/wiki)
 
-- FCM 기반 주기적 알림으로 사용자의 인강 수강 독려 경험 제공
-- LiveData 기반 알림·수강 상태를 Flow 스트림으로 전환해 화면이 동일한 상태 흐름을 구독하도록 해 화면 반영 흐름 일원화
+- **수강 독려 흐름**: 사용자가 정한 인강 계획을 놓치지 않도록 FCM 기반 주기적 알림을 제공하고, 알림에서 수강 화면으로 이어지는 진입 경로 구성
+- **상태 흐름 전환**: 알림과 수강 상태를 화면마다 별도로 갱신하지 않도록 LiveData 기반 흐름을 Flow 스트림으로 전환해 각 화면이 동일한 상태를 구독하도록 구성
 
 > **배운 점**
 >
