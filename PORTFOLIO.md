@@ -100,10 +100,10 @@
 
 **Kotlin Multiplatform 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.bandalart) · [GitHub](https://github.com/Nexters/BandalArt-Android) · 다운로드 **500+**
 
-- Jetpack Compose 기반 반다라트 계획표 Custom UI와 공통 컴포넌트로 5x5 목표 관리 경험을 일관되게 구성
-- **Circuit 전환**: 계획표 화면의 상태 생성과 이벤트 처리를 UI에서 분리하기 위해 기존 MVVM 구조를 Circuit 기반 MVI로 전환. Presenter가 상태 생성과 이벤트 처리를 담당하도록 해 UI의 상태 관리 흐름 단순화
+- **Compose Multiplatform 전환**: 기존 Android Compose 코드의 재사용 범위를 넓혀 iOS로 확장하기 위해 Compose Multiplatform을 선택. 공통 UI를 구성해 Android 앱을 유지하면서 iOS 앱까지 배포
 - 서버 API 의존 구조를 **Room 로컬 저장소 기반 offline-first 구조**로 전환해 서버 중단 이후에도 서비스 유지
-- **Compose Multiplatform 전환**: 기존 Android Compose 코드와 화면 구성 경험을 재사용하면서 iOS로 확장하기 위해 Compose Multiplatform을 선택하고 iOS 앱까지 배포
+- Jetpack Compose 기반 반다라트 계획표 Custom UI와 공통 컴포넌트로 5x5 목표 관리 경험을 일관되게 구성
+- 계획표 화면의 상태 생성과 이벤트 처리를 UI에서 분리하기 위해 기존 MVVM 구조를 Circuit 기반 MVI로 전환
 - Google Play In-App Update API로 구버전 사용자의 업데이트 유도 흐름 제공
 - **CI 도입**: Room Database·Repository·ViewModel 변경 때마다 주요 데이터·화면 로직을 반복 검증해야 했던 과정을 자동화하기 위해 테스트 코드를 GitHub Actions에서 실행하도록 구성
 - 태블릿·가로 모드에서 화면 크기에 맞는 계획표 레이아웃 제공
