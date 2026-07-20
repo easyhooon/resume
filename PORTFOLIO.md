@@ -95,7 +95,7 @@
 
 기존 9x9 만다라트 계획표를 모바일 환경에 맞게 5x5 구조로 줄인 목표 관리 앱
 
-**Kotlin Multiplatform 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.bandalart.android) · [GitHub](https://github.com/Nexters/BandalArt-Android) · 다운로드 **1,000+**
+**Kotlin Multiplatform 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.bandalart) · [GitHub](https://github.com/Nexters/BandalArt-Android) · 다운로드 **500+**
 
 - Jetpack Compose 기반 반다라트 계획표 Custom UI와 공통 컴포넌트로 5x5 목표 관리 경험을 일관되게 구성
 - Clean Architecture와 MVVM 구조를 MVI 기반 구조로 전환하고 Circuit Presenter가 상태 생성과 이벤트 처리를 담당하도록 해 상태 관리와 이벤트 처리 흐름 단순화
