@@ -37,7 +37,10 @@
 - **Navigation3 도입**: 딥링크·앱 내부 화면 전환·비로그인·warm start마다 달라지는 stack 구성을 하나의 상태에서 관리하기 위해, back stack을 앱 상태로 직접 다루는 Navigation3를 선택. 진입 경로별 stack 구성과 초대 수락·오류 처리 흐름 일원화
 - **배포 자동화**: QA 배포와 Play Store 운영 배포 때마다 빌드·업로드·versionCode·알림 단계를 반복해야 했던 흐름을 줄이기 위해 Firebase App Distribution 배포 스크립트와 versionCode override를 포함한 GitHub Actions workflow를 구성하고 Discord 알림까지 연결
 
-> **배운 점**: 빌드뿐 아니라 versionCode·배포 대상·알림까지 하나의 워크플로로 묶어야 배포 절차를 한 경로로 운영할 수 있었음
+> **배운 점**
+>
+> - 배포 자동화의 가치는 빌드 명령을 줄이는 데 그치지 않고, versionCode·배포 대상·알림처럼 사람이 놓치기 쉬운 출시 규칙을 하나의 실행 경로로 고정하는 데 있었음
+> - 모든 수작업을 한꺼번에 자동화하기보다 반복 빈도와 실수 비용이 큰 단계부터 묶어야 워크플로를 유지하기도 쉬웠음
 
 ### Reed(리드) - 문장과 감정을 함께 담는 독서 기록 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2025.05 ~ 2026.04</span>
 
@@ -47,7 +50,7 @@
 
 독서 중 만난 문장과 감정을 함께 기록하고 공유하는 서비스
 
-**Android 개발** · **YAPP 26기 최우수상**
+**Android 개발** · **YAPP 26기 최우수상** · [GitHub](https://github.com/YAPP-Github/Reed-Android) · [기술 기록](https://github.com/YAPP-Github/Reed-Android#troubleshooting)
 
 - **Circuit 도입**: 여러 화면의 상태 생성과 이벤트 처리를 동일한 계약으로 관리하기 위해 Presenter와 UI의 역할을 프레임워크 수준에서 분리하는 Circuit(MVI)을 선택. Presenter는 상태 생성·이벤트 처리를, UI는 상태 소비·이벤트 전달을 담당하도록 해 화면 구조 표준화
 - **타입 기반 화면 전환**: 기록·감정 데이터와 동적 복귀 경로를 안전하게 함께 전달하기 위해 Screen 기반 Circuit Navigation을 선택. 화면 인자를 타입으로 정의해 route·custom `NavType` 보일러플레이트 제거
@@ -56,7 +59,10 @@
 - Compose UI를 직접 공유할 수 없는 제약을 `GraphicsLayer` 기반 `Bitmap` 변환으로 해결해 도서 기록 카드 저장·공유 지원
 - Google Cloud Vision API 기반 OCR로 촬영한 문장을 텍스트로 변환해 기록 템플릿에 바로 입력할 수 있도록 연결하고 문장 입력 부담 완화
 
-> **배운 점**: Presenter·UI·Screen 계약을 통일하는 과정에서 상태·이벤트·화면 전환 책임을 명시적으로 나누는 기준을 세움
+> **배운 점**
+>
+> - Circuit으로 Presenter·UI·Screen 계약을 통일해도 화면 재진입 시 분석 로그를 다시 남길지, 화면 이탈로 취소된 코루틴을 오류로 다룰지까지 프레임워크가 대신 결정해주지는 않았음. 생명주기와 이벤트의 의미를 먼저 정한 뒤 `ImpressionEffect`와 `CancellationException` 처리 방식을 선택해야 했음
+> - Hilt에서 Metro로 전환하던 중 public API에 노출된 `Preferences` 의존성을 `implementation`으로 숨겨 컴파일러가 타입을 해석하지 못하는 문제를 겪음. 최소 재현 프로젝트로 원인을 좁히며 `api`와 `implementation`은 관례가 아니라 외부에 노출되는 타입 경계를 기준으로 선택해야 함을 배움
 
 ### 유니페스 : 대학 축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
 
@@ -66,7 +72,7 @@
 
 대학 축제 통합 플랫폼으로 지도 기반 행사 정보, 부스 웨이팅, QR 인증 이벤트, 알림 기능을 제공하는 서비스
 
-**Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.unifest.android)
+**Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.unifest.android) · [GitHub](https://github.com/Project-Unifest/unifest-android) · [기술 기록](https://github.com/Project-Unifest/unifest-android#article)
 
 고려대·가천대·상명대·한국교통대 축제 공식 앱 선정, Play Store 다운로드 **2,000+**, 축제 운영 기간 Android/iOS 통합 최고 **WAU 5,000+**
 
@@ -77,7 +83,11 @@
 - Firebase Remote Config로 지원 앱 버전 기준을 원격에서 제어하고, API 에러 코드를 앱의 예외 처리 흐름에 연결해 버전·예외 상황 대응 강화
 - **Room Migration Test**: 스키마 변경 후에도 기존 관심 축제·부스 데이터가 유지되는지 확인하기 위해, 이전 스키마에서 현재 버전까지의 마이그레이션 테스트 구성
 
-> **배운 점**: 신규 기능을 배포할 때는 기능 동작뿐 아니라 기존 사용자 데이터의 마이그레이션까지 함께 검증해야 함
+> **배운 점**
+>
+> - 신규 기능을 배포할 때는 변경된 코드의 동작뿐 아니라 이전 버전에서 쌓인 사용자 데이터가 새 스키마에서도 유지되는지 함께 검증해야 했음
+> - 로그인 없이 SSAID로 사용자를 식별해 진입 장벽을 낮췄지만, 동일 기기에서도 앱 서명 키가 달라지면 값이 바뀌어 개발 머신별 QA 데이터가 분리되는 문제를 겪음. 플랫폼 식별자는 반환값만 믿지 않고 빌드 변형·서명·재설치 조건까지 확인해야 함을 배움
+> - `derivedStateOf`를 막연히 재구성 최적화 도구로 사용했다가 일반 변수가 Snapshot 추적 대상이 아니어서 웨이팅 버튼이 갱신되지 않는 문제를 만남. 최적화 API를 적용하기 전에 어떤 상태가 어디서 관찰되고 언제 다시 계산되는지 먼저 확인하게 됨
 
 ### I'Lab - 나만의 AI 프로필 연구소 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.01 ~ 2024.04</span>
 
@@ -93,6 +103,11 @@
 - **빌드 설정 공통화**: 모듈을 추가할 때마다 플러그인·Android·의존성 설정을 반복해야 했던 지점을 줄이기 위해 Version Catalog와 Gradle Convention Plugin을 도입. 공통 설정을 빌드 로직으로 이동해 중복 감소
 - 카메라·앨범에서 사진을 선택하고 스타일 적용부터 **AI 이미지 생성·저장·공유까지 앱 안에서 완료**할 수 있는 프로필 제작 경험 제공
 
+> **배운 점**
+>
+> - 당시 주목받던 Orbit으로 MVI를 구현하며 상태와 일회성 이벤트를 구분하는 기준을 익혔지만, MVI의 핵심은 특정 프레임워크보다 팀이 합의한 상태·이벤트 처리 규칙을 일관되게 지키는 데 있음을 깨달음. 컨벤션이 명확하다면 전용 MVI 프레임워크는 필수가 아니며, 라이브러리의 편의와 프로젝트 규모·팀 숙련도·추가 의존성을 함께 비교해야 함
+> - ComposeInvestigator가 ProGuard를 적용한 Release 빌드에서 문제를 일으켜 비활성화한 경험을 통해, 개발 중 유용한 분석 도구도 실제 배포 경로와 난독화 환경까지 확인한 뒤 도입해야 함을 배움
+
 ### 반다라트 - 부담 없는 만다라트 계획표 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~</span>
 
 <p align="center">
@@ -101,7 +116,9 @@
 
 기존 9x9 만다라트 계획표를 모바일 환경에 맞게 5x5 구조로 줄인 목표 관리 앱
 
-**Kotlin Multiplatform 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.bandalart) · [GitHub](https://github.com/Nexters/BandalArt-Android) · 다운로드 **500+**
+**Kotlin Multiplatform 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.nexters.bandalart) · [App Store](https://apps.apple.com/kr/app/%EB%B0%98%EB%8B%A4%EB%9D%BC%ED%8A%B8-%EB%B6%80%EB%8B%B4-%EC%97%86%EB%8A%94-%EB%A7%8C%EB%8B%A4%EB%9D%BC%ED%8A%B8-%EA%B3%84%ED%9A%8D%ED%91%9C/id6743101965) · [GitHub](https://github.com/Nexters/BandalArt-KMP) · 다운로드 **500+**
+
+[iOS 출시기](https://velog.io/@mraz3068/Bandalart-iOS-App-Deployment-Complete) · [Koin·expect/actual 기반 네이티브 기능 전환기](https://velog.io/@mraz3068/KMP-Koin-Expect-Actual-Pattern-For-Native-Image-Handling)
 
 - **Compose Multiplatform 전환**: 기존 Android Compose 코드의 재사용 범위를 넓혀 iOS로 확장하기 위해 Compose Multiplatform을 선택. 공통 UI를 구성해 Android 앱을 유지하면서 iOS 앱까지 배포
 - 서버 API 의존 구조를 **Room 로컬 저장소 기반 offline-first 구조**로 전환해 서버 중단 이후에도 서비스 유지
@@ -111,7 +128,11 @@
 - **CI 도입**: Room Database·Repository·ViewModel 변경 때마다 주요 데이터·화면 로직을 반복 검증해야 했던 과정을 자동화하기 위해 테스트 코드를 GitHub Actions에서 실행하도록 구성
 - 태블릿·가로 모드에서 화면 크기에 맞는 계획표 레이아웃 제공
 
-> **배운 점**: iOS로 확장할 때는 전체 코드를 옮기기보다 기존 Android Compose 코드에서 공통화할 범위를 먼저 정하는 것이 중요했음
+> **배운 점**
+>
+> - KMP 전환은 Android 코드를 `commonMain`으로 최대한 옮기는 작업이 아니라, 공통으로 유지할 책임과 플랫폼에 남길 책임의 경계를 정하는 작업이었음. 이미지 저장·공유처럼 플랫폼 API가 필요한 기능은 `expect/actual`과 플랫폼별 Koin 모듈로 분리해 공통 코드가 Android `Context`나 iOS 타입을 직접 알지 않도록 구성함
+> - iOS `actual` 구현에서는 Kotlin/Native로 UIKit·Foundation·CoreGraphics를 직접 다루고 `ImageBitmap`을 `UIImage`로 변환해야 했음. 픽셀 배치·색 공간·알파 채널·바이트 순서가 다르면 색상이 변하는 문제를 겪으며, KMP가 플랫폼 코드를 줄여주더라도 네이티브 동작에 대한 이해까지 대신해주지는 않음을 배움
+> - Circuit과 Koin이 함께 동작하지 않는다고 이슈와 문서 검색만으로 판단해 다른 구조로 우회했지만, 이후 실제 연동 방법이 있음을 확인함. 레퍼런스가 적다는 이유만으로 호환 여부를 단정하지 않고 최소 구현으로 직접 검증한 뒤 기술을 선택해야 함을 배움
 
 ## Other Projects
 
@@ -123,12 +144,15 @@
 
 카페에서 공부하는 사용자를 위한 맞춤 카페 탐색 앱
 
-**Android 개발**
+**Android 개발** · [GitHub](https://github.com/Wedemy/eggeum-android)
 
 - 검색 결과와 Naver Map 마커 상태를 연결해 카페 목록과 지도 탐색 흐름을 일관되게 유지
 - Flow `flatMapLatest`와 검색어 디바운스로 조건이 바뀌면 이전 검색 결과를 폐기해 오래된 결과가 최신 검색 화면을 덮어쓰는 상황 방지
 
-> **배운 점**: Compose에 치우치지 않도록 XML 기반으로 제작하며 기존 View 시스템을 다시 익힘
+> **배운 점**
+>
+> - Compose 중심 개발 중에도 기존 View/XML 구현 감각을 잃지 않기 위해 의도적으로 XML 기반으로 제작함. 최신 기술만 반복해 쓰기보다 기존 코드베이스를 유지보수할 수 있도록 기술 범위를 유지하는 것도 필요하다고 판단함
+> - 검색 조건이 바뀐 뒤 늦게 도착한 이전 응답이 최신 화면을 덮어쓸 수 있어 `flatMapLatest`로 이전 작업을 취소함. 비동기 검색은 요청의 성공 여부뿐 아니라 어떤 결과가 현재 사용자 입력에 유효한지도 관리해야 함을 배움
 
 ### 나나공 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2021.09 ~ 2023.04</span>
 
@@ -138,12 +162,15 @@
 
 인강 수강 독려 서비스 앱
 
-**Android 개발**
+**Android 개발** · [GitHub](https://github.com/depromeet/sloth-android) · [트러블슈팅 기록](https://github.com/depromeet/sloth-android/wiki)
 
 - FCM 기반 주기적 알림으로 사용자의 인강 수강 독려 경험 제공
 - LiveData 기반 알림·수강 상태를 Flow 스트림으로 전환해 화면이 동일한 상태 흐름을 구독하도록 해 화면 반영 흐름 일원화
 
-> **배운 점**: 1년 3개월 동안 서비스를 운영·리팩토링하며 Jetpack Navigation, StateFlow, DataStore 등으로 단계적으로 전환하는 과정에서 Android 개발 방식의 변화를 직접 경험함
+> **배운 점**
+>
+> - 1년 3개월 동안 서비스를 운영·리팩토링하며 수동 Fragment 전환을 Jetpack Navigation으로, LiveData를 StateFlow로, SharedPreferences를 DataStore로 단계적으로 바꾸는 과정에서 Android 개발 방식의 변화를 직접 경험함
+> - 처음부터 최신 구조로 다시 만드는 것보다 기존 수강·알림 흐름을 유지한 채 화면과 상태 관리 책임을 조금씩 옮기는 일이 더 어려웠음. 운영 중인 제품의 리팩토링은 새 기술 도입보다 기존 동작을 깨뜨리지 않는 전환 순서가 중요함을 배움
 
 ## Libraries
 
