@@ -118,7 +118,7 @@
 ### 이끔 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~ 2024.04</span>
 
 <p align="center">
-  <img src="./assets/portfolio/eggeum-image.png" alt="이끔 프로젝트 대표 이미지" width="70%">
+  <img src="./assets/portfolio/eggeum-image.png" alt="이끔 프로젝트 대표 이미지" width="60%">
 </p>
 
 카페에서 공부하는 사용자를 위한 맞춤 카페 탐색 앱
@@ -128,10 +128,12 @@
 - 검색 결과와 Naver Map 마커 상태를 연결해 카페 목록과 지도 탐색 흐름을 일관되게 유지
 - Flow `flatMapLatest`와 검색어 디바운스로 조건이 바뀌면 이전 검색 결과를 폐기해 오래된 결과가 최신 검색 화면을 덮어쓰는 상황 방지
 
+> **배운 점**: Compose에 치우치지 않도록 XML 기반으로 제작하며 기존 View 시스템을 다시 익힘
+
 ### 나나공 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2021.09 ~ 2023.04</span>
 
 <p align="center">
-  <img src="./assets/portfolio/nanagong-image.png" alt="나나공 프로젝트 대표 이미지" width="70%">
+  <img src="./assets/portfolio/nanagong-image.png" alt="나나공 프로젝트 대표 이미지" width="60%">
 </p>
 
 인강 수강 독려 서비스 앱
