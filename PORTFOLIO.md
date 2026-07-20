@@ -36,7 +36,8 @@
 - **Metro 전환**: 기존 Hilt의 graph·scope·qualifier 기반 의존 구조를 유지하면서 KSP/KAPT 코드 생성 경로를 제거하기 위해, Kotlin compiler plugin의 FIR/IR에서 직접 코드를 생성하는 Metro를 선택하고 DI 설정 재정의
 - **Navigation3 도입**: 딥링크·앱 내부 화면 전환·비로그인·warm start마다 달라지는 stack 구성을 하나의 상태에서 관리하기 위해, back stack을 앱 상태로 직접 다루는 Navigation3를 선택. 진입 경로별 stack 구성과 초대 수락·오류 처리 흐름 일원화
 - **배포 자동화**: QA 배포와 Play Store 운영 배포 때마다 빌드·업로드·versionCode·알림 단계를 반복해야 했던 흐름을 줄이기 위해 Firebase App Distribution 배포 스크립트와 versionCode override를 포함한 GitHub Actions workflow를 구성하고 Discord 알림까지 연결
-- **배운 점**: 빌드뿐 아니라 versionCode·배포 대상·알림까지 하나의 워크플로로 묶어야 배포 절차를 한 경로로 운영할 수 있었음
+
+> **배운 점**: 빌드뿐 아니라 versionCode·배포 대상·알림까지 하나의 워크플로로 묶어야 배포 절차를 한 경로로 운영할 수 있었음
 
 ### Reed(리드) - 문장과 감정을 함께 담는 독서 기록 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2025.05 ~ 2026.04</span>
 
@@ -54,7 +55,8 @@
 - Guest Mode 지원으로 로그인 전에도 앱을 체험할 수 있게 해 초기 진입 장벽 완화
 - Compose UI를 직접 공유할 수 없는 제약을 `GraphicsLayer` 기반 `Bitmap` 변환으로 해결해 도서 기록 카드 저장·공유 지원
 - Google Cloud Vision API 기반 OCR로 촬영한 문장을 텍스트로 변환해 기록 템플릿에 바로 입력할 수 있도록 연결하고 문장 입력 부담 완화
-- **배운 점**: Presenter·UI·Screen 계약을 통일하는 과정에서 상태·이벤트·화면 전환 책임을 명시적으로 나누는 기준을 세움
+
+> **배운 점**: Presenter·UI·Screen 계약을 통일하는 과정에서 상태·이벤트·화면 전환 책임을 명시적으로 나누는 기준을 세움
 
 ### 유니페스 : 대학 축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
 
@@ -74,7 +76,8 @@
 - Room과 DataStore로 관심 축제·부스와 사용자 설정을 유지해 앱 재실행 후에도 탐색·설정 상태 복원
 - Firebase Remote Config로 지원 앱 버전 기준을 원격에서 제어하고, API 에러 코드를 앱의 예외 처리 흐름에 연결해 버전·예외 상황 대응 강화
 - **Room Migration Test**: 스키마 변경 후에도 기존 관심 축제·부스 데이터가 유지되는지 확인하기 위해, 이전 스키마에서 현재 버전까지의 마이그레이션 테스트 구성
-- **배운 점**: 신규 기능을 배포할 때는 기능 동작뿐 아니라 기존 사용자 데이터의 마이그레이션까지 함께 검증해야 함
+
+> **배운 점**: 신규 기능을 배포할 때는 기능 동작뿐 아니라 기존 사용자 데이터의 마이그레이션까지 함께 검증해야 함
 
 ### I'Lab - 나만의 AI 프로필 연구소 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.01 ~ 2024.04</span>
 
@@ -107,7 +110,8 @@
 - Google Play In-App Update API로 구버전 사용자의 업데이트 유도 흐름 제공
 - **CI 도입**: Room Database·Repository·ViewModel 변경 때마다 주요 데이터·화면 로직을 반복 검증해야 했던 과정을 자동화하기 위해 테스트 코드를 GitHub Actions에서 실행하도록 구성
 - 태블릿·가로 모드에서 화면 크기에 맞는 계획표 레이아웃 제공
-- **배운 점**: iOS로 확장할 때는 전체 코드를 옮기기보다 기존 Android Compose 코드에서 공통화할 범위를 먼저 정하는 것이 중요했음
+
+> **배운 점**: iOS로 확장할 때는 전체 코드를 옮기기보다 기존 Android Compose 코드에서 공통화할 범위를 먼저 정하는 것이 중요했음
 
 ## Other Projects
 
