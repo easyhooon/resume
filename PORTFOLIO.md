@@ -336,7 +336,7 @@ Hi-me를 개발·운영하며 해결한 주요 문제를 원인 분석과 해결
 Reed 프로젝트 Android 파트 리드로 구조 설계·기술 스택 검토·코드 리뷰 담당
 
 **한국관광공사 X 카카오 2024 관광데이터 활용 공모전** <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.11</span><br>
-트립메이트 앱 개발 및 출시, **장려상 및 강원관광재단 특별상 수상**
+[트립메이트 Android 앱](https://github.com/TeamTripmate/tripmate-android) 개발 및 출시, **장려상 및 강원관광재단 특별상 수상**
 
 ## Certificates
 
