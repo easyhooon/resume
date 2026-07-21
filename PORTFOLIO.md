@@ -122,11 +122,23 @@
 
 [기술 블로그](https://velog.io/@mraz3068/derivedStateOf-Misconceptions)
 
+#### 동적 이미지와 겹치는 시스템 아이콘 가독성 개선
+
+<span style="font-size: 0.9em;">유니페스 · Android · Edge-to-edge · Bitmap · Luminance</span>
+
+- **문제**: 부스 상세 이미지가 StatusBar와 TopAppBar 영역까지 채워지면서, 이미지 밝기에 따라 상태 표시줄과 뒤로가기 아이콘이 배경에 묻혀 보이지 않음
+- **원인 분석**: 실제 배경은 매번 달라지는 네트워크 이미지인데 아이콘 색상은 라이트·다크 테마만 기준으로 결정하고 있었음. 이미지 휘도를 계산하는 초기 구현도 화면에 사용하지 않는 영역을 포함해 모든 픽셀을 순회
+- **해결**: Coil로 불러온 `Bitmap`의 RGB 값에 BT.709 가중치를 적용해 휘도를 계산. 아이콘과 겹치는 이미지 상단 30%에서 가로 약 50개·세로 약 20개 지점을 샘플링하고, CPU 연산은 `Dispatchers.Default`에서 처리해 밝기에 따라 대조되는 아이콘 색상 적용
+- **결과**: 라이트·다크 테마와 별개로 동적 이미지의 밝기에 맞춰 아이콘 가독성을 개선하고, 이미지 전체 픽셀을 순회하던 계산 범위 축소
+
+[기술 블로그](https://velog.io/@mraz3068/How-To-Know-Image-Luminance)
+
 > **배운 점**
 >
 > - 신규 기능을 배포하며 변경된 코드의 동작뿐 아니라 이전 버전에서 쌓인 사용자 데이터가 새 스키마에서도 유지되는지 함께 검증하는 것을 배포 원칙으로 삼음
 > - 로그인 없이 SSAID로 사용자를 식별해 진입 장벽을 낮췄지만, 동일 기기에서도 앱 서명 키가 달라지면 값이 바뀌어 개발 머신별 QA 데이터가 분리되는 문제를 겪음. 플랫폼 식별자는 반환값만 믿지 않고 빌드 변형·서명·재설치 조건까지 확인해야 함을 배움
 > - `derivedStateOf`를 막연히 재구성 최적화 도구로 사용했다가 일반 변수가 Snapshot 추적 대상이 아니어서 웨이팅 버튼이 갱신되지 않는 문제를 만남. 최적화 API를 적용하기 전에 어떤 상태가 어디서 관찰되고 언제 다시 계산되는지 먼저 확인하게 됨
+> - **콘텐츠 기반 UI 판단**: 테마 같은 간접 상태만 사용하지 않고 실제 배경 이미지의 밝기를 아이콘 색상 결정에 반영. 비용이 큰 연산은 문제와 직접 관련된 상단 영역과 대표 표본으로 제한하며, 최적화 전에 필요한 입력 범위와 정밀도를 먼저 정의하게 됨
 
 ### I'Lab - 나만의 AI 프로필 연구소 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.01 ~ 2024.04</span>
 
@@ -167,6 +179,17 @@
 - **CI 도입**: Room Database·Repository·ViewModel 변경 때마다 주요 데이터·화면 로직을 반복 검증해야 했던 과정을 자동화하기 위해 테스트 코드를 GitHub Actions에서 실행하도록 구성
 - **다양한 화면 대응**: 5x5 계획표가 태블릿·가로 모드에서 휴대전화 기준 크기로 고정되지 않도록 가용 영역에 맞춰 셀과 레이아웃을 조정해 화면 크기별 조작 공간 확보
 
+#### KMP 이미지 저장·공유의 플랫폼 경계와 iOS 색상 왜곡 해결
+
+<span style="font-size: 0.9em;">반다라트 · Kotlin Multiplatform · Koin · expect/actual · CoreGraphics</span>
+
+- **문제**: Android `Context`·`MediaStore`·`FileProvider`에 의존하던 이미지 저장·공유 코드를 `commonMain`에서 사용할 수 없었고, iOS에서 `ImageBitmap`을 `UIImage`로 변환한 초기 구현은 이미지 색상이 바래짐
+- **원인 분석**: Android와 iOS는 네이티브 API와 URI 타입이 다르며, `ImageBitmap`과 `UIImage`도 픽셀·색 공간 처리 방식이 달라 하나의 구현을 그대로 공유할 수 없었음
+- **해결**: 공통 코드에는 `ImageHandlerProvider` 계약을 두고 Koin의 플랫폼별 모듈에서 `actual` 구현을 제공. Android는 `Application`을 주입해 `MediaStore`·`FileProvider`를 사용하고, iOS는 sRGB 색 공간과 알파·바이트 순서를 지정한 CoreGraphics 컨텍스트에서 `UIImage`로 변환
+- **결과**: 공통 UI가 동일한 계약으로 Android·iOS의 이미지 저장과 공유를 호출하도록 구성하고, iOS 변환 과정의 색상 왜곡 해결
+
+[기술 블로그](https://velog.io/@mraz3068/KMP-Koin-Expect-Actual-Pattern-For-Native-Image-Handling) · [iOS 출시기](https://velog.io/@mraz3068/Bandalart-iOS-App-Deployment-Complete)
+
 > **배운 점**
 >
 > - 이미지 저장·공유처럼 플랫폼 API가 필요한 기능은 `expect/actual`과 플랫폼별 Koin 모듈로 분리해 공통 코드가 Android `Context`나 iOS 타입을 직접 알지 않도록 구성함. 이 과정에서 KMP 전환은 Android 코드를 `commonMain`으로 최대한 옮기는 작업이 아니라, 공통으로 유지할 책임과 플랫폼에 남길 책임의 경계를 먼저 정하는 것을 전환 기준으로 삼음
@@ -183,15 +206,27 @@
 
 카페에서 공부하는 사용자를 위한 맞춤 카페 탐색 앱
 
-**Android 개발** · [GitHub](https://github.com/Wedemy/eggeum-android)
+**Android 개발** · [GitHub](https://github.com/Wedemy/eggeum-android) · [기술 기록](https://velog.io/@mraz3068/How-To-Solve-Circular-Dependency-Between-Feature-Modules)
 
 - **지도·목록 상태 동기화**: 지도에서 선택한 카페와 목록에서 강조되는 항목이 달라지지 않도록 검색 결과와 Naver Map 마커가 같은 선택 상태를 사용하게 해 두 탐색 방식의 맥락 유지
 - **검색 결과 최신성**: 조건이 바뀐 뒤 늦게 도착한 이전 응답이 최신 화면을 덮어쓰지 않도록 검색어 디바운스와 Flow `flatMapLatest`로 이전 검색 작업 취소
+
+#### Feature 모듈 간 화면 전환의 순환 의존성 해결
+
+<span style="font-size: 0.9em;">이끔 · Android · Multi-module · Hilt · Navigator</span>
+
+- **문제**: Login 모듈이 로그인 후 Main·Onboarding 화면을 참조하는 상태에서, Main 모듈의 로그아웃 기능이 Login 화면을 다시 참조해 `Login ↔ Main` 순환 의존성이 발생하고 모듈 관계를 구성할 수 없었음
+- **원인 분석**: Activity 기반 화면 전환을 위해 각 Feature 모듈이 이동할 화면의 구현 모듈을 직접 참조하고 있었음. Setting 모듈을 추가로 분리해도 화면 전환의 의존 방향이 그대로여서 순환 구조가 해소되지 않음을 확인
+- **해결**: 화면 전환 인터페이스를 별도 Navigator 모듈로 분리하고 모든 Feature 모듈이 구현 대신 계약만 의존하도록 변경. 목적지 Feature 모듈에서 Navigator 구현체를 만들고 Hilt로 바인딩해 호출 모듈에 주입
+- **결과**: Feature 모듈 간 직접 참조를 제거해 빌드 순환 의존성을 해소하고, 로그인·온보딩·메인 화면 전환을 공통 계약으로 통일
+
+[기술 블로그](https://velog.io/@mraz3068/How-To-Solve-Circular-Dependency-Between-Feature-Modules)
 
 > **배운 점**
 >
 > - Compose 중심 개발 중에도 기존 View/XML 구현 감각을 잃지 않기 위해 의도적으로 XML 기반으로 제작함. 최신 기술만 반복해 쓰기보다 기존 코드베이스를 유지보수할 수 있도록 기술 범위를 유지하는 것도 필요하다고 판단함
 > - 검색 조건이 바뀐 뒤 늦게 도착한 이전 응답이 최신 화면을 덮어쓸 수 있어 `flatMapLatest`로 이전 작업을 취소함. 비동기 검색은 요청의 성공 여부뿐 아니라 어떤 결과가 현재 사용자 입력에 유효한지도 관리해야 함을 배움
+> - **모듈 간 화면 전환 경계**: Feature 모듈을 더 잘게 나누는 것만으로는 화면 전환의 순환 의존성이 사라지지 않았음. 화면 구현 참조를 Navigator 계약으로 분리하며, 모듈화에서는 파일의 위치보다 의존 방향과 변경 전파 범위를 먼저 설계해야 함을 배움
 
 ### 나나공 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2021.09 ~ 2023.04</span>
 
