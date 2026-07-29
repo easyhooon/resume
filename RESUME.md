@@ -53,7 +53,8 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 사용자 맞춤 명상 경험을 지원하는 웰니스 서비스 · [Google Play](https://play.google.com/store/apps/details?id=com.mediplussolution.android.breeseed) 다운로드 **500+**
 
 - Google Play 인앱 결제 연동, 일회성 결제 플로우를 구현해 유료 콘텐츠 구매 경로 추가
-- 명상 음악 플레이어의 Activity-Service 통신을 Broadcast Receiver에서 Flow 기반 스트림으로 전환해 재생 상태의 생산·소비 경로 통합
+- XML 기반 명상 플레이어 UI를 Jetpack Compose로 전환하고, Activity-Service 통신을 Broadcast Receiver에서 Flow 기반 스트림으로 재구성해 UI와 재생 상태의 생산·소비 경로 통합
+- 레거시 MediaPlayer를 Media3로 전환하고, 인증 토큰 만료 시 플레이어 객체를 재생성하던 복구 방식을 인증 헤더 갱신·재시도 구조로 개선해 재생 중단 가능성을 낮추고 명상 콘텐츠 재생 안정성 향상
 - KISA 보안취약점 점검에서 지적된 앱 위변조·루팅·백그라운드 오버레이 항목에 Play Integrity API와 런타임 탐지 로직을 적용해 보안 대응 강화
 - 전역 싱글톤으로 관리하던 플레이어·결제 객체를 Hilt 기반 의존성 주입 구조로 전환해 생성·스코프 관리 책임을 분리하고 컴포넌트 간 결합도를 낮춤
 
