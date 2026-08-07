@@ -44,6 +44,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 만성질환자와 암 수술 환자를 위한 맞춤 건강관리·재활 서비스 · [세컨드 윈드](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.secondwindforpatentkr)와 유방암·전립선암·대장암·위암 대상 [세컨드 닥터](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.breastcancer) 4종으로 현재 총 5종 운영 · 전체 출시 앱 Google Play 누적 다운로드 합산 **13,000+**
 
+- 전역 세마포어 기반 네트워크 직렬 병목을 제거하고 Health Connect 데이터 처리를 유형별 병렬화해, 로그인 후 첫 대시보드 데이터 준비 시간을 **2.835초 → 1.116초(60.6% 단축)**, 최초 동기화 완료 시간을 **6.546초 → 4.740초(27.6% 단축)**로 개선
 - ExoPlayer2 기반 운동 영상 플레이어를 Media3로 마이그레이션하고 긴 영상을 구간 단위로 내려받아, 전체 파일 다운로드 완료 전에도 내려받은 첫 구간부터 영상을 재생할 수 있도록 변경해 재생 시작 대기 완화
 - TensorFlow Lite + CameraX 기반 어깨 움직임 측정 기능 개발, 팔벌림 각도 정확도 **오차범위 ±5도 이내**로 개선
 - Android OS 정책 변경에 맞춘 BLE 연동 SDK 수정과 AAR 재배포, 웨어러블 기기 연동 중단 이슈 해결
