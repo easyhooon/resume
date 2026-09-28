@@ -246,6 +246,22 @@
 > - 1년 3개월 동안 서비스를 운영·리팩토링하며 수동 Fragment 전환을 Jetpack Navigation으로, LiveData를 StateFlow로, SharedPreferences를 DataStore로 단계적으로 바꾸는 과정에서 Android 개발 방식의 변화를 직접 경험함
 > - 기존 수강·알림 흐름을 유지한 채 화면과 상태 관리 책임을 단계적으로 옮기며, 운영 중인 제품의 리팩토링은 새 기술 도입보다 기존 동작을 깨뜨리지 않는 전환 순서가 중요함을 배움
 
+## Open Source Project
+
+### windowinsets.info - Android 기기별 안전 영역 측정·시각화 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2026.09 ~</span>
+
+<p align="center">
+  <img src="./assets/portfolio/windowinsets-thumbnail.jpg" alt="windowinsets.info에서 Galaxy Z Fold8의 안전 영역과 측정값을 보여주는 화면" width="70%">
+</p>
+
+Android 기기별 시스템 바·디스플레이 컷아웃·둥근 모서리·폴더블 화면의 안전 영역을 측정하고 시각화하는 오픈소스 도구
+
+**Android 측정 앱·데이터 검증·웹 시각화 개발** · [서비스](https://windowinsets.info) · [GitHub](https://github.com/easyhooon/windowinsets.info) · [개발 기록](https://velog.io/@mraz3068/windowinsets-rtl-automation)
+
+- **InsetsProbe 개발**: `WindowInsets`, `DisplayCutout`, `RoundedCorner`, `FoldingFeature`를 Android 앱에서 읽어 화면·회전 방향·내비게이션 방식·OS 버전과 함께 JSON으로 기록. 창 크기와 실제 화면이 맞지 않거나 회전이 적용되지 않은 캡처는 제외해 잘못된 측정값의 게시 방지
+- **측정 과정 자동화**: Samsung Remote Test Lab에서 결과 파일을 수동으로 내려받던 병목을 줄이기 위해, Probe → 업로드 API → GitHub PR로 원본 JSON을 모으는 흐름 구축. Fold8·Flip8 실기기 측정값이 PR에 도착하는 것까지 확인
+- **출처가 보이는 데이터 제공**: 실기기·원격 실기기·에뮬레이터 측정값을 구분하고, 확인되지 않은 값은 추정하지 않고 미측정으로 표시. Galaxy와 Pixel의 화면별 안전 영역을 기기 그림과 수치로 함께 확인할 수 있도록 구성
+
 ## Libraries
 
 ### Dari - WebView Bridge Inspector
