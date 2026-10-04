@@ -89,10 +89,11 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 - Jetpack Compose 기반 Custom UI와 공통 컴포넌트 정의, 화면 구성 일관성 확보와 Google Play In-App Update 기반 업데이트 유도 흐름 제공
 - Room Database, Repository, ViewModel 테스트 코드와 GitHub Actions CI 도입, 데이터 변경과 화면 로직 회귀 검증 자동화
 
-## Libraries
+## Open Source
 
-- [Dari](https://github.com/easyhooon/dari): 실무 WebView 연동 디버깅 문제에서 출발해 만든 Android 라이브러리. 특정 WebView 브릿지 구현체에 묶이지 않도록 설계했으며, JavaScript bridge 메시지의 요청·응답·상태를 실시간으로 확인해 프론트엔드 개발자도 호출 흐름과 실패 지점을 함께 추적할 수 있도록 지원. debug/release 분리를 위한 no-op 모듈 제공.
-- [RoutePeek](https://github.com/easyhooon/routepeek): WebView의 현재 route와 SPA route 변경을 Compose overlay로 확인하는 Android 디버깅 라이브러리. 웹뷰 화면의 현재 경로를 앱 안에서 바로 확인해 라우팅 이슈를 재현하고 공유하기 쉽게 지원.
+- [windowinsets.info](https://windowinsets.info/): Android 기기별 WindowInsets·DisplayCutout 측정·시각화 도구. [Android Weekly #747](https://androidweekly.net/issues/issue-747) Libraries & Code 소개 (2026.10.04).
+- [Dari](https://github.com/easyhooon/dari): 실무 WebView 연동 디버깅 문제에서 개발한 Android 라이브러리. 브릿지 구현체와 독립적으로 JavaScript 메시지의 요청·응답·상태를 실시간 확인해 프론트엔드 개발자와 호출 흐름·실패 지점을 함께 추적. debug/release 분리용 no-op 모듈 제공.
+- [RoutePeek](https://github.com/easyhooon/routepeek): WebView의 현재 route와 SPA route 변경을 Compose overlay로 확인하는 Android 디버깅 라이브러리. 앱 안에서 경로를 확인해 라우팅 이슈 재현·공유 지원.
 
 ## Other Experience
 
