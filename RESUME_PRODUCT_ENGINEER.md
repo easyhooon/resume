@@ -67,6 +67,18 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 - Health Connect로 걸음 수·소모 칼로리·심박수·수면시간 수집 경로 통합
 - 사진 업로드용 파일을 갤러리 저장에서 임시 파일 생성·업로드 후 제거로 변경해 사용자 기기에 불필요한 미디어 파일이 남는 문제 해결
 
+## Frontend Project
+
+### WindowInsets.Info - Android 기기별 화면 영역 측정·시각화 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2026.09 ~</span>
+
+**Android 측정 앱·데이터 검증·웹 시각화 개발** · [서비스](https://windowinsets.info) · [GitHub](https://github.com/easyhooon/windowinsets.info) · [개발 기록](https://velog.io/@mraz3068/windowinsets-rtl-automation)
+
+- **웹 시각화·출처 표시**: Galaxy·Pixel의 화면 영역을 디바이스 프리뷰와 수치로 제공. 실기기·RTL·Emulator 출처를 구분하고 잘못된 캡처는 제외, 미확인 값은 미측정으로 표시
+- **초기 전송량 개선**: 전체 기기 데이터의 클라이언트 번들 포함을 제거하고 Three.js·코드 블록을 지연 로딩해 Galaxy S25 Ultra 페이지의 초기 JS를 **351.0 kB → 143.3 kB(약 59% 감소)** — prerender HTML 참조 JS의 gzip 합계 비교
+- **진입 전 로딩**: 폴더블 링크의 hover·focus·touch에서 3D 청크를 prefetch하고 지연 로딩과 같은 요청을 공유. production 빌드에서 클릭 전 도착·마운트 시 재요청 없음 확인, 일반 기기·Save-Data 연결은 제외
+- **수집 자동화**: RTL 수동 다운로드를 Probe → 업로드 API → GitHub PR로 전환하고 Fold8·Flip8 원본 JSON 도착까지 확인
+- **외부 소개**: [Android Weekly #747](https://androidweekly.net/issues/issue-747) Libraries & Code 섹션에 Android Window Insets & Safe Areas로 소개 (2026.10.04)
+
 ## Team Projects
 
 ### 유니페스 : 대학축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
@@ -84,12 +96,6 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 - 작은 화면의 탐색 부담을 줄이기 위해 9x9 계획표를 5x5로 재구성하고 Compose Custom UI로 조작 방식 통일
 - 서버 중단 후에도 목표 조회·편집을 유지하도록 Room 로컬 저장 중심으로 전환. 기존 Android 코드를 Compose Multiplatform으로 확장해 iOS 앱까지 배포
 - 상태 생성·이벤트 처리를 Circuit Presenter로 분리하고 Room·Repository·ViewModel 테스트를 GitHub Actions에서 실행해 회귀 검증 자동화
-
-## Open Source
-
-- [windowinsets.info](https://windowinsets.info/): Android 측정 앱·데이터 검증·웹 시각화 개발. Probe → 업로드 API → GitHub PR로 측정값 수집을 자동화하고 잘못된 캡처는 제외, 미확인 값은 미측정으로 표시. [Android Weekly #747](https://androidweekly.net/issues/issue-747) 소개 (2026.10.04).
-- [Dari](https://github.com/easyhooon/dari): 실무 디버깅 불편에서 출발한 WebView 브릿지 검사 도구. Release에서는 동일 API의 no-op 모듈로 교체해 로그 노출 방지
-- [RoutePeek](https://github.com/easyhooon/routepeek): WebView·SPA의 현재 경로를 앱 안에서 확인해 라우팅 문제 재현·공유 지원
 
 ## Other Experience
 
