@@ -172,10 +172,22 @@ def main():
     ap.add_argument("target", nargs="?", default="all", choices=[*TARGETS, "all"])
     ap.add_argument("--masked", action="store_true")
     ap.add_argument("--qa", type=Path)
+    ap.add_argument("--skip-lint", action="store_true",
+                    help="build despite AGENTS.md wording violations (only when the user asked)")
     a = ap.parse_args()
 
+    keys = list(TARGETS) if a.target == "all" else [a.target]
+    # Same check as the PostToolUse hook; this also catches edits made through Bash.
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import lint_resume
+    problems = [p for k in keys for p in lint_resume.check(REPO / TARGETS[k][0])]
+    if problems and not a.skip_lint:
+        print("AGENTS.md 작성 규칙 위반으로 PDF를 만들지 않습니다 (새로 추가한 줄):", file=sys.stderr)
+        print("\n".join(problems), file=sys.stderr)
+        sys.exit(1)
+
     ok = True
-    for key in (TARGETS if a.target == "all" else [a.target]):
+    for key in keys:
         md_name, out_rel, zoom = TARGETS[key]
         md = (REPO / md_name).read_text(encoding="utf-8")
         title = md.splitlines()[0].lstrip("# ").strip()
