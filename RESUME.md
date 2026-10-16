@@ -20,6 +20,7 @@
 운영 중 재현하기 어려운 Android 문제의 원인을 끝까지 추적해 해결하고, 문제 재현부터 원인 분석, 수정 결과 확인까지 이어지는 도구와 절차를 구축해왔습니다. BLE 의료기기·헬스 데이터·Media3·CameraX/TensorFlow Lite 기능을 제품에 적용하고, 웹뷰 제품에서는 브릿지와 프론트엔드까지 함께 개발했습니다.
 
 사이드 프로젝트로 **Android 앱 9개와 iOS 앱 1개**를 출시·운영하며 사용자가 겪는 문제를 제품 기능으로 해결해왔습니다.\
+직접 만든 오픈소스 [windowinsets.info](https://windowinsets.info/)와 [Dari](https://github.com/easyhooon/dari)가 각각 **Android Weekly #747·#748**에 소개되었습니다.\
 개발 블로그와 팀 내 기술 공유를 통해 학습 내용을 정리하고, 실무 적용 관점의 기술 선택 과정을 공유해왔습니다.
 
 ## Work Experience
@@ -44,6 +45,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 만성질환자와 암 수술 환자를 위한 맞춤 건강관리·재활 서비스 · [세컨드 윈드](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.secondwindforpatentkr)와 유방암·전립선암·대장암·위암 대상 [세컨드 닥터](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.breastcancer) 4종으로 현재 총 5종 운영 · 전체 출시 앱 Google Play 누적 다운로드 합산 **13,000+**
 
+- 테스트가 없던 Java 70,535줄의 Kotlin 전환 주도(2026.10 완료 예정, 현재 74%). 원본 동작을 테스트로 고정해 전환 전후를 비교하고, PIT 뮤테이션 테스트와 골든 케이스 2,924건으로 테스트가 실제로 변화를 잡는지 확인하며 단위 테스트 **0개 → 1,483개** 작성. 이 과정에서 찾은 기존 버그는 이슈로 따로 관리하고, BLE 기기 이름이 웹뷰에서 JS로 실행되는 보안 취약점은 먼저 수정
 - 전역 세마포어 기반 네트워크 직렬 병목을 제거하고 Health Connect 데이터 처리를 유형별 병렬화해, 로그인 후 첫 대시보드 데이터 준비 시간을 **2.835초 → 1.116초(60.6% 단축)**, 최초 동기화 완료 시간을 **6.546초 → 4.740초(27.6% 단축)**로 개선
 - ExoPlayer2 기반 운동 영상 플레이어를 Media3로 마이그레이션하고 긴 영상을 구간 단위로 내려받아, 전체 파일 다운로드 완료 전에도 내려받은 첫 구간부터 영상을 재생할 수 있도록 변경해 재생 시작 대기 완화
 - TensorFlow Lite + CameraX 기반 어깨 움직임 측정 기능 개발, 팔벌림 각도 정확도 **오차범위 ±5도 이내**로 개선
@@ -67,17 +69,15 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 - Bamboo 기반 CI/CD 배포 환경을 구축해 빌드 넘버 관리를 자동화하고 충돌 문제 해결
 - 클래스 사진 업로드 로직을 갤러리 저장 방식에서 임시 파일 생성·업로드 후 제거하는 방식으로 전환해 불필요한 미디어 파일이 기기에 남지 않도록 변경
 
+<span style="font-size: 0.9em; color: #6b7280;">각 프로젝트의 문제 해결 과정은 [포트폴리오](https://github.com/easyhooon/resume/blob/main/PORTFOLIO.md)의 Troubleshooting에 정리했습니다.</span>
+
 ## Team Projects
 
 ### 유니페스 : 대학축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
 
 <span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월, 현재 운영 중</span> · 고려대·가천대·상명대·한국교통대 축제 공식 앱 선정, Play Store 다운로드 **2,000+**, 축제 운영 기간 Android/iOS 통합 최고 **WAU 5,000+**
 
-- Naver Map Compose 클러스터링을 적용해 줌 레벨에 따라 밀집된 부스·행사 마커를 묶고 펼쳐서 표시해 지도 정보 가독성 개선
-- MVI 패턴과 구글 권장 아키텍처 기반 모듈화를 적용하고 화면 상태·이벤트 처리 책임을 기능 모듈 안으로 분리
-- QR 스캔 결과를 부스 참여 상태와 연결해 현장 행사 인증을 앱 안에서 완료하도록 구현
-- Firebase Remote Config로 지원 앱 버전 기준을 원격에서 제어하고, API 에러 코드를 앱의 예외 처리 흐름에 연결해 버전·예외 상황 대응 강화
-- Firebase App Distribution으로 테스트 빌드를 배포하고, Room Migration Test로 이전 데이터베이스 스키마에서 현재 버전까지의 마이그레이션 회귀 검증 강화
+- QR 현장 인증과 Remote Config 기반 지원 버전 제어로 축제 기간 몰리는 현장 트래픽을 운영하고, Room Migration Test로 업데이트 시 기존 데이터 유지 검증
 
 ### 반다라트 - 부담 없는 만다라트 계획표 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~</span>
 
@@ -86,13 +86,13 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 - Android 앱을 Compose Multiplatform으로 마이그레이션, 기존 Android 코드 기반으로 iOS 앱까지 배포
 - Slack Circuit Presenter로 계획표 상태 생성과 이벤트 처리를 UI에서 분리해 상태 로직을 독립적으로 테스트할 수 있게 하고, UI 컴포저블은 렌더링과 이벤트 전달에만 집중하도록 구성
 - 서버 API 의존 구조를 로컬 Room Database 기반으로 전환, 서버 중단 이후에도 서비스 유지
+- 기기 종류 대신 화면 비율 기준으로 레이아웃을 나눠 Galaxy Z Fold·iPhone Duo·iPad에서 2단 배치
 - Jetpack Compose 기반 Custom UI와 공통 컴포넌트 정의, 화면 구성 일관성 확보와 Google Play In-App Update 기반 업데이트 유도 흐름 제공
-- Room Database, Repository, ViewModel 테스트 코드와 GitHub Actions CI 도입, 데이터 변경과 화면 로직 회귀 검증 자동화
 
 ## Open Source
 
-- [windowinsets.info](https://windowinsets.info/): Android 기기별 WindowInsets·DisplayCutout 측정·시각화 도구. [Android Weekly #747](https://androidweekly.net/issues/issue-747) Libraries & Code 소개 (2026.10.04).
-- [Dari](https://github.com/easyhooon/dari): 실무 WebView 연동 디버깅 문제에서 개발한 Android 라이브러리. 브릿지 구현체와 독립적으로 JavaScript 메시지의 요청·응답·상태를 실시간 확인해 프론트엔드 개발자와 호출 흐름·실패 지점을 함께 추적. debug/release 분리용 no-op 모듈 제공.
+- [windowinsets.info](https://windowinsets.info/): Android 기기별 WindowInsets·DisplayCutout 측정·시각화 도구. **[Android Weekly #747](https://androidweekly.net/issues/issue-747) Libraries & Code 소개** (2026.10.04).
+- [Dari](https://github.com/easyhooon/dari): 사내 웹뷰 브릿지 디버깅이 불편해서 직접 만든 라이브러리. 사내 앱 4종(Hi-me·세컨드 윈드·브리시드·마이밸런스)에 적용. Logcat에서 요청·응답을 찾아 짝짓는 대신 기기·PC 화면에서 바로 확인하고, QA(STG) 빌드에서 난 버그는 테스트 기기에 남은 로그를 프론트엔드 개발자에게 넘겨 웹·앱 중 어느 쪽 실패인지 함께 판단. **[Android Weekly #748](https://androidweekly.net/issues/issue-748) Libraries & Code 소개** (2026.10.11), 최근 30일 다운로드 **189회**(Scarf). adb만으로 PC에서 메시지를 보는 Desktop 앱을 배포하고 ProGuard·아키텍처별 네이티브 라이브러리 정리와 LZFSE 압축 전환으로 macOS DMG를 **70.7 MB → 43.3 MB(38.7% 감소)**로 축소
 - [RoutePeek](https://github.com/easyhooon/routepeek): WebView의 현재 route와 SPA route 변경을 Compose overlay로 확인하는 Android 디버깅 라이브러리. 앱 안에서 경로를 확인해 라우팅 이슈 재현·공유 지원.
 
 ## Other Experience

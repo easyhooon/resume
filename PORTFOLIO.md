@@ -19,7 +19,7 @@
 
 출시한 **Android 앱 9개와 iOS 앱 1개**를 중심으로, 제품을 개발·운영하며 기능 구현, 구조 설계, 도구 개발로 문제를 해결한 경험을 정리했습니다.
 
-제품 요구사항을 구현하고 서비스를 운영하며 마주한 상태 관리와 의존성, 화면 전환, 플랫폼 확장 문제를 풀어왔습니다. 기술 선택은 해결할 문제와 프로젝트 상황을 기준으로 판단했으며, 그 경험을 라이브러리 개발과 오픈소스 기여로 확장했습니다.
+제품 요구사항을 구현하고 서비스를 운영하며 마주한 상태 관리와 의존성, 화면 전환, 플랫폼 확장 문제를 풀어왔습니다. 기술 선택은 해결할 문제와 프로젝트 상황을 기준으로 판단했으며, 그 경험을 라이브러리 개발과 오픈소스 기여로 확장했습니다. 직접 만든 [windowinsets.info](https://windowinsets.info/)와 [Dari](https://github.com/easyhooon/dari)는 각각 **Android Weekly #747·#748**에 소개되었습니다.
 
 ## Team Projects
 
@@ -103,7 +103,7 @@
 
 고려대·가천대·상명대·한국교통대 축제 공식 앱 선정, Play Store 다운로드 **2,000+**, 축제 운영 기간 Android/iOS 통합 최고 **WAU 5,000+**
 
-- **지도 클러스터링**: 축제 현장에 밀집된 부스·행사 마커를 제한된 화면에서 구분하기 위해 Naver Map Compose 기반 지도에 클러스터링을 적용. 줌 레벨에 따라 마커를 묶고 펼쳐서 표시해 지도 정보 가독성 개선
+- **지도 클러스터링**: 좁은 캠퍼스에 밀집된 부스·행사 마커를 구분하기 위해, 공식 지원이 막 시작되어 Compose 레퍼런스가 샘플 코드뿐이던 NaverMap Compose 클러스터링을 도입. 모든 부스가 하나로 뭉치지 않도록 줌 레벨별·카테고리별 병합 전략을 직접 설계하고, 클러스터를 누르면 묶인 부스 목록을 보여주도록 구현 ([기술 블로그](https://velog.io/@mraz3068/Android-NaverMap-Compose-Clurstering-Implementation))
 - **MVI 기반 모듈화**: 축제 기능별 상태와 이벤트를 분리해 관리하기 위해 구글 권장 아키텍처와 MVI 패턴을 선택. 화면 상태와 이벤트 처리 책임을 기능 모듈 안으로 분리
 - **Type-safe 중첩 Navigation**: 문자열 route와 argument key 불일치를 줄이기 위해 sealed route 기반 Navigation으로 전환하고, 중첩 graph에서도 data class property와 `SavedStateHandle` key를 연결해 부스 상세·위치 화면의 인자 전달 규칙 정리
 - **QR 기반 현장 인증**: 부스의 QR 스캔 결과를 참여 상태에 연결해 현장 이벤트 인증을 앱 안에서 완료
@@ -177,7 +177,7 @@
 - **계획표 상태 관리**: 목표 조회·편집·완료 과정의 상태 생성과 이벤트 처리가 UI에 섞이지 않도록 기존 MVVM 구조를 Circuit 기반 MVI로 전환하고 Presenter와 UI의 책임 분리
 - **업데이트 경로 제공**: 새 버전이 배포돼도 사용자가 스토어에서 업데이트 여부를 따로 확인하지 않도록 Google Play In-App Update API로 앱 안에서 새 버전을 안내하고 업데이트하는 흐름 구성
 - **CI 도입**: Room Database·Repository·ViewModel 변경 때마다 주요 데이터·화면 로직을 반복 검증해야 했던 과정을 자동화하기 위해 테스트 코드를 GitHub Actions에서 실행하도록 구성
-- **다양한 화면 대응**: 5x5 계획표가 태블릿·가로 모드에서 휴대전화 기준 크기로 고정되지 않도록 가용 영역에 맞춰 셀과 레이아웃을 조정해 화면 크기별 조작 공간 확보
+- **넓은 화면 대응**: 세로 휴대폰 기준으로 고정돼 있던 화면을 Galaxy Z Fold·iPhone Duo·iPad·휴대폰 가로 화면까지 대응. 기기 종류 대신 콘텐츠 영역의 가로세로 비율로 분기해(너비가 높이의 0.9배 이상이면 정보와 표를 2단 배치) 한 기준으로 모든 기기를 처리하고, 표 크기에 따라 셀 글자 배율을 0.85~1.5배로 조절. 공유 이미지도 2단 화면에서는 가로형으로 만들고, iPad에서 공유 시트 위치를 지정하지 않으면 앱이 종료되는 문제를 막음
 
 #### KMP 이미지 저장·공유의 플랫폼 경계와 iOS 색상 왜곡 해결
 
@@ -276,7 +276,20 @@ Web ↔ App JavaScript Bridge 메시지의 요청·응답·상태를 기기에�
 - **운영 검증과 고도화**: 실제 운영 서비스의 개발 환경에 적용한 뒤 인메모리 로그 유실, 단방향 이벤트, 다중 WebView 로그 충돌, 대용량 payload 공유 시 `TransactionTooLargeException`을 발견. **인메모리 `StateFlow` 즉시 반영과 Room 비동기 저장, 최대 건수·TTL 기반 로그 정리, optional request id, 브릿지별 tag, payload 길이 제한**을 도입해 해결
 - **사용성 개선**: 전체 로그 JSON 내보내기, `Error`·`In Progress`·`Success` 메시지 상태 필터, 다크모드, shake-to-open을 추가하고 흔들기 감지를 방향 반전 카운팅 방식으로 바꿔 오탐 완화
 - **프로덕션 안전성**: Debug 빌드에서는 통신을 기록하고 Release 빌드에서는 동일한 API의 **`dari-noop` 모듈로 교체**해 로그 노출과 런타임 오버헤드를 방지
-- **성과**: 반복되는 사내 디버깅 문제를 **재사용 가능한 오픈소스 도구로 전환**하고, 직접 사용하는 서비스에서 발견한 예외 상황을 다시 라이브러리 개선으로 연결하는 개발·검증 사이클 구축
+- **Dari Desktop**: 기기 화면에서 긴 JSON을 읽기 어려운 문제를 줄이기 위해, adb만으로 연결 기기의 브릿지 메시지를 PC에서 요청·응답 나란히 보여주는 Compose Desktop 앱 개발. 토큰·비밀번호·쿠키는 기기에서 마스킹한 뒤 전송하고, macOS 서명·공증과 앱 내 업데이트, Windows 프리뷰 배포까지 구성
+- **사내 도입**: Hi-me·세컨드 윈드·브리시드·마이밸런스 4개 앱의 Debug 빌드에 적용하고, Hi-me는 QA(STG) 빌드에도 포함. 전에는 Logcat에서 요청과 응답을 직접 찾아 짝지어야 했고, 프론트엔드 개발자는 네이티브 로그를 볼 수 없어 실패가 웹 쪽인지 앱 쪽인지 말로 맞춰봐야 했음. 지금은 양쪽 개발자가 기기나 PC 화면에서 같은 요청·응답을 보고 로그를 주고받으며 원인을 찾고, IDE를 연결할 수 없는 QA(STG) 환경의 버그도 테스트 기기에 남은 로그로 추적
+- **성과**: [Android Weekly #748](https://androidweekly.net/issues/issue-748) Libraries & Code 섹션 소개 (2026.10.11). Maven Central의 `dari` 최근 30일 다운로드 **189회**(Scarf 기준). 반복되는 사내 디버깅 문제를 **재사용 가능한 오픈소스 도구로 전환**하고, 직접 사용하는 서비스에서 발견한 예외 상황을 다시 라이브러리 개선으로 연결
+
+#### Dari Desktop 배포 파일에서 실행 중 쓰지 않는 코드·라이브러리 걷어내기
+
+<span style="font-size: 0.9em;">Dari Desktop · Compose Desktop · ProGuard · Gradle Artifact Transform · DMG</span>
+
+- **문제**: macOS(arm64) DMG가 70.7 MB였음. 번들을 열어보니 실행 중 한 번도 로드되지 않는 파일이 상당 부분을 차지. arm64 앱 안에 Intel용 Skiko 네이티브 라이브러리(압축 전 21.7 MB)가 같이 들어 있었고, 축소하지 않은 jar가 35.6 MB
+- **원인 분석**: Skiko의 macOS 런타임 jar는 arm64·x64 라이브러리를 모두 담고 있고, Compose Gradle 플러그인은 현재 아키텍처용만 꺼낸 뒤 나머지를 jar에 다시 넣어 배포함을 확인. 최신 Skiko에서도 같은 구조라 버전 업그레이드로는 해결되지 않음
+- **해결**: Gradle artifact transform으로 패키징 전에 다른 아키텍처 라이브러리를 제거하고, Compose ProGuard release 빌드로 jar를 축소(로그 스택 트레이스를 읽을 수 있도록 난독화는 끄고 `META-INF/services`로 로드되는 클래스만 keep). 압축은 2.2.0에서 LZMA(ULMO)로 바꿔 58.1 MB까지 줄였으나, macOS 커널이 바로 풀지 못해 설치·앱 내 업데이트 때 앱 복사가 약 3배 느려지는 것을 측정하고 2.2.1에서 LZFSE(ULFO)로 변경(복사 17.6초 → 5.6초)
+- **결과**: arm64 DMG **70.7 MB → 43.3 MB(38.7% 감소)**, Windows MSI 59.6 MB → 46.1 MB. 앱 시작 시간은 측정상 차이가 없었고, macOS·Windows·Linux에서 ProGuard 빌드 실행을 CI 스모크 테스트로 확인
+
+[Skiko 중복 제거 PR](https://github.com/easyhooon/dari/pull/146) · [ProGuard 적용 PR](https://github.com/easyhooon/dari/pull/148) · [DMG 압축 형식 PR](https://github.com/easyhooon/dari/pull/150)
 
 ### RoutePeek - WebView Route Inspector
 
@@ -346,6 +359,23 @@ Hi-me를 개발·운영하며 해결한 주요 문제를 원인 분석과 해결
 - **결과**: Report First, Then Delete와 `lastSyncDate` 기반 필터링·로컬 캐싱을 적용해 측정 데이터 누락·중복과 연동 상태 불일치 위험 완화
 
 [기술 블로그](https://velog.io/@mraz3068/Android-BLE-Bonding-and-Measurement-Data-Sync-Implementation)
+
+### 세컨드 윈드/닥터 - 만성질환자·암 수술 환자 건강관리·재활 서비스 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
+
+**Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.secondwindforpatentkr) · 5종 운영 · 전체 출시 앱 누적 다운로드 합산 **13,000+**
+
+#### 테스트가 없던 Java 7만 줄을 동작 변화 없이 Kotlin으로 전환
+
+<span style="font-size: 0.9em;">세컨드 윈드 · Android · Kotlin · JUnit · MockK · PIT Mutation Testing · MockWebServer</span> · 2026.10 완료 예정
+
+- **문제**: 9개 flavor 앱이 공유하는 Java 70,535줄(208개 파일)에 단위 테스트가 하나도 없었음. 건강 데이터·BLE 기기·서버 요청이 얽힌 코드라 언어를 바꾸다 동작이 조금만 달라져도 사용자 데이터에 영향을 줄 수 있었는데, 이를 확인할 방법이 수동 QA뿐이었음
+- **검증 원칙**: 전환 전후 동작이 같다는 것을 테스트로 확인한 것만 머지. 리팩터링 중 찾은 기존 버그도 바로 고치지 않고 현재 동작 그대로 테스트에 고정해 옮긴 뒤 이슈로 추적하고, 전환이 끝나면 별도 fix PR에서 테스트 기대값을 바꿔 수정. 동작이 바뀐 이유가 전환 때문인지 버그 수정 때문인지 섞이지 않게 하기 위함
+- **A-A 검증**: 파일마다 Java 원본으로 현재 동작과 공개 API 시그니처를 테스트에 먼저 고정(test 커밋)하고 Kotlin으로 옮긴 뒤(refactor 커밋), 스크립트가 test 커밋을 별도 worktree로 꺼내 같은 테스트를 Java·Kotlin 양쪽에서 돌려 비교. 전환 커밋에서 테스트가 바뀌면 실패하도록 해서 테스트를 코드에 맞춰 고치는 일을 막음
+- **뮤테이션 테스트**: 테스트가 통과해도 동작 변화를 실제로 잡아내는지 보기 위해 PIT로 코드를 자동 변형하고, `trim`·Locale·12시간 표기처럼 Java와 Kotlin 표준 함수 차이에서 생기는 변형은 직접 뮤턴트로 추가. 살아남은 뮤턴트는 Java 원본에서 다시 확인한 뒤 테스트를 보강
+- **골든 테스트**: 13,792줄짜리 서버 명령 클래스처럼 구조 자체를 바꾸는 경우는 클래스 단위로 비교할 수 없어서, MockWebServer로 정상·HTTP 오류·본문 오류·연결 끊김 등 응답 상황 12종을 재현하고 나가는 요청·콜백 순서·이벤트·저장 상태를 기록한 골든 케이스 **2,924건**과 대조
+- **결과**: 단위 테스트 **0개 → 1,483개**, Java **70,535줄 → 18,061줄(74% 전환)**. 서버 명령 클래스는 골든 테스트를 통과한 상태로 정의 표 기반 Kotlin 실행기로 바꿔 **13,792줄 → 1,585줄**
+- **전환 중 찾은 문제**: 동작을 테스트로 고정하다가 알람을 다시 읽으면 연도가 사라지는 문제, 체중계 사용자 ID를 엉뚱한 바이트에서 읽는 문제 등 사용자 데이터에 영향을 줄 수 있는 기존 버그 5건을 찾아 known issue로 등록. 근처 BLE 기기의 광고 이름이 이스케이프 없이 `evaluateJavascript`로 넘어가 웹뷰에서 임의 JS가 실행될 수 있는 보안 취약점도 발견해 `JSONObject` 이스케이프로 수정했고, 같은 패턴이 남은 곳을 정리 중
+- **이후 유지보수**: 기능을 고친 뒤 1,483개 테스트를 돌려 기존 동작이 바뀐 곳이 있는지 바로 확인하고, 남은 Coroutine·Compose 전환도 같은 test → refactor 커밋 절차로 진행할 계획
 
 ## Awards
 
