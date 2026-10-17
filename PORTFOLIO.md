@@ -287,7 +287,7 @@ Web ↔ App JavaScript Bridge 메시지의 요청·응답·상태를 기기에�
 - **문제**: macOS(arm64) DMG가 70.7 MB였음. 번들을 열어보니 실행 중 한 번도 로드되지 않는 파일이 상당 부분을 차지. arm64 앱 안에 Intel용 Skiko 네이티브 라이브러리(압축 전 21.7 MB)가 같이 들어 있었고, 축소하지 않은 jar가 35.6 MB
 - **원인 분석**: Skiko의 macOS 런타임 jar는 arm64·x64 라이브러리를 모두 담고 있고, Compose Gradle 플러그인은 현재 아키텍처용만 꺼낸 뒤 나머지를 jar에 다시 넣어 배포함을 확인. 최신 Skiko에서도 같은 구조라 버전 업그레이드로는 해결되지 않음
 - **해결**: Gradle artifact transform으로 패키징 전에 다른 아키텍처 라이브러리를 제거하고, Compose ProGuard release 빌드로 jar를 축소(로그 스택 트레이스를 읽을 수 있도록 난독화는 끄고 `META-INF/services`로 로드되는 클래스만 keep). 압축은 2.2.0에서 LZMA(ULMO)로 바꿔 58.1 MB까지 줄였으나, macOS 커널이 바로 풀지 못해 설치·앱 내 업데이트 때 앱 복사가 약 3배 느려지는 것을 측정하고 2.2.1에서 LZFSE(ULFO)로 변경(복사 17.6초 → 5.6초)
-- **결과**: arm64 DMG **70.7 MB → 43.3 MB(38.7% 감소)**, Windows MSI 59.6 MB → 46.1 MB. 앱 시작 시간은 측정상 차이가 없었고, macOS·Windows·Linux에서 ProGuard 빌드 실행을 CI 스모크 테스트로 확인
+- **결과**: arm64 DMG **70.7 MB → 43.3 MB(38.7% 감소)**, Windows MSI 59.6 MB → 46.1 MB. 앱 시작 시간은 측정상 차이가 없었고, ProGuard 빌드의 동작을 macOS는 실사용, Windows는 실기기, Linux는 Ubuntu 가상 머신에서 확인
 
 [Skiko 중복 제거 PR](https://github.com/easyhooon/dari/pull/146) · [ProGuard 적용 PR](https://github.com/easyhooon/dari/pull/148) · [DMG 압축 형식 PR](https://github.com/easyhooon/dari/pull/150)
 
