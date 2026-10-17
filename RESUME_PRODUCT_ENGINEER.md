@@ -77,17 +77,17 @@ HD현대 그룹사 임직원 대상 건강관리 서비스 · [Google Play](http
 
 ## Team Projects
 
-### 유니페스 : 대학축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
-
-<span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월, 현재 운영 중</span> · 4개 대학 축제 공식 앱 선정 · 축제 운영 기간 Android/iOS 통합 최고 **WAU 5,000+**
-
-- 밀집된 부스·행사 마커에 지도 클러스터링을 적용하고 QR 스캔을 부스 참여 상태와 연결해 탐색·현장 인증 흐름 구현. 웨이팅 신청 버튼의 상태 관찰 누락을 찾아 수정
-
 ### 반다라트 - 부담 없는 만다라트 계획표 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~</span>
 
 <span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월, 현재 운영 중</span>
 
 - 작은 화면의 탐색 부담을 줄이려 9x9 계획표를 5x5로 재구성. 서버 중단 뒤에도 목표 조회·편집을 유지하도록 Room 로컬 저장으로 전환하고 Compose Multiplatform iOS 앱 배포
+
+### 유니페스 : 대학축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
+
+<span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월</span> · 4개 대학 축제 공식 앱 선정 · 축제 운영 기간 Android/iOS 통합 최고 **WAU 5,000+**
+
+- 밀집된 부스·행사 마커에 지도 클러스터링을 적용하고 QR 스캔을 부스 참여 상태와 연결해 탐색·현장 인증 흐름 구현. 웨이팅 신청 버튼의 상태 관찰 누락을 찾아 수정
 
 ## Other Experience
 

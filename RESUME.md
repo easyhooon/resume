@@ -73,21 +73,20 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 ## Team Projects
 
-### 유니페스 : 대학축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
-
-<span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월, 현재 운영 중</span> · 고려대·가천대·상명대·한국교통대 축제 공식 앱 선정, Play Store 다운로드 **2,000+**, 축제 운영 기간 Android/iOS 통합 최고 **WAU 5,000+**
-
-- QR 현장 인증과 Remote Config 기반 지원 버전 제어로 축제 기간 몰리는 현장 트래픽을 운영하고, Room Migration Test로 업데이트 시 기존 데이터 유지 검증
-
 ### 반다라트 - 부담 없는 만다라트 계획표 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~</span>
 
 <span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월, 현재 운영 중</span>
 
-- Android 앱을 Compose Multiplatform으로 마이그레이션, 기존 Android 코드 기반으로 iOS 앱까지 배포
+- Android 앱을 Compose Multiplatform으로 마이그레이션해 iOS 개발자 없이 Android 개발자 2명이 iOS 앱까지 출시(2025.03). 앱 코드의 약 73%(20,189줄)를 Android·iOS 공통 코드로 유지해 기능 추가·수정을 한 번에 양쪽에 반영
 - Slack Circuit Presenter로 계획표 상태 생성과 이벤트 처리를 UI에서 분리해 상태 로직을 독립적으로 테스트할 수 있게 하고, UI 컴포저블은 렌더링과 이벤트 전달에만 집중하도록 구성
 - 서버 API 의존 구조를 로컬 Room Database 기반으로 전환, 서버 중단 이후에도 서비스 유지
-- 기기 종류 대신 화면 비율 기준으로 레이아웃을 나눠 Galaxy Z Fold·iPhone Duo·iPad에서 2단 배치
-- Jetpack Compose 기반 Custom UI와 공통 컴포넌트 정의, 화면 구성 일관성 확보와 Google Play In-App Update 기반 업데이트 유도 흐름 제공
+- 기기 종류 대신 화면 비율 기준으로 레이아웃을 나눠, Galaxy Z Fold·iPhone Duo·iPad 같은 넓은 화면에서는 목표 정보(제목·달성률·마감일)와 계획표를 좌우로 나란히 배치
+
+### 유니페스 : 대학축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
+
+<span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월</span> · 고려대·가천대·상명대·한국교통대 축제 공식 앱 선정, Play Store 다운로드 **2,000+**, 축제 운영 기간 Android/iOS 통합 최고 **WAU 5,000+**
+
+- QR 현장 인증과 Remote Config 기반 지원 버전 제어로 축제 기간 몰리는 현장 트래픽을 운영하고, Room Migration Test로 업데이트 시 기존 데이터 유지 검증
 
 ## Open Source
 
