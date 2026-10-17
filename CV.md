@@ -76,6 +76,8 @@ WebView와 Android 사이의 요청·응답 규격, 상태 코드, 오류 처리
 
 StateFlow를 이용한 즉시 반영과 Room 비동기 저장을 결합하고, 최대 저장 건수와 TTL 기반 정리, 브릿지별 태그, payload 길이 제한을 적용했습니다. Release 빌드에서는 동일한 API를 제공하는 no-op 모듈로 교체해 로그 노출과 불필요한 런타임 동작을 방지했습니다.
 
+이후 기기 화면에서 긴 payload를 확인하기 어려운 문제를 줄이기 위해, adb로 앱에 연결해 컴퓨터에서 브릿지 메시지를 확인하는 Compose Desktop 인스펙터 앱을 개발했습니다. macOS뿐 아니라 Windows와 Linux용 설치 파일까지 배포해 개발 환경과 관계없이 사용할 수 있도록 했습니다.
+
 BLE Glucose Profile과 Blood Pressure Profile을 기반으로 혈당계·혈압계 연동 기능도 개발했습니다.
 
 OS의 bondedDevices와 앱의 DataStore 연동 정보를 교차 검증하고 GATT 명령을 순차 실행하도록 구성해 기기별 연결 동작 차이에 대응했습니다.

@@ -45,7 +45,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 만성질환자와 암 수술 환자를 위한 맞춤 건강관리·재활 서비스 · [세컨드 윈드](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.secondwindforpatentkr)와 유방암·전립선암·대장암·위암 대상 [세컨드 닥터](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.breastcancer) 4종으로 현재 총 5종 운영 · 전체 출시 앱 Google Play 누적 다운로드 합산 **13,000+**
 
-- 테스트가 없던 Java 64,484줄의 Kotlin 전환 주도(2026.10 완료 예정, Kotlin 비율 14% → 76%). 원본 동작을 테스트로 고정해 전환 전후를 비교하는 A-A 검증과 뮤테이션 테스트로 모든 전환을 확인하며 단위 테스트 **0개 → 1,580개** 작성. 4,000줄이 넘던 God class 2개는 책임별 Kotlin 클래스 19개로 분리하고, 전환 중 찾은 기존 버그는 이슈로 따로 관리하며 BLE 기기 이름이 웹뷰에서 JS로 실행되는 보안 취약점은 먼저 수정
+- 테스트가 없던 Java 64,484줄의 Kotlin 전환 주도(2026.10 완료 예정, Kotlin 비율 14% → 76%). 원본 동작을 테스트로 고정해 전환 전후를 비교하는 A-A 검증과 뮤테이션 테스트로 모든 전환을 확인하며 단위 테스트 **0개 → 1,580개** 작성. 1만 줄이 넘던 God class 2개(`MainActivity`, API 호출 클래스 `ControlCommand`)는 책임별 Kotlin 클래스와 정의 표 기반 실행기로 나눠 정리하고, 전환 중 찾은 기존 버그는 이슈로 따로 관리하며 BLE 기기 이름이 웹뷰에서 JS로 실행되는 보안 취약점은 먼저 수정
 - 전역 세마포어 기반 네트워크 직렬 병목을 제거하고 Health Connect 데이터 처리를 유형별 병렬화해, 로그인 후 첫 대시보드 데이터 준비 시간을 **2.835초 → 1.116초(60.6% 단축)**, 최초 동기화 완료 시간을 **6.546초 → 4.740초(27.6% 단축)**로 개선
 - ExoPlayer2 기반 운동 영상 플레이어를 Media3로 마이그레이션하고 긴 영상을 구간 단위로 내려받아, 전체 파일 다운로드 완료 전에도 내려받은 첫 구간부터 영상을 재생할 수 있도록 변경해 재생 시작 대기 완화
 - TensorFlow Lite + CameraX 기반 어깨 움직임 측정 기능 개발, 팔벌림 각도 정확도 **오차범위 ±5도 이내**로 개선
@@ -66,7 +66,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 직장인의 건강한 습관 형성을 지원하는 건강관리·리워드 서비스 · [Google Play](https://play.google.com/store/apps/details?id=com.kyobo.mybalance) 다운로드 **1,000+**
 
 - Health Connect 연동, 걸음 수·소모 칼로리·평균 심박수·수면시간 데이터 수집 경로 통합
-- Bamboo 기반 CI/CD 배포 환경을 구축해 빌드 넘버 관리를 자동화하고 충돌 문제 해결
+- Bamboo 기반 레거시 CI/CD를 GitHub Actions로 전환하여 빌드 넘버 관리를 자동화하고 충돌 문제 해결
 - 클래스 사진 업로드 로직을 갤러리 저장 방식에서 임시 파일 생성·업로드 후 제거하는 방식으로 전환해 불필요한 미디어 파일이 기기에 남지 않도록 변경
 
 <span style="font-size: 0.9em; color: #6b7280;">각 프로젝트의 문제 해결 과정은 [포트폴리오](https://github.com/easyhooon/resume/blob/main/PORTFOLIO.md)의 Troubleshooting에 정리했습니다.</span>
@@ -92,12 +92,12 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 ## Open Source
 
 - [windowinsets.info](https://windowinsets.info/): Android 기기별 WindowInsets·DisplayCutout 측정·시각화 도구. **[Android Weekly #747](https://androidweekly.net/issues/issue-747) Libraries & Code 소개** (2026.10.04).
-- [Dari](https://github.com/easyhooon/dari): 사내 웹뷰 브릿지 디버깅이 불편해서 직접 만든 라이브러리. 사내 앱 4종(Hi-me·세컨드 윈드·브리시드·마이밸런스)에 적용. Logcat에서 요청·응답을 찾아 짝짓는 대신 기기·PC 화면에서 바로 확인하고, QA(STG) 빌드에서 난 버그는 테스트 기기에 남은 로그를 프론트엔드 개발자에게 넘겨 웹·앱 중 어느 쪽 실패인지 함께 판단. **[Android Weekly #748](https://androidweekly.net/issues/issue-748) Libraries & Code 소개** (2026.10.11), 최근 30일 다운로드 **189회**(Scarf). adb만으로 PC에서 메시지를 보는 Desktop 앱을 배포하고 ProGuard·아키텍처별 네이티브 라이브러리 정리와 LZFSE 압축 전환으로 macOS DMG를 **70.7 MB → 43.3 MB(38.7% 감소)**로 축소
+- [Dari](https://github.com/easyhooon/dari): 사내 웹뷰 브릿지 디버깅이 불편해서 직접 만든 라이브러리. 사내 앱 4종(Hi-me·세컨드 윈드·브리시드·마이밸런스)에 적용. Logcat에서 요청·응답을 찾아 짝짓는 대신 기기·PC 화면에서 바로 확인하고, QA(STG) 빌드에서 난 버그는 테스트 기기에 남은 로그를 프론트엔드 개발자에게 넘겨 웹·앱 중 어느 쪽 실패인지 함께 판단. **[Android Weekly #748](https://androidweekly.net/issues/issue-748) Libraries & Code 소개** (2026.10.11), 최근 30일 다운로드 **189회**(Scarf). adb만으로 PC에서 메시지를 보는 macOS·Windows·Linux Desktop 앱을 배포하고 ProGuard·아키텍처별 네이티브 라이브러리 정리와 LZFSE 압축 전환으로 macOS DMG를 **70.7 MB → 43.3 MB(38.7% 감소)**로 축소
 - [RoutePeek](https://github.com/easyhooon/routepeek): WebView의 현재 route와 SPA route 변경을 Compose overlay로 확인하는 Android 디버깅 라이브러리. 앱 안에서 경로를 확인해 라우팅 이슈 재현·공유 지원.
 
 ## Other Experience
 
-- 브리시드 심리상담센터: React Native 앱의 미사용 SDK 등 18개 의존성 제거·pnpm 전환으로 iOS 시뮬레이터 Debug 빌드 **238.7초 → 195.8초(18.0% 단축)** — 동일 Mac·빈 DerivedData에서 각 3회 측정 중앙값
+- 브리시드 심리상담센터: React Native 앱의 미사용 SDK 등 18개 의존성 제거·pnpm 전환으로 iOS 시뮬레이터 Debug 빌드 **238.7초 → 195.8초(18.0% 단축)**, 동일 Mac·빈 DerivedData에서 각 3회 측정 중앙값
 - YAPP 26기: Reed 프로젝트 Android 파트 리드로 구조 설계·기술 스택 검토·코드 리뷰 담당, Android Manifest Interview 도서/기술 블로그 작성 스터디 운영, 최우수상 수상, 27·28기 Android 개발자 선발 면접 참여
 - Nexters 23·24·26기: 반다라트, I'lab, Ziine 프로젝트 Android 구조 설계·기술 스택 선정·코드 리뷰, 출시 후 리팩터링과 성능 병목 분석 담당
 

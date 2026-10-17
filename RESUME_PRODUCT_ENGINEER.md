@@ -51,15 +51,15 @@ HD현대 그룹사 임직원 대상 건강관리 서비스 · [Google Play](http
 
 ## Frontend & Client–Server Projects
 
-### WindowInsets.Info — 기기별 화면 영역 측정·시각화 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2026.09 ~</span>
+### WindowInsets.Info - 기기별 화면 영역 측정·시각화 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2026.09 ~</span>
 
 **Android 측정 앱·데이터 검증·웹 시각화 개발** · [서비스](https://windowinsets.info) · [GitHub](https://github.com/easyhooon/windowinsets.info) · [개발 기록](https://velog.io/@mraz3068/windowinsets-rtl-automation)
 
 - 개발자가 화면 영역 값을 믿고 쓸 수 있도록 실기기·RTL·Emulator 출처를 구분하고 잘못된 캡처는 제외, 미확인 값은 미측정으로 표시
-- 전체 기기 데이터를 초기 번들에서 분리하고 Three.js·코드 블록을 지연 로딩. Galaxy S25 Ultra 페이지 초기 JS **351.0 kB → 143.3 kB(약 59% 감소)** — prerender HTML 참조 JS의 gzip 합계
+- 전체 기기 데이터를 초기 번들에서 분리하고 Three.js·코드 블록을 지연 로딩. Galaxy S25 Ultra 페이지 초기 JS **351.0 kB → 143.3 kB(약 59% 감소)**, prerender HTML 참조 JS의 gzip 합계
 - 폴더블 링크의 hover·focus·touch에서만 3D 청크를 prefetch. production 빌드에서 클릭 전 도착·마운트 시 재요청 없음 확인. 일반 기기·Save-Data 연결은 제외
 
-### Chat Sync Lab — 응답 유실에도 중복 전송을 막는 채팅 실험
+### Chat Sync Lab - 응답 유실에도 중복 전송을 막는 채팅 실험
 
 **Ktor 로컬 서버·Compose Android 앱** · [GitHub](https://github.com/easyhooon/chat-sync-lab) · 배포 서비스가 아닌 개인 학습 프로젝트
 
@@ -67,7 +67,7 @@ HD현대 그룹사 임직원 대상 건강관리 서비스 · [Google Play](http
 - 서버의 중복 키·cursor 과거 조회와 앱의 Room 캐시·Paging·전경 복귀 후 누락 보충을 연결. 로컬 AVD에서 수락 응답 유실, 프로세스 재시작, 과거 조회 중 실시간 메시지, 배경 복귀를 검증
 - 서버는 메모리 저장·로컬 테스트 신원만 사용. 실제 Firebase 테스트 프로젝트의 단일 배경 메시지 수신은 확인했으나 운영 인증·영속 서버·배포는 구현하지 않음
 
-### Stream Playback Lab — 재생 실패와 라이브 복귀를 확인하는 영상 실험
+### Stream Playback Lab - 재생 실패와 라이브 복귀를 확인하는 영상 실험
 
 **Python 로컬 HTTP 서버·FFmpeg HLS·Media3 Android 앱** · [GitHub](https://github.com/easyhooon/stream-playback-lab) · 배포 서비스가 아닌 개인 학습 프로젝트
 
@@ -91,7 +91,7 @@ HD현대 그룹사 임직원 대상 건강관리 서비스 · [Google Play](http
 
 ## Other Experience
 
-- 브리시드 심리상담센터: React Native 앱의 미사용 SDK 등 18개 의존성 제거·pnpm 전환으로 iOS 시뮬레이터 Debug 빌드 **238.7초 → 195.8초(18.0% 단축)** — 동일 Mac·빈 DerivedData에서 각 3회 측정 중앙값
+- 브리시드 심리상담센터: React Native 앱의 미사용 SDK 등 18개 의존성 제거·pnpm 전환으로 iOS 시뮬레이터 Debug 빌드 **238.7초 → 195.8초(18.0% 단축)**, 동일 Mac·빈 DerivedData에서 각 3회 측정 중앙값
 - YAPP 26기: Reed Android 파트 리드로 구조 설계·코드 리뷰와 OCR 입력 흐름 구현, 최우수상 수상
 
 ## Awards
