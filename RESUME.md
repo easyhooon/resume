@@ -38,7 +38,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 - 웹뷰-네이티브 요청/응답 규격과 에러 처리 기준을 표준화하고, [Dari](https://github.com/easyhooon/dari) 라이브러리 기반 디버깅 환경을 구축해 Android·프론트엔드 개발자가 브릿지 호출 흐름과 실패 지점을 같은 화면에서 확인하도록 구성
 - BLE Glucose/Blood Pressure Profile 기반 혈당계·혈압계 연동, 측정 데이터 동기화와 연동 해제까지 포함한 의료기기 데이터 수집 흐름 제공
 - Health Connect 경유 시 걸음 수가 갱신되지 않는 경우를 위해 Samsung Health Data SDK 수집 경로를 추가하고, 걸음 수·심박수·소모 칼로리를 직접 동기화
-- 웹뷰 오디오 재생 상태를 MediaSession과 동기화해 백그라운드 재생, 잠금화면·미디어 알림 컨트롤 제공
+- 웹뷰 오디오 플레이어(video.js)의 재생 위치·재생/일시정지 상태를 네이티브 Media3 ExoPlayer·MediaSession과 동기화해, 앱을 나가거나 화면을 꺼도 재생이 끊기지 않고 잠금화면·알림에서 제어하며 앱 복귀 시 같은 위치에서 이어 재생
 - GitHub Actions 기반 Play Console 내부 테스트 트랙 CD 환경 구축, 반복되는 테스트 배포 작업 자동화
 
 ### 세컨드 윈드/닥터 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
