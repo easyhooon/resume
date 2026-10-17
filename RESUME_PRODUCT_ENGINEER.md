@@ -53,7 +53,7 @@ HD현대 그룹사 임직원 대상 건강관리 서비스 · [Google Play](http
 
 ### WindowInsets.Info - 기기별 화면 영역 측정·시각화 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2026.09 ~</span>
 
-**Android 측정 앱·데이터 검증·웹 시각화 개발** · [서비스](https://windowinsets.info) · [GitHub](https://github.com/easyhooon/windowinsets.info) · [개발 기록](https://velog.io/@mraz3068/windowinsets-rtl-automation)
+[서비스](https://windowinsets.info) · [GitHub](https://github.com/easyhooon/windowinsets.info) · [개발 기록](https://velog.io/@mraz3068/windowinsets-rtl-automation)
 
 - 개발자가 화면 영역 값을 믿고 쓸 수 있도록 실기기·RTL·Emulator 출처를 구분하고 잘못된 캡처는 제외, 미확인 값은 미측정으로 표시
 - 전체 기기 데이터를 초기 번들에서 분리하고 Three.js·코드 블록을 지연 로딩. Galaxy S25 Ultra 페이지 초기 JS **351.0 kB → 143.3 kB(약 59% 감소)**, prerender HTML 참조 JS의 gzip 합계
@@ -61,7 +61,7 @@ HD현대 그룹사 임직원 대상 건강관리 서비스 · [Google Play](http
 
 ### Chat Sync Lab - 응답 유실에도 중복 전송을 막는 채팅 실험
 
-**Ktor 로컬 서버·Compose Android 앱** · [GitHub](https://github.com/easyhooon/chat-sync-lab) · 배포 서비스가 아닌 개인 학습 프로젝트
+[GitHub](https://github.com/easyhooon/chat-sync-lab) · 배포 서비스가 아닌 개인 학습 프로젝트
 
 - HTTP 수락 응답과 WebSocket 알림이 모두 유실될 때 사용자에게 전송 성공을 섣불리 표시하지 않도록 Room outbox에 `UNKNOWN`을 보존. 같은 ID로 수동 재시도해 서버 수락 기록을 중복 생성하지 않도록 설계
 - 서버의 중복 키·cursor 과거 조회와 앱의 Room 캐시·Paging·전경 복귀 후 누락 보충을 연결. 로컬 AVD에서 수락 응답 유실, 프로세스 재시작, 과거 조회 중 실시간 메시지, 배경 복귀를 검증
@@ -69,7 +69,7 @@ HD현대 그룹사 임직원 대상 건강관리 서비스 · [Google Play](http
 
 ### Stream Playback Lab - 재생 실패와 라이브 복귀를 확인하는 영상 실험
 
-**Python 로컬 HTTP 서버·FFmpeg HLS·Media3 Android 앱** · [GitHub](https://github.com/easyhooon/stream-playback-lab) · 배포 서비스가 아닌 개인 학습 프로젝트
+[GitHub](https://github.com/easyhooon/stream-playback-lab) · 배포 서비스가 아닌 개인 학습 프로젝트
 
 - VOD 화질 선택·탐색과 일반 라이브 HLS의 이동 창을 구현하고, 서버에서 세그먼트 속도 제한·503·송출 중단을 주입해 앱의 오류 표시와 수동 Retry를 확인
 - 전용 AVD에서 Auto 화질의 720p→360p→720p 전환, 503 뒤 재생, 라이브 Pause→Go live와 송출 재시작 뒤 복귀를 재생 로그·서버 상태·화면으로 대조. 서버·앱 자동 검사 9개와 시나리오별 검증 기록 보유
