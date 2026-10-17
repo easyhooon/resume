@@ -92,7 +92,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 ## Open Source
 
 - [windowinsets.info](https://windowinsets.info/): Android 기기별 WindowInsets·DisplayCutout 측정·시각화 도구. **[Android Weekly #747](https://androidweekly.net/issues/issue-747) Libraries & Code 소개** (2026.10.04).
-- [Dari](https://github.com/easyhooon/dari): 사내 웹뷰 브릿지 디버깅이 불편해서 직접 만든 라이브러리. 사내 앱 4종(Hi-me·세컨드 윈드·브리시드·마이밸런스)에 적용. Logcat에서 요청·응답을 찾아 짝짓는 대신 기기·PC 화면에서 바로 확인하고, QA(STG) 빌드에서 난 버그는 테스트 기기에 남은 로그를 프론트엔드 개발자에게 넘겨 웹·앱 중 어느 쪽 실패인지 함께 판단. **[Android Weekly #748](https://androidweekly.net/issues/issue-748) Libraries & Code 소개** (2026.10.11), 최근 30일 다운로드 **189회**(Scarf). adb만으로 PC에서 메시지를 보는 macOS·Windows·Linux Desktop 앱을 배포하고 ProGuard·아키텍처별 네이티브 라이브러리 정리와 LZFSE 압축 전환으로 macOS DMG를 **70.7 MB → 43.3 MB(38.7% 감소)**로 축소
+- [Dari](https://github.com/easyhooon/dari): 웹뷰 브릿지 메시지는 Chrome inspector에 보이지 않아 IDE를 연결해야만 확인할 수 있던 문제를 해결하려고 직접 만든 라이브러리. 사내 앱 4종(Hi-me·세컨드 윈드·브리시드·마이밸런스)에 적용. Logcat에서 요청·응답을 찾아 짝짓는 대신 기기·PC 화면에서 바로 확인하고, QA(STG) 빌드에서 난 버그는 테스트 기기에 남은 로그를 프론트엔드 개발자에게 넘겨 웹·앱 중 어느 쪽 실패인지 함께 판단. **[Android Weekly #748](https://androidweekly.net/issues/issue-748) Libraries & Code 소개** (2026.10.11), 최근 30일 다운로드 **189회**(Scarf). adb로 연결해 PC에서 메시지를 보는 Desktop 앱을 macOS·Windows·Linux용으로 배포. ProGuard·아키텍처별 네이티브 라이브러리 정리와 LZFSE 압축 전환으로 macOS DMG를 **70.7 MB → 43.3 MB(38.7% 감소)**로 축소
 - [RoutePeek](https://github.com/easyhooon/routepeek): WebView의 현재 route와 SPA route 변경을 Compose overlay로 확인하는 Android 디버깅 라이브러리. 앱 안에서 경로를 확인해 라우팅 이슈 재현·공유 지원.
 
 ## Other Experience
