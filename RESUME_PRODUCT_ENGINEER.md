@@ -85,7 +85,7 @@ HD현대 그룹사 임직원 대상 건강관리 서비스 · [Google Play](http
 
 ### 유니페스 : 대학축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
 
-<span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월</span> · 4개 대학 축제 공식 앱 선정 · 축제 운영 기간 Android/iOS 통합 최고 **WAU 5,000+**
+<span style="font-size: 0.9em;">Android 개발자 2명, 배포까지 2개월</span> · 고려대·가천대·상명대·한국교통대 축제 공식 앱 선정, Play Store 다운로드 **2,000+**, 축제 운영 기간 Android/iOS 통합 최고 **WAU 5,000+**
 
 - 밀집된 부스·행사 마커가 지도에서 겹쳐 보이는 문제를 Naver Map Compose 클러스터링으로 해결해, 줌 레벨에 따라 마커를 묶고 펼쳐 표시
 - 축제 기간 현장 트래픽이 몰리는 상황에서 QR 현장 인증으로 부스 참여를 앱 안에서 처리하고, Remote Config로 지원 버전을 원격 제어해 구버전 사용자를 업데이트로 유도. Room Migration Test로 업데이트 후 기존 데이터 유지를 배포 전 검증
