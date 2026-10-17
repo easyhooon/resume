@@ -65,8 +65,6 @@
 
 #### 화면 이탈로 취소된 코루틴을 API 실패로 노출한 문제 해결
 
-<span style="font-size: 0.9em;">Reed · Android · Kotlin Coroutines · Circuit · Compose</span>
-
 - **문제**: 도서 항목을 동시에 눌러 상세 화면이 중복으로 쌓인 뒤 빠르게 뒤로 가면, 내 서재 화면에 코루틴 오류가 Toast로 노출됨
 - **원인 분석**: 상세 화면이 연속으로 pop되면서 `LaunchedEffect`의 scope와 진행 중인 API 요청이 취소됨. 이때 발생한 `CancellationException`을 `catch (Throwable)`이 일반 통신 오류로 처리해 사용자에게 실패 메시지를 표시한 사실을 확인
 - **해결**: `CancellationException`은 다시 throw해 상위 scope로 취소 신호를 전달하고, 나머지 예외만 공통 오류 처리기로 전달. 서로 다른 항목을 동시에 누를 수 없도록 멀티 터치도 차단해 상세 화면의 중복 적재 방지
@@ -75,8 +73,6 @@
 [기술 블로그](https://velog.io/@mraz3068/Coroutine-CancellationException-UseCase)
 
 #### Hilt → Metro 마이그레이션 컴파일 오류 해결
-
-<span style="font-size: 0.9em;">Reed · Kotlin · Metro · Multi-module · Compiler Plugin</span>
 
 - **문제**: 운영 중인 멀티 모듈 프로젝트를 Hilt에서 Metro로 전환하던 중, 문제 위치나 누락된 타입을 알려주지 않는 `IrErrorTypeImpl` 컴파일 오류가 발생해 마이그레이션이 중단됨
 - **원인 분석**: 서명 키 없이 누구나 빌드할 수 있는 **최소 재현 프로젝트**를 구성하고 Metro Maintainer와 원인을 추적. Hilt는 각 모듈의 클래스패스를 개별 처리하지만 Metro는 앱 모듈에서 전체 의존성 그래프를 분석한다는 차이를 바탕으로, public API에 노출된 `Preferences` 타입이 `implementation` 의존성에 가려진 것을 확인
@@ -113,8 +109,6 @@
 
 #### 웨이팅 신청 버튼의 상태가 갱신되지 않는 문제 해결
 
-<span style="font-size: 0.9em;">유니페스 · Android · Jetpack Compose · Snapshot State · derivedStateOf</span>
-
 - **문제**: 웨이팅 인원·전화번호·개인정보 동의 조건을 모두 충족해도 신청 버튼이 활성화되지 않아 현장 웨이팅을 등록할 수 없었음
 - **원인 분석**: `derivedStateOf` 내부의 `partySize`와 `isPrivacyPolicyClicked`는 Compose State가 아닌 일반 변수였음. `remember` key에도 두 값을 지정하지 않아 Snapshot 시스템이 변경을 추적하지 못하고 초기 값으로 유효성을 계속 계산한 사실을 확인
 - **해결**: 일반 변수인 인원 수와 동의 여부를 `remember` key로 명시하고, Snapshot State인 `TextFieldState.text`는 `derivedStateOf` 내부에서 관찰하도록 의존성 구성 수정
@@ -123,8 +117,6 @@
 [기술 블로그](https://velog.io/@mraz3068/derivedStateOf-Misconceptions)
 
 #### 동적 이미지와 겹치는 시스템 아이콘 가독성 개선
-
-<span style="font-size: 0.9em;">유니페스 · Android · Edge-to-edge · Bitmap · Luminance</span>
 
 - **문제**: 부스 상세 이미지가 StatusBar와 TopAppBar 영역까지 채워지면서, 이미지 밝기에 따라 상태 표시줄과 뒤로가기 아이콘이 배경에 묻혀 보이지 않음
 - **원인 분석**: 실제 배경은 매번 달라지는 네트워크 이미지인데 아이콘 색상은 라이트·다크 테마만 기준으로 결정하고 있었음. 이미지 휘도를 계산하는 초기 구현도 화면에 사용하지 않는 영역을 포함해 모든 픽셀을 순회
@@ -181,8 +173,6 @@
 
 #### KMP 이미지 저장·공유의 플랫폼 경계와 iOS 색상 왜곡 해결
 
-<span style="font-size: 0.9em;">반다라트 · Kotlin Multiplatform · Koin · expect/actual · CoreGraphics</span>
-
 - **문제**: Android `Context`·`MediaStore`·`FileProvider`에 의존하던 이미지 저장·공유 코드를 `commonMain`에서 사용할 수 없었고, iOS에서 `ImageBitmap`을 `UIImage`로 변환한 초기 구현은 이미지 색상이 바래짐
 - **원인 분석**: Android와 iOS는 네이티브 API와 URI 타입이 다르며, `ImageBitmap`과 `UIImage`도 픽셀·색 공간 처리 방식이 달라 하나의 구현을 그대로 공유할 수 없었음
 - **해결**: 공통 코드에는 `ImageHandlerProvider` 계약을 두고 Koin의 플랫폼별 모듈에서 `actual` 구현을 제공. Android는 `Application`을 주입해 `MediaStore`·`FileProvider`를 사용하고, iOS는 sRGB 색 공간과 알파·바이트 순서를 지정한 CoreGraphics 컨텍스트에서 `UIImage`로 변환
@@ -212,8 +202,6 @@
 - **검색 결과 최신성**: 조건이 바뀐 뒤 늦게 도착한 이전 응답이 최신 화면을 덮어쓰지 않도록 검색어 디바운스와 Flow `flatMapLatest`로 이전 검색 작업 취소
 
 #### Feature 모듈 간 화면 전환의 순환 의존성 해결
-
-<span style="font-size: 0.9em;">이끔 · Android · Multi-module · Hilt · Navigator</span>
 
 - **문제**: Login 모듈이 로그인 후 Main·Onboarding 화면을 참조하는 상태에서, Main 모듈의 로그아웃 기능이 Login 화면을 다시 참조해 `Login ↔ Main` 순환 의존성이 발생하고 모듈 관계를 구성할 수 없었음
 - **원인 분석**: Activity 기반 화면 전환을 위해 각 Feature 모듈이 이동할 화면의 구현 모듈을 직접 참조하고 있었음. Setting 모듈을 추가로 분리해도 화면 전환의 의존 방향이 그대로여서 순환 구조가 해소되지 않음을 확인
@@ -269,7 +257,7 @@ Android 기기별 `WindowInsets`, `DisplayCutout`, `RoundedCorner`, `FoldingFeat
 
 Web ↔ App JavaScript Bridge 메시지의 요청·응답·상태를 기기에서 실시간으로 확인하는 Android 디버깅 라이브러리
 
-<span style="font-size: 0.9em;">Kotlin · Jetpack Compose · WebView Bridge · Room</span> · [GitHub](https://github.com/easyhooon/dari) · [개발 배경](https://velog.io/@mraz3068/Android-WebView-Debugging-with-Dari-Library-Introduction) · [운영 적용 및 고도화](https://velog.io/@mraz3068/Improving-Dari-Library)
+[GitHub](https://github.com/easyhooon/dari) · [개발 배경](https://velog.io/@mraz3068/Android-WebView-Debugging-with-Dari-Library-Introduction) · [운영 적용 및 고도화](https://velog.io/@mraz3068/Improving-Dari-Library)
 
 - **개발 배경**: HTTP 통신은 Chucker로 요청과 응답을 쉽게 확인할 수 있지만, 표준화된 도구가 없는 WebView Bridge는 Logcat에서 흩어진 로그를 직접 찾고 짝지어야 했음. 호출이 빈번하거나 IDE를 연결할 수 없는 환경에서는 **문제 재현이 어렵고, 프론트엔드 개발자와 실패 지점을 공유하기도 힘든 상황**이 반복됨
 - **핵심 구현**: 브릿지 레이어에 Interceptor를 연결해 **Web-to-App/App-to-Web 메시지를 함께 수집**하고, 핸들러·상태별 검색과 필터링, Request/Response 매칭, JSON 포매팅, 복사·공유 기능을 제공. Persistent Notification과 Dynamic Shortcut으로 앱 밖에서도 최근 통신과 디버그 패널에 접근하도록 구성
@@ -282,8 +270,6 @@ Web ↔ App JavaScript Bridge 메시지의 요청·응답·상태를 기기에�
 
 #### Dari Desktop 배포 파일에서 실행 중 쓰지 않는 코드·라이브러리 걷어내기
 
-<span style="font-size: 0.9em;">Dari Desktop · Compose Desktop · ProGuard · Gradle Artifact Transform · DMG</span>
-
 - **문제**: macOS(arm64) DMG가 70.7 MB였음. 번들을 열어보니 실행 중 한 번도 로드되지 않는 파일이 상당 부분을 차지. arm64 앱 안에 Intel용 Skiko 네이티브 라이브러리(압축 전 21.7 MB)가 같이 들어 있었고, 축소하지 않은 jar가 35.6 MB
 - **원인 분석**: Skiko의 macOS 런타임 jar는 arm64·x64 라이브러리를 모두 담고 있고, Compose Gradle 플러그인은 현재 아키텍처용만 꺼낸 뒤 나머지를 jar에 다시 넣어 배포함을 확인. 최신 Skiko에서도 같은 구조라 버전 업그레이드로는 해결되지 않음
 - **해결**: Gradle artifact transform으로 패키징 전에 다른 아키텍처 라이브러리를 제거하고, Compose ProGuard release 빌드로 jar를 축소(로그 스택 트레이스를 읽을 수 있도록 난독화는 끄고 `META-INF/services`로 로드되는 클래스만 keep). 압축은 2.2.0에서 LZMA(ULMO)로 바꿔 58.1 MB까지 줄였으나, macOS 커널이 바로 풀지 못해 설치·앱 내 업데이트 때 앱 복사가 약 3배 느려지는 것을 측정하고 2.2.1에서 LZFSE(ULFO)로 변경(복사 17.6초 → 5.6초)
@@ -295,7 +281,7 @@ Web ↔ App JavaScript Bridge 메시지의 요청·응답·상태를 기기에�
 
 WebView의 현재 route와 **SPA route 변경을 Compose overlay로 확인**하는 Android 디버깅 라이브러리. IDE를 연결하지 않아도 웹뷰 화면의 현재 경로를 앱 안에서 확인해 라우팅 이슈 재현 시 경로를 함께 전달 가능
 
-<span style="font-size: 0.9em;">Kotlin · Jetpack Compose · WebView</span> · [GitHub](https://github.com/easyhooon/routepeek)
+[GitHub](https://github.com/easyhooon/routepeek)
 
 ## Open Source Contributions
 
@@ -318,8 +304,6 @@ Hi-me를 개발·운영하며 해결한 주요 문제를 원인 분석과 해결
 
 #### WebView Renderer 종료 후 사진 업로드 흐름 복구
 
-<span style="font-size: 0.9em;">Hi-me · Android · WebView · Frontend · Crashlytics</span>
-
 - **문제**: 특정 기기에서 카메라 촬영 후 앱으로 복귀하면 앱이 재시작된 것처럼 보이고, 촬영한 사진의 업로드 흐름이 중단됨
 - **원인 분석**: Crashlytics에 Fatal 로그가 없는 점에서 앱 프로세스와 WebView Renderer 종료를 분리해 추적. `onRenderProcessGone()`에 WebView 버전·URL·가용 메모리·`didCrash`를 Non-Fatal로 수집해 카메라 실행 중 **메모리 압박으로 Renderer가 시스템에 의해 종료**된 사실을 확인
 - **해결**: 앱 전체 재시작 로직을 제거하고 WebView를 재생성·복원. 네이티브는 촬영 요청과 결과를 **ViewModel의 pending state**로 보관하고, 웹 측에서는 request id와 진행 상태를 **TTL이 있는 `localStorage`**에 저장한 뒤 bridge ready 시 결과를 재전달하도록 구현해 네이티브-웹 양쪽 복구 흐름을 맞춤
@@ -328,8 +312,6 @@ Hi-me를 개발·운영하며 해결한 주요 문제를 원인 분석과 해결
 [기술 블로그](https://velog.io/@mraz3068/Camera-WebView-Crash-Troubleshooting)
 
 #### Compose-AndroidView 경계의 터치 이벤트 누수 해결
-
-<span style="font-size: 0.9em;">Hi-me · Android · Jetpack Compose · AndroidView · WebView · Pointer Input</span>
 
 - **문제**: 스플래시 오버레이 노출 중 터치가 하단 WebView까지 전달되어 JS 클릭 핸들러가 실행됨
 - **원인 분석**: `Modifier.clickable`은 Main pass에서 이벤트를 소비하지만, `AndroidViewHolder`의 `pointerInteropFilter`가 Initial pass에서 MotionEvent를 WebView로 먼저 전달하는 구조를 확인
@@ -340,8 +322,6 @@ Hi-me를 개발·운영하며 해결한 주요 문제를 원인 분석과 해결
 
 #### 하이브리드 앱의 백그라운드 음악 재생 구조 설계
 
-<span style="font-size: 0.9em;">Hi-me · Android · WebView Bridge · Media3 · MediaSession</span>
-
 - **문제**: Android WebView가 MediaSession을 지원하지 않고 백그라운드 진입 시 재생을 중단해, 웹 플레이어만으로는 잠금화면·알림 미디어 제어 요구사항을 충족할 수 없었음
 - **의사결정**: 일정과 하이브리드 앱의 구조적 일관성을 고려해 전체 화면의 네이티브 전환 대신, **웹은 포그라운드 UI를 맡고 네이티브는 백그라운드 재생을 맡는 역할 분리** 선택
 - **해결**: video.js와 Media3 ExoPlayer/MediaSession 사이에 **6개의 양방향 브릿지**를 정의. ExoPlayer 사전 준비와 전환 경과 시간 보정으로 재생 끊김을 줄이고, 양쪽 seek·play·pause 상태를 동기화
@@ -350,8 +330,6 @@ Hi-me를 개발·운영하며 해결한 주요 문제를 원인 분석과 해결
 [기술 블로그](https://velog.io/@mraz3068/Implementing-Music-Player-In-Android-Webview-Hybrid-App)
 
 #### BLE 의료기기 연동과 측정 데이터 동기화 안정화
-
-<span style="font-size: 0.9em;">Hi-me · Android · BLE · GATT · DataStore · Bluetooth</span>
 
 - **문제**: 혈당계·혈압계 연동에서 OS 본딩 상태와 앱 내 DataStore 연동 정보가 불일치하거나, 기기별 측정·전송 타이밍 차이로 데이터 동기화 실패와 중복 수신 가능성이 발생
 - **원인 분석**: Android BLE의 Connection/Bonding 생명주기, GATT 명령 순차 실행 제약, 혈당계 RACP 응답 후 자체 연결 종료, 혈압계 실시간 indication 방식의 차이를 분리해 추적
@@ -366,7 +344,7 @@ Hi-me를 개발·운영하며 해결한 주요 문제를 원인 분석과 해결
 
 #### 테스트가 없던 Java 7만 줄을 동작 변화 없이 Kotlin으로 전환
 
-<span style="font-size: 0.9em;">세컨드 윈드 · Android · Kotlin · JUnit · MockK · PIT Mutation Testing · MockWebServer</span> · 2026.10 완료 예정
+<span style="font-size: 0.9em;">2026.10 완료 예정</span>
 
 - **문제**: 9개 flavor 앱이 공유하는 Java 64,484줄에 단위 테스트가 하나도 없었음. 건강 데이터·BLE 기기·서버 요청이 얽힌 코드라 언어를 바꾸다 동작이 조금만 달라져도 사용자 데이터에 영향을 줄 수 있었는데, 이를 확인할 방법이 수동 QA뿐이었음
 - **검증 원칙**: 전환 전후 동작이 같다는 것을 테스트로 확인한 것만 머지. 리팩터링 중 찾은 기존 버그도 바로 고치지 않고 현재 동작 그대로 테스트에 고정해 옮긴 뒤 이슈로 추적하고, 전환이 끝나면 별도 fix PR에서 테스트 기대값을 바꿔 수정. 동작이 바뀐 이유가 전환 때문인지 버그 수정 때문인지 섞이지 않게 하기 위함
