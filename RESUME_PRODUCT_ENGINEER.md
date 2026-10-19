@@ -63,6 +63,12 @@ HD현대 그룹사 임직원 대상 건강관리 서비스 · [Google Play](http
 
 ## Side Projects · Frontend & Client–Server
 
+### Dari - WebView 브릿지 디버깅 라이브러리
+
+[GitHub](https://github.com/easyhooon/dari) · [Android Weekly #748](https://androidweekly.net/issues/issue-748) 소개 · 사내 앱 4종 적용
+
+- **Gradle 플러그인으로 수동 호출 제거**: 브릿지마다 직접 넣던 Interceptor 호출을 debug 빌드에서 자동 삽입하는 플러그인(ASM) 개발. KSP·컴파일러 플러그인·Proxy를 근거와 함께 배제하고, 매핑 없는 자동 수집은 읽을 수 없는 기록만 남는 것을 스파이크로 확인해 1회 매핑 방식 선택
+
 ### WindowInsets.Info - 기기별 화면 영역 측정·시각화 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2026.09 ~</span>
 
 [서비스](https://windowinsets.info) · [GitHub](https://github.com/easyhooon/windowinsets.info) · [개발 기록](https://velog.io/@mraz3068/windowinsets-rtl-automation)
