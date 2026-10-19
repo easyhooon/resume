@@ -21,67 +21,6 @@
 
 제품 요구사항을 구현하고 서비스를 운영하며 마주한 상태 관리와 의존성, 화면 전환, 플랫폼 확장 문제를 풀어왔습니다. 기술 선택은 해결할 문제와 프로젝트 상황을 기준으로 판단했으며, 그 경험을 라이브러리 개발과 오픈소스 기여로 확장했습니다. 직접 만든 [windowinsets.info](https://windowinsets.info/)와 [Dari](https://github.com/easyhooon/dari)는 각각 **Android Weekly #747·#748**에 소개되었습니다.
 
-## Company Troubleshooting
-
-### Hi-me - HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2025.10 ~</span>
-
-**Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.mediplussolution.hime) · 다운로드 **2,000+**
-
-Hi-me를 개발·운영하며 해결한 주요 문제를 원인 분석과 해결 결과 중심으로 정리했습니다.
-
-#### WebView Renderer 종료 후 사진 업로드 흐름 복구
-
-- **문제**: 특정 기기에서 카메라 촬영 후 앱으로 복귀하면 앱이 재시작된 것처럼 보이고, 촬영한 사진의 업로드 흐름이 중단됨
-- **원인 분석**: Crashlytics에 Fatal 로그가 없는 점에서 앱 프로세스와 WebView Renderer 종료를 분리해 추적. `onRenderProcessGone()`에 WebView 버전·URL·가용 메모리·`didCrash`를 Non-Fatal로 수집해 카메라 실행 중 **메모리 압박으로 Renderer가 시스템에 의해 종료**된 사실을 확인
-- **해결**: 앱 전체 재시작 로직을 제거하고 WebView를 재생성·복원. 네이티브는 촬영 요청과 결과를 **ViewModel의 pending state**로 보관하고, 웹 측에서는 request id와 진행 상태를 **TTL이 있는 `localStorage`**에 저장한 뒤 bridge ready 시 결과를 재전달하도록 구현해 네이티브-웹 양쪽 복구 흐름을 맞춤
-- **결과**: Renderer가 종료되어 JS 메모리와 callback이 유실되어도 **사용자가 진행하던 사진 요청을 복원해 업로드를 완료**할 수 있는 흐름 구축
-
-[기술 블로그](https://velog.io/@mraz3068/Camera-WebView-Crash-Troubleshooting)
-
-#### Compose-AndroidView 경계의 터치 이벤트 누수 해결
-
-- **문제**: 스플래시 오버레이 노출 중 터치가 하단 WebView까지 전달되어 JS 클릭 핸들러가 실행됨
-- **원인 분석**: `Modifier.clickable`은 Main pass에서 이벤트를 소비하지만, `AndroidViewHolder`의 `pointerInteropFilter`가 Initial pass에서 MotionEvent를 WebView로 먼저 전달하는 구조를 확인
-- **해결**: `pointerInput`과 `PointerEventPass.Initial`에서 터치 이벤트를 선점해 consume하는 **`blockTouches()` modifier**를 적용
-- **결과**: Compose overlay 아래의 WebView로 터치 이벤트가 전달되는 문제를 차단하고, Splash·Scrim·Loading overlay에 재사용 가능한 이벤트 차단 패턴 확보
-
-[기술 블로그](https://velog.io/@mraz3068/Exploring-Compose-Modifier-Clickable)
-
-#### 하이브리드 앱의 백그라운드 음악 재생 구조 설계
-
-- **문제**: Android WebView가 MediaSession을 지원하지 않고 백그라운드 진입 시 재생을 중단해, 웹 플레이어만으로는 잠금화면·알림 미디어 제어 요구사항을 충족할 수 없었음
-- **의사결정**: 일정과 하이브리드 앱의 구조적 일관성을 고려해 전체 화면의 네이티브 전환 대신, **웹은 포그라운드 UI를 맡고 네이티브는 백그라운드 재생을 맡는 역할 분리** 선택
-- **해결**: video.js와 Media3 ExoPlayer/MediaSession 사이에 **6개의 양방향 브릿지**를 정의. ExoPlayer 사전 준비와 전환 경과 시간 보정으로 재생 끊김을 줄이고, 양쪽 seek·play·pause 상태를 동기화
-- **결과**: 기존 웹 화면을 유지하면서 **백그라운드 재생, 잠금화면·알림 컨트롤, 포그라운드 복귀 시 재생 위치 복원** 지원
-
-[기술 블로그](https://velog.io/@mraz3068/Implementing-Music-Player-In-Android-Webview-Hybrid-App)
-
-#### BLE 의료기기 연동과 측정 데이터 동기화 안정화
-
-- **문제**: 혈당계·혈압계 연동에서 OS 본딩 상태와 앱 내 DataStore 연동 정보가 불일치하거나, 기기별 측정·전송 타이밍 차이로 데이터 동기화 실패와 중복 수신 가능성이 발생
-- **원인 분석**: Android BLE의 Connection/Bonding 생명주기, GATT 명령 순차 실행 제약, 혈당계 RACP 응답 후 자체 연결 종료, 혈압계 실시간 indication 방식의 차이를 분리해 추적
-- **해결**: DataStore의 연동 정보와 OS bondedDevices를 교차 검증하고, 혈당계는 **Report First, Then Delete** 전략으로 측정값을 먼저 확보한 뒤 기기 데이터를 삭제. 혈압계는 `lastSyncDate` 기준 필터링과 로컬 캐싱으로 중복 반영을 방지
-- **결과**: Report First, Then Delete와 `lastSyncDate` 기반 필터링·로컬 캐싱을 적용해 측정 데이터 누락·중복과 연동 상태 불일치 위험 완화
-
-[기술 블로그](https://velog.io/@mraz3068/Android-BLE-Bonding-and-Measurement-Data-Sync-Implementation)
-
-### 세컨드 윈드/닥터 - 만성질환자·암 수술 환자 건강관리·재활 서비스 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
-
-**Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.secondwindforpatentkr) · 5종 운영 · 전체 출시 앱 누적 다운로드 합산 **13,000+**
-
-#### 테스트가 없던 Java 6.4만 줄을 동작 변화 없이 Kotlin으로 전환
-
-<span style="font-size: 0.9em;">2026.10 완료 예정</span>
-
-- **문제**: 9개 flavor 앱이 공유하는 Java 64,484줄에 단위 테스트가 하나도 없었음. 건강 데이터·BLE 기기·서버 요청이 얽힌 코드라 언어를 바꾸다 동작이 조금만 달라져도 사용자 데이터에 영향을 줄 수 있었는데, 이를 확인할 방법이 수동 QA뿐이었음
-- **검증 원칙**: 전환 전후 동작이 같다는 것을 테스트로 확인한 것만 머지. 리팩터링 중 찾은 기존 버그도 바로 고치지 않고 현재 동작 그대로 테스트에 고정해 옮긴 뒤 이슈로 추적하고, 전환이 끝나면 별도 fix PR에서 테스트 기대값을 바꿔 수정. 동작이 바뀐 이유가 전환 때문인지 버그 수정 때문인지 섞이지 않게 하기 위함
-- **A-A 검증**: 파일마다 Java 원본으로 현재 동작과 공개 API 시그니처를 테스트에 먼저 고정(test 커밋)하고 Kotlin으로 옮긴 뒤(refactor 커밋), 스크립트가 test 커밋을 별도 worktree로 꺼내 같은 테스트를 Java·Kotlin 양쪽에서 돌려 비교. 전환 커밋에서 테스트가 바뀌면 실패하도록 해서 테스트를 코드에 맞춰 고치는 일을 막음
-- **뮤테이션 테스트**: 테스트가 통과해도 동작 변화를 실제로 잡아내는지 보기 위해 PIT로 코드를 자동 변형하고, `trim`·Locale·12시간 표기처럼 Java와 Kotlin 표준 함수 차이에서 생기는 변형은 직접 뮤턴트로 추가. 살아남은 뮤턴트는 Java 원본에서 다시 확인한 뒤 테스트를 보강
-- **골든 테스트**: 13,792줄짜리 서버 명령 클래스처럼 구조 자체를 바꾸는 경우는 클래스 단위로 비교할 수 없어서, MockWebServer로 정상·HTTP 오류·본문 오류·연결 끊김 등 응답 상황 12종을 재현하고 나가는 요청·콜백 순서·이벤트·저장 상태를 기록한 골든 케이스 **2,924건**과 대조
-- **결과**: 단위 테스트 **0개 → 1,619개**를 작성하며 Kotlin 비율 **14% → 89%**(Java 64,484줄 중 91% 제거, 남은 Java 6,018줄). 1만 줄이 넘던 God class 2개(2024.05 기준 `MainActivity` 18,368줄, API 호출 클래스 `ControlCommand` 14,652줄)를 정리. `MainActivity`는 `NativeCommandHandler`와 함께 책임별 Kotlin 클래스로 분리하고(전환 시작 시점 `MainActivity` 7,499줄 → 4,226줄, `NativeCommandHandler` 4,175줄 → Kotlin 167줄), `ControlCommand`는 골든 테스트를 통과한 상태로 정의 표 기반 Kotlin 실행기로 바꿔 전환 시작 시점 13,792줄 → 1,200줄
-- **전환 중 찾은 문제**: 동작을 테스트로 고정하다가 알람을 다시 읽으면 연도가 사라지는 문제, 체중계 사용자 ID를 엉뚱한 바이트에서 읽는 문제 등 사용자 데이터에 영향을 줄 수 있는 기존 버그 5건을 찾아 known issue로 등록. 근처 BLE 기기의 광고 이름이 이스케이프 없이 `evaluateJavascript`로 넘어가 웹뷰에서 임의 JS가 실행될 수 있는 보안 취약점도 발견해 `JSONObject` 이스케이프로 수정했고, 같은 패턴이 남은 곳을 정리 중
-- **이후 유지보수**: 기능을 고친 뒤 전체 테스트를 돌려 기존 동작이 바뀐 곳이 있는지 바로 확인하고, Kotlin 전환이 끝나면 known issue로 등록한 기존 버그 5건을 별도 fix PR에서 테스트 기대값을 바꿔 수정할 예정. 이어서 중복 테스트와 전환 이후 필요 없어진 테스트를 지워, 지금도 오래 걸리는 Robolectric·뮤테이션 테스트 실행 시간을 줄일 계획
-
 ## Side Projects
 
 ### YeoBee(여비) - 여행 비용 기록과 정산을 돕는 여행 가계부 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2026.01 ~</span>
@@ -354,6 +293,67 @@ Android 기기별 `WindowInsets`, `DisplayCutout`, `RoundedCorner`, `FoldingFeat
 - [compose-stability-analyzer](https://github.com/skydoves/compose-stability-analyzer) · [Pull Request](https://github.com/skydoves/compose-stability-analyzer/pull/7): README의 Logger 설정 코드와 실제 구현 간 불일치 수정
 - [Circuit](https://github.com/slackhq/circuit) · [Pull Request](https://github.com/slackhq/circuit/pull/1870): Circuit Navigation 공식 문서의 변수명 일관성 개선
 - [DroidKnightsApp](https://github.com/droidknights/DroidKnightsApp) · [Pull Request](https://github.com/droidknights/DroidKnightsApp/pull/274): Flow 반환 타입 함수의 불필요한 `suspend` 제거와 관련 테스트 코드 반영
+
+## Company Troubleshooting
+
+### Hi-me - HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2025.10 ~</span>
+
+**Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.mediplussolution.hime) · 다운로드 **2,000+**
+
+Hi-me를 개발·운영하며 해결한 주요 문제를 원인 분석과 해결 결과 중심으로 정리했습니다.
+
+#### WebView Renderer 종료 후 사진 업로드 흐름 복구
+
+- **문제**: 특정 기기에서 카메라 촬영 후 앱으로 복귀하면 앱이 재시작된 것처럼 보이고, 촬영한 사진의 업로드 흐름이 중단됨
+- **원인 분석**: Crashlytics에 Fatal 로그가 없는 점에서 앱 프로세스와 WebView Renderer 종료를 분리해 추적. `onRenderProcessGone()`에 WebView 버전·URL·가용 메모리·`didCrash`를 Non-Fatal로 수집해 카메라 실행 중 **메모리 압박으로 Renderer가 시스템에 의해 종료**된 사실을 확인
+- **해결**: 앱 전체 재시작 로직을 제거하고 WebView를 재생성·복원. 네이티브는 촬영 요청과 결과를 **ViewModel의 pending state**로 보관하고, 웹 측에서는 request id와 진행 상태를 **TTL이 있는 `localStorage`**에 저장한 뒤 bridge ready 시 결과를 재전달하도록 구현해 네이티브-웹 양쪽 복구 흐름을 맞춤
+- **결과**: Renderer가 종료되어 JS 메모리와 callback이 유실되어도 **사용자가 진행하던 사진 요청을 복원해 업로드를 완료**할 수 있는 흐름 구축
+
+[기술 블로그](https://velog.io/@mraz3068/Camera-WebView-Crash-Troubleshooting)
+
+#### Compose-AndroidView 경계의 터치 이벤트 누수 해결
+
+- **문제**: 스플래시 오버레이 노출 중 터치가 하단 WebView까지 전달되어 JS 클릭 핸들러가 실행됨
+- **원인 분석**: `Modifier.clickable`은 Main pass에서 이벤트를 소비하지만, `AndroidViewHolder`의 `pointerInteropFilter`가 Initial pass에서 MotionEvent를 WebView로 먼저 전달하는 구조를 확인
+- **해결**: `pointerInput`과 `PointerEventPass.Initial`에서 터치 이벤트를 선점해 consume하는 **`blockTouches()` modifier**를 적용
+- **결과**: Compose overlay 아래의 WebView로 터치 이벤트가 전달되는 문제를 차단하고, Splash·Scrim·Loading overlay에 재사용 가능한 이벤트 차단 패턴 확보
+
+[기술 블로그](https://velog.io/@mraz3068/Exploring-Compose-Modifier-Clickable)
+
+#### 하이브리드 앱의 백그라운드 음악 재생 구조 설계
+
+- **문제**: Android WebView가 MediaSession을 지원하지 않고 백그라운드 진입 시 재생을 중단해, 웹 플레이어만으로는 잠금화면·알림 미디어 제어 요구사항을 충족할 수 없었음
+- **의사결정**: 일정과 하이브리드 앱의 구조적 일관성을 고려해 전체 화면의 네이티브 전환 대신, **웹은 포그라운드 UI를 맡고 네이티브는 백그라운드 재생을 맡는 역할 분리** 선택
+- **해결**: video.js와 Media3 ExoPlayer/MediaSession 사이에 **6개의 양방향 브릿지**를 정의. ExoPlayer 사전 준비와 전환 경과 시간 보정으로 재생 끊김을 줄이고, 양쪽 seek·play·pause 상태를 동기화
+- **결과**: 기존 웹 화면을 유지하면서 **백그라운드 재생, 잠금화면·알림 컨트롤, 포그라운드 복귀 시 재생 위치 복원** 지원
+
+[기술 블로그](https://velog.io/@mraz3068/Implementing-Music-Player-In-Android-Webview-Hybrid-App)
+
+#### BLE 의료기기 연동과 측정 데이터 동기화 안정화
+
+- **문제**: 혈당계·혈압계 연동에서 OS 본딩 상태와 앱 내 DataStore 연동 정보가 불일치하거나, 기기별 측정·전송 타이밍 차이로 데이터 동기화 실패와 중복 수신 가능성이 발생
+- **원인 분석**: Android BLE의 Connection/Bonding 생명주기, GATT 명령 순차 실행 제약, 혈당계 RACP 응답 후 자체 연결 종료, 혈압계 실시간 indication 방식의 차이를 분리해 추적
+- **해결**: DataStore의 연동 정보와 OS bondedDevices를 교차 검증하고, 혈당계는 **Report First, Then Delete** 전략으로 측정값을 먼저 확보한 뒤 기기 데이터를 삭제. 혈압계는 `lastSyncDate` 기준 필터링과 로컬 캐싱으로 중복 반영을 방지
+- **결과**: Report First, Then Delete와 `lastSyncDate` 기반 필터링·로컬 캐싱을 적용해 측정 데이터 누락·중복과 연동 상태 불일치 위험 완화
+
+[기술 블로그](https://velog.io/@mraz3068/Android-BLE-Bonding-and-Measurement-Data-Sync-Implementation)
+
+### 세컨드 윈드/닥터 - 만성질환자·암 수술 환자 건강관리·재활 서비스 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
+
+**Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.secondwindforpatentkr) · 5종 운영 · 전체 출시 앱 누적 다운로드 합산 **13,000+**
+
+#### 테스트가 없던 Java 6.4만 줄을 동작 변화 없이 Kotlin으로 전환
+
+<span style="font-size: 0.9em;">2026.10 완료 예정</span>
+
+- **문제**: 9개 flavor 앱이 공유하는 Java 64,484줄에 단위 테스트가 하나도 없었음. 건강 데이터·BLE 기기·서버 요청이 얽힌 코드라 언어를 바꾸다 동작이 조금만 달라져도 사용자 데이터에 영향을 줄 수 있었는데, 이를 확인할 방법이 수동 QA뿐이었음
+- **검증 원칙**: 전환 전후 동작이 같다는 것을 테스트로 확인한 것만 머지. 리팩터링 중 찾은 기존 버그도 바로 고치지 않고 현재 동작 그대로 테스트에 고정해 옮긴 뒤 이슈로 추적하고, 전환이 끝나면 별도 fix PR에서 테스트 기대값을 바꿔 수정. 동작이 바뀐 이유가 전환 때문인지 버그 수정 때문인지 섞이지 않게 하기 위함
+- **A-A 검증**: 파일마다 Java 원본으로 현재 동작과 공개 API 시그니처를 테스트에 먼저 고정(test 커밋)하고 Kotlin으로 옮긴 뒤(refactor 커밋), 스크립트가 test 커밋을 별도 worktree로 꺼내 같은 테스트를 Java·Kotlin 양쪽에서 돌려 비교. 전환 커밋에서 테스트가 바뀌면 실패하도록 해서 테스트를 코드에 맞춰 고치는 일을 막음
+- **뮤테이션 테스트**: 테스트가 통과해도 동작 변화를 실제로 잡아내는지 보기 위해 PIT로 코드를 자동 변형하고, `trim`·Locale·12시간 표기처럼 Java와 Kotlin 표준 함수 차이에서 생기는 변형은 직접 뮤턴트로 추가. 살아남은 뮤턴트는 Java 원본에서 다시 확인한 뒤 테스트를 보강
+- **골든 테스트**: 13,792줄짜리 서버 명령 클래스처럼 구조 자체를 바꾸는 경우는 클래스 단위로 비교할 수 없어서, MockWebServer로 정상·HTTP 오류·본문 오류·연결 끊김 등 응답 상황 12종을 재현하고 나가는 요청·콜백 순서·이벤트·저장 상태를 기록한 골든 케이스 **2,924건**과 대조
+- **결과**: 단위 테스트 **0개 → 1,619개**를 작성하며 Kotlin 비율 **14% → 89%**(Java 64,484줄 중 91% 제거, 남은 Java 6,018줄). 1만 줄이 넘던 God class 2개(2024.05 기준 `MainActivity` 18,368줄, API 호출 클래스 `ControlCommand` 14,652줄)를 정리. `MainActivity`는 `NativeCommandHandler`와 함께 책임별 Kotlin 클래스로 분리하고(전환 시작 시점 `MainActivity` 7,499줄 → 4,226줄, `NativeCommandHandler` 4,175줄 → Kotlin 167줄), `ControlCommand`는 골든 테스트를 통과한 상태로 정의 표 기반 Kotlin 실행기로 바꿔 전환 시작 시점 13,792줄 → 1,200줄
+- **전환 중 찾은 문제**: 동작을 테스트로 고정하다가 알람을 다시 읽으면 연도가 사라지는 문제, 체중계 사용자 ID를 엉뚱한 바이트에서 읽는 문제 등 사용자 데이터에 영향을 줄 수 있는 기존 버그 5건을 찾아 known issue로 등록. 근처 BLE 기기의 광고 이름이 이스케이프 없이 `evaluateJavascript`로 넘어가 웹뷰에서 임의 JS가 실행될 수 있는 보안 취약점도 발견해 `JSONObject` 이스케이프로 수정했고, 같은 패턴이 남은 곳을 정리 중
+- **이후 유지보수**: 기능을 고친 뒤 전체 테스트를 돌려 기존 동작이 바뀐 곳이 있는지 바로 확인하고, Kotlin 전환이 끝나면 known issue로 등록한 기존 버그 5건을 별도 fix PR에서 테스트 기대값을 바꿔 수정할 예정. 이어서 중복 테스트와 전환 이후 필요 없어진 테스트를 지워, 지금도 오래 걸리는 Robolectric·뮤테이션 테스트 실행 시간을 줄일 계획
 
 ## Awards
 
