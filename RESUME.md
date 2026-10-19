@@ -105,12 +105,12 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 ## Open Source
 
-- **[windowinsets.info](https://windowinsets.info/): [Android Weekly #747](https://androidweekly.net/issues/issue-747) 소개** (2026.10.04)
-  - Android 기기별 WindowInsets·DisplayCutout 측정·시각화 도구
 - **[Dari](https://github.com/easyhooon/dari): [Android Weekly #748](https://androidweekly.net/issues/issue-748) 소개** (2026.10.11), 사내 앱 4종 적용
-  - 웹뷰 브릿지 메시지는 Chrome inspector에 보이지 않아 IDE를 연결해야만 확인할 수 있던 문제를 해결하려고 직접 만든 라이브러리. 최근 30일 다운로드 189회(Scarf)
+  - 웹뷰 브릿지 메시지는 Chrome inspector에 보이지 않아 IDE를 연결해야만 확인할 수 있던 문제를 해결하려고 직접 만든 라이브러리
   - Hi-me·세컨드 윈드·브리시드·마이밸런스에서 Logcat으로 요청·응답을 짝짓는 대신 기기·PC 화면에서 바로 확인하고, QA(STG) 빌드의 버그는 테스트 기기에 남은 로그를 프론트엔드 개발자에게 넘겨 웹·앱 중 어느 쪽 실패인지 함께 판단
-  - adb로 연결해 PC에서 메시지를 보는 Desktop 앱을 macOS·Windows·Linux용으로 배포. ProGuard·아키텍처별 네이티브 라이브러리 정리와 LZFSE 압축 전환으로 macOS DMG를 70.7 MB → 43.3 MB(38.7% 감소)로 축소
+  - adb로 연결해 PC에서 메시지를 보는 Desktop 앱을 macOS·Windows·Linux용으로 배포. ProGuard·아키텍처별 네이티브 라이브러리 정리와 LZFSE 압축 전환으로 macOS DMG를 70.7 MB → 45.4 MB(35.7% 감소, 2.5.2 기준)로 축소
+- **[windowinsets.info](https://windowinsets.info/): [Android Weekly #747](https://androidweekly.net/issues/issue-747) 소개** (2026.10.04)
+  - Galaxy·Pixel 기기별 WindowInsets·DisplayCutout을 측정해 디바이스 프리뷰와 수치로 확인하도록 지원
 - [RoutePeek](https://github.com/easyhooon/routepeek): WebView의 현재 route와 SPA route 변경을 Compose overlay로 확인하는 Android 디버깅 라이브러리. 앱 안에서 경로를 확인해 라우팅 이슈 재현·공유 지원.
 
 ## Other Experience

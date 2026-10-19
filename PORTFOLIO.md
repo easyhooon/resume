@@ -234,6 +234,38 @@
 > - 1년 3개월 동안 서비스를 운영·리팩토링하며 수동 Fragment 전환을 Jetpack Navigation으로, LiveData를 StateFlow로, SharedPreferences를 DataStore로 단계적으로 바꾸는 과정에서 Android 개발 방식의 변화를 직접 경험함
 > - 기존 수강·알림 흐름을 유지한 채 화면과 상태 관리 책임을 단계적으로 옮기며, 운영 중인 제품의 리팩토링은 새 기술 도입보다 기존 동작을 깨뜨리지 않는 전환 순서가 중요함을 배움
 
+## Libraries
+
+### Dari - WebView Bridge Inspector
+
+Web ↔ App JavaScript Bridge 메시지의 요청·응답·상태를 기기에서 실시간으로 확인하는 Android 디버깅 라이브러리
+
+[GitHub](https://github.com/easyhooon/dari) · [개발 배경](https://velog.io/@mraz3068/Android-WebView-Debugging-with-Dari-Library-Introduction) · [운영 적용 및 고도화](https://velog.io/@mraz3068/Improving-Dari-Library)
+
+- **개발 배경**: HTTP 통신은 Chucker로 요청과 응답을 쉽게 확인할 수 있지만, 표준화된 도구가 없는 WebView Bridge는 Logcat에서 흩어진 로그를 직접 찾고 짝지어야 했음. 호출이 빈번하거나 IDE를 연결할 수 없는 환경에서는 **문제 재현이 어렵고, 프론트엔드 개발자와 실패 지점을 공유하기도 힘든 상황**이 반복됨
+- **핵심 구현**: 브릿지 레이어에 Interceptor를 연결해 **Web-to-App/App-to-Web 메시지를 함께 수집**하고, 핸들러·상태별 검색과 필터링, Request/Response 매칭, JSON 포매팅, 복사·공유 기능을 제공. Persistent Notification과 Dynamic Shortcut으로 앱 밖에서도 최근 통신과 디버그 패널에 접근하도록 구성
+- **운영 검증과 고도화**: 실제 운영 서비스의 개발 환경에 적용한 뒤 인메모리 로그 유실, 단방향 이벤트, 다중 WebView 로그 충돌, 대용량 payload 공유 시 `TransactionTooLargeException`을 발견. **인메모리 `StateFlow` 즉시 반영과 Room 비동기 저장, 최대 건수·TTL 기반 로그 정리, optional request id, 브릿지별 tag, payload 길이 제한**을 도입해 해결
+- **사용성 개선**: 전체 로그 JSON 내보내기, `Error`·`In Progress`·`Success` 메시지 상태 필터, 다크모드, shake-to-open을 추가하고 흔들기 감지를 방향 반전 카운팅 방식으로 바꿔 오탐 완화
+- **프로덕션 안전성**: Debug 빌드에서는 통신을 기록하고 Release 빌드에서는 동일한 API의 **`dari-noop` 모듈로 교체**해 로그 노출과 런타임 오버헤드를 방지
+- **Dari Desktop**: 기기 화면에서 긴 JSON을 읽기 어려운 문제를 줄이기 위해, adb만으로 연결 기기의 브릿지 메시지를 PC에서 요청·응답 나란히 보여주는 Compose Desktop 앱 개발. 토큰·비밀번호·쿠키는 기기에서 마스킹한 뒤 전송하고, macOS 서명·공증과 앱 내 업데이트, Windows 배포와 Linux 프리뷰 배포까지 구성
+- **사내 도입**: Hi-me·세컨드 윈드·브리시드·마이밸런스 4개 앱의 Debug 빌드에 적용하고, Hi-me는 QA(STG) 빌드에도 포함. 전에는 Logcat에서 요청과 응답을 직접 찾아 짝지어야 했고, 프론트엔드 개발자는 네이티브 로그를 볼 수 없어 실패가 웹 쪽인지 앱 쪽인지 말로 맞춰봐야 했음. 지금은 양쪽 개발자가 기기나 PC 화면에서 같은 요청·응답을 보고 로그를 주고받으며 원인을 찾고, IDE를 연결할 수 없는 QA(STG) 환경의 버그도 테스트 기기에 남은 로그로 추적
+- **성과**: [Android Weekly #748](https://androidweekly.net/issues/issue-748) Libraries & Code 섹션 소개 (2026.10.11). 반복되는 사내 디버깅 문제를 **재사용 가능한 오픈소스 도구로 전환**하고, 직접 사용하는 서비스에서 발견한 예외 상황을 다시 라이브러리 개선으로 연결
+
+#### Dari Desktop 배포 파일에서 실행 중 쓰지 않는 코드·라이브러리 걷어내기
+
+- **문제**: macOS(arm64) DMG가 70.7 MB였음. 번들을 열어보니 실행 중 한 번도 로드되지 않는 파일이 상당 부분을 차지. arm64 앱 안에 Intel용 Skiko 네이티브 라이브러리(압축 전 21.7 MB)가 같이 들어 있었고, 축소하지 않은 jar가 35.6 MB
+- **원인 분석**: Skiko의 macOS 런타임 jar는 arm64·x64 라이브러리를 모두 담고 있고, Compose Gradle 플러그인은 현재 아키텍처용만 꺼낸 뒤 나머지를 jar에 다시 넣어 배포함을 확인. 최신 Skiko에서도 같은 구조라 버전 업그레이드로는 해결되지 않음
+- **해결**: Gradle artifact transform으로 패키징 전에 다른 아키텍처 라이브러리를 제거하고, Compose ProGuard release 빌드로 jar를 축소(로그 스택 트레이스를 읽을 수 있도록 난독화는 끄고 `META-INF/services`로 로드되는 클래스만 keep). 압축은 2.2.0에서 LZMA(ULMO)로 바꿔 58.1 MB까지 줄였으나, macOS 커널이 바로 풀지 못해 설치·앱 내 업데이트 때 앱 복사가 약 3배 느려지는 것을 측정하고 2.2.1에서 LZFSE(ULFO)로 변경(복사 17.6초 → 5.6초)
+- **결과**: 2.2.1 기준 arm64 DMG **70.7 MB → 43.3 MB(38.7% 감소)**, Windows MSI 59.6 MB → 46.1 MB. 이후 기능이 추가된 2.5.2의 arm64 DMG는 45.4 MB. 앱 시작 시간은 측정상 차이가 없었고, ProGuard 빌드의 동작을 macOS는 실사용, Windows는 실기기, Linux는 Ubuntu 가상 머신에서 확인
+
+[Skiko 중복 제거 PR](https://github.com/easyhooon/dari/pull/146) · [ProGuard 적용 PR](https://github.com/easyhooon/dari/pull/148) · [DMG 압축 형식 PR](https://github.com/easyhooon/dari/pull/150)
+
+### RoutePeek - WebView Route Inspector
+
+WebView의 현재 route와 **SPA route 변경을 Compose overlay로 확인**하는 Android 디버깅 라이브러리. IDE를 연결하지 않아도 웹뷰 화면의 현재 경로를 앱 안에서 확인해 라우팅 이슈 재현 시 경로를 함께 전달 가능
+
+[GitHub](https://github.com/easyhooon/routepeek)
+
 ## Open Source Project
 
 ### windowinsets.info - Android WindowInsets 측정·시각화 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2026.09 ~</span>
@@ -250,38 +282,6 @@ Android 기기별 `WindowInsets`, `DisplayCutout`, `RoundedCorner`, `FoldingFeat
 - **측정 과정 자동화**: Samsung Remote Test Lab에서 결과 파일을 수동으로 내려받던 병목을 줄이기 위해, Probe → 업로드 API → GitHub PR로 원본 JSON을 모으는 흐름 구축. Fold8·Flip8 실기기 측정값이 PR에 도착하는 것까지 확인
 - **출처가 보이는 데이터 제공**: 실기기·Samsung RTL·Android Emulator 측정값을 구분하고, 확인되지 않은 값은 추정하지 않고 미측정으로 표시. Galaxy와 Pixel의 디스플레이별 `WindowInsets`·`DisplayCutout`을 디바이스 프리뷰와 수치로 함께 확인할 수 있도록 구성
 - **성과**: [Android Weekly #747](https://androidweekly.net/issues/issue-747) Libraries & Code 섹션에 **Android Window Insets & Safe Areas**로 소개 (2026.10.04)
-
-## Libraries
-
-### Dari - WebView Bridge Inspector
-
-Web ↔ App JavaScript Bridge 메시지의 요청·응답·상태를 기기에서 실시간으로 확인하는 Android 디버깅 라이브러리
-
-[GitHub](https://github.com/easyhooon/dari) · [개발 배경](https://velog.io/@mraz3068/Android-WebView-Debugging-with-Dari-Library-Introduction) · [운영 적용 및 고도화](https://velog.io/@mraz3068/Improving-Dari-Library)
-
-- **개발 배경**: HTTP 통신은 Chucker로 요청과 응답을 쉽게 확인할 수 있지만, 표준화된 도구가 없는 WebView Bridge는 Logcat에서 흩어진 로그를 직접 찾고 짝지어야 했음. 호출이 빈번하거나 IDE를 연결할 수 없는 환경에서는 **문제 재현이 어렵고, 프론트엔드 개발자와 실패 지점을 공유하기도 힘든 상황**이 반복됨
-- **핵심 구현**: 브릿지 레이어에 Interceptor를 연결해 **Web-to-App/App-to-Web 메시지를 함께 수집**하고, 핸들러·상태별 검색과 필터링, Request/Response 매칭, JSON 포매팅, 복사·공유 기능을 제공. Persistent Notification과 Dynamic Shortcut으로 앱 밖에서도 최근 통신과 디버그 패널에 접근하도록 구성
-- **운영 검증과 고도화**: 실제 운영 서비스의 개발 환경에 적용한 뒤 인메모리 로그 유실, 단방향 이벤트, 다중 WebView 로그 충돌, 대용량 payload 공유 시 `TransactionTooLargeException`을 발견. **인메모리 `StateFlow` 즉시 반영과 Room 비동기 저장, 최대 건수·TTL 기반 로그 정리, optional request id, 브릿지별 tag, payload 길이 제한**을 도입해 해결
-- **사용성 개선**: 전체 로그 JSON 내보내기, `Error`·`In Progress`·`Success` 메시지 상태 필터, 다크모드, shake-to-open을 추가하고 흔들기 감지를 방향 반전 카운팅 방식으로 바꿔 오탐 완화
-- **프로덕션 안전성**: Debug 빌드에서는 통신을 기록하고 Release 빌드에서는 동일한 API의 **`dari-noop` 모듈로 교체**해 로그 노출과 런타임 오버헤드를 방지
-- **Dari Desktop**: 기기 화면에서 긴 JSON을 읽기 어려운 문제를 줄이기 위해, adb만으로 연결 기기의 브릿지 메시지를 PC에서 요청·응답 나란히 보여주는 Compose Desktop 앱 개발. 토큰·비밀번호·쿠키는 기기에서 마스킹한 뒤 전송하고, macOS 서명·공증과 앱 내 업데이트, Windows·Linux 프리뷰 배포까지 구성
-- **사내 도입**: Hi-me·세컨드 윈드·브리시드·마이밸런스 4개 앱의 Debug 빌드에 적용하고, Hi-me는 QA(STG) 빌드에도 포함. 전에는 Logcat에서 요청과 응답을 직접 찾아 짝지어야 했고, 프론트엔드 개발자는 네이티브 로그를 볼 수 없어 실패가 웹 쪽인지 앱 쪽인지 말로 맞춰봐야 했음. 지금은 양쪽 개발자가 기기나 PC 화면에서 같은 요청·응답을 보고 로그를 주고받으며 원인을 찾고, IDE를 연결할 수 없는 QA(STG) 환경의 버그도 테스트 기기에 남은 로그로 추적
-- **성과**: [Android Weekly #748](https://androidweekly.net/issues/issue-748) Libraries & Code 섹션 소개 (2026.10.11). Maven Central의 `dari` 최근 30일 다운로드 **189회**(Scarf 기준). 반복되는 사내 디버깅 문제를 **재사용 가능한 오픈소스 도구로 전환**하고, 직접 사용하는 서비스에서 발견한 예외 상황을 다시 라이브러리 개선으로 연결
-
-#### Dari Desktop 배포 파일에서 실행 중 쓰지 않는 코드·라이브러리 걷어내기
-
-- **문제**: macOS(arm64) DMG가 70.7 MB였음. 번들을 열어보니 실행 중 한 번도 로드되지 않는 파일이 상당 부분을 차지. arm64 앱 안에 Intel용 Skiko 네이티브 라이브러리(압축 전 21.7 MB)가 같이 들어 있었고, 축소하지 않은 jar가 35.6 MB
-- **원인 분석**: Skiko의 macOS 런타임 jar는 arm64·x64 라이브러리를 모두 담고 있고, Compose Gradle 플러그인은 현재 아키텍처용만 꺼낸 뒤 나머지를 jar에 다시 넣어 배포함을 확인. 최신 Skiko에서도 같은 구조라 버전 업그레이드로는 해결되지 않음
-- **해결**: Gradle artifact transform으로 패키징 전에 다른 아키텍처 라이브러리를 제거하고, Compose ProGuard release 빌드로 jar를 축소(로그 스택 트레이스를 읽을 수 있도록 난독화는 끄고 `META-INF/services`로 로드되는 클래스만 keep). 압축은 2.2.0에서 LZMA(ULMO)로 바꿔 58.1 MB까지 줄였으나, macOS 커널이 바로 풀지 못해 설치·앱 내 업데이트 때 앱 복사가 약 3배 느려지는 것을 측정하고 2.2.1에서 LZFSE(ULFO)로 변경(복사 17.6초 → 5.6초)
-- **결과**: arm64 DMG **70.7 MB → 43.3 MB(38.7% 감소)**, Windows MSI 59.6 MB → 46.1 MB. 앱 시작 시간은 측정상 차이가 없었고, ProGuard 빌드의 동작을 macOS는 실사용, Windows는 실기기, Linux는 Ubuntu 가상 머신에서 확인
-
-[Skiko 중복 제거 PR](https://github.com/easyhooon/dari/pull/146) · [ProGuard 적용 PR](https://github.com/easyhooon/dari/pull/148) · [DMG 압축 형식 PR](https://github.com/easyhooon/dari/pull/150)
-
-### RoutePeek - WebView Route Inspector
-
-WebView의 현재 route와 **SPA route 변경을 Compose overlay로 확인**하는 Android 디버깅 라이브러리. IDE를 연결하지 않아도 웹뷰 화면의 현재 경로를 앱 안에서 확인해 라우팅 이슈 재현 시 경로를 함께 전달 가능
-
-[GitHub](https://github.com/easyhooon/routepeek)
 
 ## Open Source Contributions
 
