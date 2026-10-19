@@ -90,6 +90,8 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
   - 앱 코드의 약 73%(20,189줄)를 Android·iOS 공통 코드로 유지해 기능 추가·수정을 한 번에 양쪽에 반영
 - **서버 중단 이후에도 서비스 유지**: 서버 API 의존 구조를 로컬 Room Database 기반으로 전환
 - **넓은 화면 레이아웃 대응**: 기기 종류 대신 화면 비율 기준으로 레이아웃을 나눠, Galaxy Z Fold·iPhone Duo·iPad에서는 목표 정보(제목·달성률·마감일)와 계획표를 좌우로 나란히 배치
+- **Circuit 기반 상태 로직 분리**
+  - Slack Circuit Presenter로 계획표 상태 생성과 이벤트 처리를 UI에서 분리해 상태 로직을 독립적으로 테스트할 수 있게 하고, UI 컴포저블은 렌더링과 이벤트 전달에만 집중하도록 구성
 
 ### 유니페스 : 대학축제의 지도를 펼쳐라! <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.03 ~ 2025.10</span>
 
