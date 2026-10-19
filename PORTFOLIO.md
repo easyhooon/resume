@@ -252,6 +252,10 @@ Web ↔ App JavaScript Bridge 메시지의 요청·응답·상태를 기기에�
 - **사용성 개선**: 전체 로그 JSON 내보내기, `Error`·`In Progress`·`Success` 메시지 상태 필터, 다크모드, shake-to-open을 추가하고 흔들기 감지를 방향 반전 카운팅 방식으로 바꿔 오탐 완화
 - **프로덕션 안전성**: Debug 빌드에서는 통신을 기록하고 Release 빌드에서는 동일한 API의 **`dari-noop` 모듈로 교체**해 로그 노출과 런타임 오버헤드를 방지
 - **Dari Desktop**: 기기 화면에서 긴 JSON을 읽기 어려운 문제를 줄이기 위해, adb만으로 연결 기기의 브릿지 메시지를 PC에서 요청·응답 나란히 보여주는 Compose Desktop 앱 개발. 토큰·비밀번호·쿠키는 기기에서 마스킹한 뒤 전송하고, macOS 서명·공증과 앱 내 업데이트, Windows 배포와 Linux 프리뷰 배포까지 구성
+- **Gradle 플러그인으로 수동 호출 제거**: Chucker는 OkHttp Interceptor 한 줄로 모든 HTTP 통신을 기록하지만, 웹뷰 브릿지는 표준 프로토콜과 단일 진입점이 없어 호출 지점마다 Interceptor 코드를 직접 넣어야 했음([#4](https://github.com/easyhooon/dari/issues/4))
+  - 대안 검토: KSP는 새 파일만 생성해 기존 `@JavascriptInterface` 본문을 고칠 수 없고, Kotlin IR 컴파일러 플러그인은 Java 브릿지와 AAR 안 클래스를 놓치며 Kotlin 버전마다 컴파일러 내부 API를 따라가야 하고, `java.lang.reflect.Proxy`는 WebView가 실제 클래스에 선언된 `@JavascriptInterface` 메서드만 노출해 동작하지 않는다는 근거로 배제
+  - 스파이크: AGP Instrumentation API(`AsmClassVisitorFactory`)로 매핑 없이 모든 `@JavascriptInterface` 메서드와 `evaluateJavascript` 호출을 잡아 보니, 실기기에서 요청 10건과 응답 7건이 모두 기록됐지만 핸들러가 `BridgeInterface.onBridgeRequest`로, 응답이 `javascript:onBridgeResponse(…)` 스크립트 문자열로 남고 `simulateError`도 SUCCESS로 기록돼 읽을 수 없는 데이터가 됨을 확인. 그래서 브릿지 메서드를 `dari { }`에 한 번 매핑하는 방식과 완료 기준(release 빌드 미변경, `dari-noop` debug 빌드 정상 동작, 기본 계측 범위는 프로젝트 클래스)을 정의
+  - 구현·검증: debug 빌드에서만 매핑한 메서드와 `addJavascriptInterface` 호출부, `doUpdateVisitedHistory`를 ASM으로 고쳐 같은 `DariInterceptor` 호출을 삽입. 실기기에서 같은 시나리오(페이지 동작 16개와 App→Web 호출)를 돌려 기록 18건의 핸들러·payload·상태가 수동 방식과 같음을 확인했고, 응답이 없는 fire-and-forget 호출은 IN_PROGRESS에 머물지 않고 SUCCESS로 처리. 수동 API는 기본값으로 유지해 기존 사용자는 버전만 올리면 됨([PR #218](https://github.com/easyhooon/dari/pull/218), 2.6.0)
 - **사내 도입**: Hi-me·세컨드 윈드·브리시드·마이밸런스 4개 앱의 Debug 빌드에 적용하고, Hi-me는 QA(STG) 빌드에도 포함. 전에는 Logcat에서 요청과 응답을 직접 찾아 짝지어야 했고, 프론트엔드 개발자는 네이티브 로그를 볼 수 없어 실패가 웹 쪽인지 앱 쪽인지 말로 맞춰봐야 했음. 지금은 양쪽 개발자가 기기나 PC 화면에서 같은 요청·응답을 보고 로그를 주고받으며 원인을 찾고, IDE를 연결할 수 없는 QA(STG) 환경의 버그도 테스트 기기에 남은 로그로 추적
 - **성과**: [Android Weekly #748](https://androidweekly.net/issues/issue-748) Libraries & Code 섹션 소개 (2026.10.11). 반복되는 사내 디버깅 문제를 **재사용 가능한 오픈소스 도구로 전환**하고, 직접 사용하는 서비스에서 발견한 예외 상황을 다시 라이브러리 개선으로 연결
 
@@ -361,7 +365,7 @@ Hi-me를 개발·운영하며 해결한 주요 문제를 원인 분석과 해결
 - **전환 중 찾은 문제**: 동작을 테스트로 고정하다가 알람을 다시 읽으면 연도가 사라지는 문제, 체중계 사용자 ID를 엉뚱한 바이트에서 읽는 문제 등 사용자 데이터에 영향을 줄 수 있는 기존 버그 5건을 찾아 known issue로 등록. 근처 BLE 기기의 광고 이름이 이스케이프 없이 `evaluateJavascript`로 넘어가 웹뷰에서 임의 JS가 실행될 수 있는 보안 취약점도 발견해 `JSONObject` 이스케이프로 수정했고, 같은 패턴이 남은 곳을 정리 중
 - **이후 유지보수**: 기능을 고친 뒤 전체 테스트를 돌려 기존 동작이 바뀐 곳이 있는지 바로 확인하고, 남은 Java는 Realm → Room 교체(마이그레이션 테스트로 기존 데이터 읽기를 먼저 고정) 때 옮긴 뒤 known issue로 등록한 기존 버그 5건을 별도 fix PR에서 테스트 기대값을 바꿔 수정할 예정. 이어서 중복 테스트와 전환 이후 필요 없어진 테스트를 지워, 지금도 오래 걸리는 Robolectric·뮤테이션 테스트 실행 시간을 줄일 계획
 
-[기술 블로그](https://velog.io/@mraz3068/Java-To-Kotlin-Migration-In-Two-Weeks)
+[기술 블로그](https://velog.io/@mraz3068/Java-To-Kotlin-Migration-With-AI)
 
 ## Awards
 
