@@ -45,8 +45,8 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 만성질환자와 암 수술 환자를 위한 맞춤 건강관리·재활 서비스 · [세컨드 윈드](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.secondwindforpatentkr)와 유방암·전립선암·대장암·위암 대상 [세컨드 닥터](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.breastcancer) 4종으로 현재 총 5종 운영 · 전체 출시 앱 Google Play 누적 다운로드 합산 **13,000+**
 
-- **테스트 없는 Java 6.4만 줄 → Kotlin 전환 주도** (2026.10 완료 예정, Kotlin 비율 14% → 76%)
-  - 원본 동작을 테스트로 고정해 전환 전후를 비교하는 A-A 검증과 뮤테이션 테스트로 모든 전환을 확인하며 단위 테스트 0개 → 1,580개 작성
+- **테스트 없는 Java 6.4만 줄 → Kotlin 전환 주도** (2026.10 완료 예정, Kotlin 비율 14% → 89%)
+  - 원본 동작을 테스트로 고정해 전환 전후를 비교하는 A-A 검증과 뮤테이션 테스트로 모든 전환을 확인하며 단위 테스트 0개 → 1,619개 작성
   - 1만 줄이 넘던 God class 2개(`MainActivity`, API 호출 클래스 `ControlCommand`)를 책임별 Kotlin 클래스와 정의 표 기반 실행기로 분리
   - 전환 중 찾은 기존 버그는 이슈로 따로 관리하고, BLE 기기 이름이 웹뷰에서 JS로 실행되는 보안 취약점은 먼저 수정
 - **로그인 후 첫 데이터 로딩 60.6% 단축** (2.835초 → 1.116초)
