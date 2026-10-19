@@ -113,7 +113,7 @@ HD현대 그룹사 임직원 대상 건강관리 서비스 · [Google Play](http
 
 ## Other Experience
 
-- 메디플러스솔루션 브리시드 심리상담센터 앱(React Native): 미사용 SDK 등 18개 의존성 제거·pnpm 전환으로 iOS 시뮬레이터 Debug 빌드 **238.7초 → 195.8초(18.0% 단축)**, 동일 Mac·빈 DerivedData에서 각 3회 측정 중앙값
+- 메디플러스솔루션 [브리시드 심리상담센터](https://play.google.com/store/apps/details?id=com.mediplussolution.mentalcounsel) 앱(React Native): 미사용 SDK 등 18개 의존성 제거·pnpm 전환으로 iOS 시뮬레이터 Debug 빌드 **238.7초 → 195.8초(18.0% 단축)**, 동일 Mac·빈 DerivedData에서 각 3회 측정 중앙값
 - YAPP 26기: Reed Android 파트 리드로 구조 설계·코드 리뷰와 OCR 입력 흐름 구현, 최우수상 수상
 
 ## Awards
