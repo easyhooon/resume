@@ -238,6 +238,10 @@
 
 ### Dari - WebView Bridge Inspector
 
+<p align="center">
+  <img src="./assets/portfolio/dari-desktop.jpg" alt="Galaxy S25+ 샘플 앱 화면과 Dari Desktop에서 같은 브릿지 메시지 목록과 요청·응답 JSON을 나란히 확인하는 화면" width="90%">
+</p>
+
 Web ↔ App JavaScript Bridge 메시지의 요청·응답·상태를 기기에서 실시간으로 확인하는 Android 디버깅 라이브러리
 
 [GitHub](https://github.com/easyhooon/dari) · [개발 배경](https://velog.io/@mraz3068/Android-WebView-Debugging-with-Dari-Library-Introduction) · [운영 적용 및 고도화](https://velog.io/@mraz3068/Improving-Dari-Library)
