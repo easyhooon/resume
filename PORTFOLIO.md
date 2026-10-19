@@ -342,7 +342,7 @@ Hi-me를 개발·운영하며 해결한 주요 문제를 원인 분석과 해결
 
 **Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.secondwindforpatentkr) · 5종 운영 · 전체 출시 앱 누적 다운로드 합산 **13,000+**
 
-#### 테스트가 없던 Java 7만 줄을 동작 변화 없이 Kotlin으로 전환
+#### 테스트가 없던 Java 6.4만 줄을 동작 변화 없이 Kotlin으로 전환
 
 <span style="font-size: 0.9em;">2026.10 완료 예정</span>
 
