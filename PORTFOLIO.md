@@ -21,7 +21,7 @@
 
 제품 요구사항을 구현하고 서비스를 운영하며 마주한 상태 관리와 의존성, 화면 전환, 플랫폼 확장 문제를 풀어왔습니다. 기술 선택은 해결할 문제와 프로젝트 상황을 기준으로 판단했으며, 그 경험을 라이브러리 개발과 오픈소스 기여로 확장했습니다. 직접 만든 [windowinsets.info](https://windowinsets.info/)와 [Dari](https://github.com/easyhooon/dari)는 각각 **Android Weekly #747·#748**에 소개되었습니다.
 
-## Team Projects
+## Side Projects
 
 ### YeoBee(여비) - 여행 비용 기록과 정산을 돕는 여행 가계부 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2026.01 ~</span>
 
@@ -186,7 +186,7 @@
 > - iOS `actual` 구현에서 Kotlin/Native로 UIKit·Foundation·CoreGraphics를 직접 다루고 `ImageBitmap`을 `UIImage`로 변환하는 과정에서 픽셀 배치·색 공간·알파 채널·바이트 순서에 따라 색상이 변하는 문제를 겪음. 이를 해결하며 KMP가 플랫폼 코드를 줄여주더라도 플랫폼별 이미지 처리 원리와 네이티브 동작까지 함께 이해해야 한다는 점을 체감
 > - Circuit과 Koin이 함께 동작하지 않는다고 이슈와 문서 검색만으로 판단해 다른 구조로 우회했지만, 이후 실제 연동 방법이 있음을 확인함. 레퍼런스가 적다는 이유만으로 호환 여부를 단정하지 않고 최소 구현으로 직접 검증한 뒤 기술을 선택해야 함을 배움
 
-## Other Projects
+## Other Side Projects
 
 ### 이끔 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~ 2024.04</span>
 
@@ -294,7 +294,7 @@ WebView의 현재 route와 **SPA route 변경을 Compose overlay로 확인**하�
 - [Circuit](https://github.com/slackhq/circuit) · [Pull Request](https://github.com/slackhq/circuit/pull/1870): Circuit Navigation 공식 문서의 변수명 일관성 개선
 - [DroidKnightsApp](https://github.com/droidknights/DroidKnightsApp) · [Pull Request](https://github.com/droidknights/DroidKnightsApp/pull/274): Flow 반환 타입 함수의 불필요한 `suspend` 제거와 관련 테스트 코드 반영
 
-## Troubleshooting
+## Company Troubleshooting
 
 ### Hi-me - HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2025.10 ~</span>
 
