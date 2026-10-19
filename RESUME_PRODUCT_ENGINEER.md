@@ -19,7 +19,7 @@
 
 Android를 기반으로 사용자 흐름이 끊기는 지점을 찾고, 웹뷰 프론트엔드·서버 연결·배포와 검증 절차까지 해결 범위를 넓혀온 개발자입니다. 기능을 구현할 때 실패 후 복구 경로와 출시 후 확인 방법을 함께 설계합니다. AI 코딩 에이전트는 구현과 반복 검증에 활용하되, 완료 여부는 실제 동작·테스트·배포 기록으로 판단합니다.
 
-**Android 앱 9개와 iOS 앱 1개**를 출시·운영했고, 직접 만든 오픈소스 [windowinsets.info](https://windowinsets.info/)와 [Dari](https://github.com/easyhooon/dari)가 각각 **Android Weekly #747·#748**에 소개되었습니다.
+**Android 앱 9개와 iOS 앱 1개**를 출시·운영했고, 직접 만든 오픈소스 [windowinsets.info](https://windowinsets.info/)와 [Dari](https://github.com/easyhooon/dari)가 각각 **Android Weekly [#747](https://androidweekly.net/issues/issue-747)·[#748](https://androidweekly.net/issues/issue-748)**에 소개되었습니다.
 
 ## Work Experience
 

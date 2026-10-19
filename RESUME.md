@@ -19,7 +19,7 @@
 
 운영 중 재현하기 어려운 Android 문제의 원인을 끝까지 추적해 해결하고, 문제 재현부터 원인 분석, 수정 결과 확인까지 이어지는 도구와 절차를 구축해왔습니다.
 
-사이드 프로젝트로 **Android 앱 9개와 iOS 앱 1개**를 출시·운영했고, 직접 만든 오픈소스 [windowinsets.info](https://windowinsets.info/)와 [Dari](https://github.com/easyhooon/dari)가 각각 **Android Weekly #747·#748**에 소개되었습니다.
+사이드 프로젝트로 **Android 앱 9개와 iOS 앱 1개**를 출시·운영했고, 직접 만든 오픈소스 [windowinsets.info](https://windowinsets.info/)와 [Dari](https://github.com/easyhooon/dari)가 각각 **Android Weekly [#747](https://androidweekly.net/issues/issue-747)·[#748](https://androidweekly.net/issues/issue-748)**에 소개되었습니다.
 
 ## Work Experience
 
