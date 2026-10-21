@@ -268,6 +268,15 @@ Web ↔ App JavaScript Bridge 메시지의 요청·응답·상태를 기기에�
 
 [Skiko 중복 제거 PR](https://github.com/easyhooon/dari/pull/146) · [ProGuard 적용 PR](https://github.com/easyhooon/dari/pull/148) · [DMG 압축 형식 PR](https://github.com/easyhooon/dari/pull/150)
 
+#### Dari Desktop이 쓰지 않는 힙을 붙잡고 있던 문제 해결
+
+- **문제**: 브릿지 메시지가 몰린 뒤 Desktop 앱의 committed Java heap이 약 146 MB까지 커진 채 줄지 않음. 실제로 살아 있는 데이터는 약 20 MB였고, 메시지 요약 2,000건은 약 145 KB에 불과
+- **원인 분석**: G1 GC가 메시지가 몰릴 때 늘린 heap을 유휴 상태에서도 OS에 돌려주지 않았음. 또 observe 이벤트가 올 때마다 메시지 맵 전체를 복사하고, 화면이 매 프레임 같은 목록을 세 번씩 다시 계산
+- **해결**: G1 주기적 GC(15초)와 작은 초기 heap(`-Xms32m`), `MinHeapFreeRatio`·`MaxHeapFreeRatio`로 유휴 heap을 반환하게 하고, 채널에 쌓인 이벤트를 한 번에 꺼내 배치당 맵 복사를 1회로 줄임. 파생 목록은 `derivedStateOf`로 공유하고 메시지 맵에 `referentialEqualityPolicy()`를 적용해 2,000건 비교를 없앰
+- **결과**: 2.7.0과 번갈아 4회씩 같은 조건(메시지 2,500건 수신)으로 측정해 committed heap **128 MB → 34 MB(73% 감소)**, 그래픽을 제외한 앱 메모리 295 MB → 214 MB(27% 감소). Skia 그래픽 메모리는 빌드와 상관없이 실행마다 약 8~155 MB로 흔들려 비교에서 제외
+
+[메모리 개선 PR](https://github.com/easyhooon/dari/pull/241)
+
 ### RoutePeek - WebView Route Inspector
 
 WebView의 현재 route와 **SPA route 변경을 Compose overlay로 확인**하는 Android 디버깅 라이브러리. IDE를 연결하지 않아도 웹뷰 화면의 현재 경로를 앱 안에서 확인해 라우팅 이슈 재현 시 경로를 함께 전달 가능
