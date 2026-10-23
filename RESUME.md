@@ -73,7 +73,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 ### 마이밸런스 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
 
-직장인의 건강한 습관 형성을 지원하는 건강관리·리워드 서비스 · [Google Play](https://play.google.com/store/apps/details?id=com.kyobo.mybalance) 다운로드 **1,000+**
+직장인의 건강한 습관 형성을 지원하는 건강관리·리워드 서비스 · [Google Play](https://play.google.com/store/apps/details?id=com.kyobo.mybalance) 다운로드 **2,000+**
 
 - **Health Connect 연동**: 걸음 수·소모 칼로리·평균 심박수·수면시간 데이터 수집 경로 통합
 - **CI/CD GitHub Actions 전환**: Bamboo 기반 레거시 CI/CD를 옮겨 빌드 넘버 관리를 자동화하고 충돌 문제 해결
