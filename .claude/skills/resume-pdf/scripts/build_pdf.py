@@ -9,9 +9,11 @@ Why not `gh api markdown`: GitHub's renderer strips inline `style` attributes,
 so the gray date spans next to headings lose their color.
 
 Usage:
-  build_pdf.py [resume|portfolio|pe|all] [--masked] [--qa DIR]
+  build_pdf.py [resume|portfolio|pe|all] [--no-masked] [--qa DIR]
 
---masked  also writes the *_제출용_개인정보마스킹.pdf variant (phone/email hidden)
+Every build also writes the *_제출용_개인정보마스킹.pdf variant (phone/email
+hidden), so the submission copy never falls behind the public one.
+--no-masked  skip the masked variant (previews only)
 --qa DIR  render every page as JPEG into DIR for visual review
 """
 import argparse
@@ -172,7 +174,7 @@ def report(pdf: Path, qa_dir: Path | None, masked: bool):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("target", nargs="?", default="all", choices=[*TARGETS, "all"])
-    ap.add_argument("--masked", action="store_true")
+    ap.add_argument("--masked", action=argparse.BooleanOptionalAction, default=True)
     ap.add_argument("--qa", type=Path)
     ap.add_argument("--skip-lint", action="store_true",
                     help="build despite AGENTS.md wording violations (only when the user asked)")
