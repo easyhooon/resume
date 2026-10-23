@@ -61,6 +61,8 @@ html, body { background: #fff; }
 }
 .markdown-body li, .markdown-body tr, .markdown-body blockquote,
 .markdown-body img, .markdown-body p[align] { break-inside: avoid; page-break-inside: avoid; }
+/* A bullet with sub-bullets may split between its children; each leaf line still stays whole. */
+.markdown-body li:has(> ul), .markdown-body li:has(> ol) { break-inside: auto; page-break-inside: auto; }
 .markdown-body img { max-height: 340px; object-fit: contain; }
 .markdown-body a { text-decoration: none; }
 /* GitHub adds anchor icons next to headings; they are noise on paper. */

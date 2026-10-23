@@ -61,6 +61,7 @@ Turns the Markdown in the repo root into the PDFs under `output/pdf/`. The scrip
 
 ## Change history
 
+- 2026-10-23: Let a bullet that has sub-bullets split between its children (`li:has(> ul)`); leaf lines still never split. Before, a whole bullet group jumped to the next page and left about five blank lines at the bottom of resume page 1, so the resume overflowed even with room to spare. With it, Awards and Education & Certificates went back to their two-line form and the resume stays at 3 pages. The portfolio and PE resume text and page breaks did not change.
 - 2026-10-23: The user cut the page margins from 14mm/13mm to 10mm and the h2 spacing to 14px/10px (4efcc33). The rule went from "don't shrink fonts or margins" to "keep these values unless the user asks". Rebuilt all three targets with them: resume 3 pages, portfolio 11, PE resume 3.
 - 2026-10-16: Added the AGENTS.md wording lint. It runs as a PostToolUse hook in `.claude/settings.json` and as a gate in `build_pdf.py`. "10일 만에" and abstract outcome phrases came back twice in one session, so prose rules alone were not enough. Verified that the hook flags an Edit, that the gate stops a Bash edit, and that both pass after reverting.
 
