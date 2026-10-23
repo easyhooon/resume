@@ -34,6 +34,8 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 - **웹뷰 브릿지 규격 표준화와 [Dari](https://github.com/easyhooon/dari) 기반 디버깅 환경 구축**
   - 웹뷰-네이티브 요청/응답 규격과 에러 처리 기준 표준화
   - Android·프론트엔드 개발자가 브릿지 호출 흐름과 실패 지점을 같은 화면에서 확인하도록 구성
+- **웹뷰 이미지 전달 시 메인 스레드 점유 76% 감소** (14.2ms → 3.4ms, 실기기 p50)
+  - base64 이미지가 담긴 브릿지 메시지의 JSON 직렬화를 메인 스레드 밖으로 옮기고, 이미지 전달 방식을 base64 문자열에서 캐시 파일 기반 로컬 URL로 전환해 Macrobenchmark(실기기, n=20)에서 전달 시간 67% 단축(15.9ms → 5.2ms), 운영 적용은 웹 배포 후 예정
 - **BLE 의료기기·헬스 데이터 수집**
   - BLE Glucose/Blood Pressure Profile 기반 혈당계·혈압계 연동, 측정 데이터 동기화와 연동 해제까지 제공
   - Health Connect 경유 시 걸음 수가 갱신되지 않는 경우를 위해 Samsung Health Data SDK 수집 경로 추가
@@ -75,7 +77,6 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 - **Health Connect 연동**: 걸음 수·소모 칼로리·평균 심박수·수면시간 데이터 수집 경로 통합
 - **CI/CD GitHub Actions 전환**: Bamboo 기반 레거시 CI/CD를 옮겨 빌드 넘버 관리를 자동화하고 충돌 문제 해결
-- **업로드 후 기기에 남던 챌린지 사진 제거**: 갤러리 저장 방식에서 임시 파일 생성·업로드 후 제거하는 방식으로 전환
 
 <span style="font-size: 0.9em; color: #6b7280;">각 프로젝트의 문제 해결 과정은 [포트폴리오](https://github.com/easyhooon/resume/blob/main/PORTFOLIO.md)의 Company Troubleshooting에 정리했습니다.</span>
 
@@ -122,13 +123,8 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 ## Awards
 
-**한국관광공사 X 카카오 2024 관광데이터 활용 공모전** <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.11</span><br>
-트립메이트 앱 개발 및 출시, **장려상 및 강원관광재단 특별상 수상**
+**한국관광공사 X 카카오 2024 관광데이터 활용 공모전** <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.11</span> · 트립메이트 앱 개발 및 출시, **장려상 및 강원관광재단 특별상 수상**
 
-## Certificates
+## Education & Certificates
 
-정보처리기사 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2022.09</span>
-
-## Education
-
-건국대학교 컴퓨터 공학부 학사 졸업 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.02</span>
+건국대학교 컴퓨터 공학부 학사 졸업 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.02</span> · 정보처리기사 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2022.09</span>
