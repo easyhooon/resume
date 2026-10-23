@@ -46,6 +46,10 @@ RULES = [
 ]
 MAX_BOLD_PER_LINE = 2
 
+# 두괄식: 이 절의 bullet은 결과를 굵게 먼저 쓴다. 값은 검사할 bullet 깊이(0 = 최상위).
+# Open Source는 최상위 bullet이 프로젝트 이름이라 그 아래 줄을 본다.
+HEADLINE_SECTIONS = {"Work Experience": 0, "Side Projects": 0, "Open Source": 1}
+
 
 def added_lines(path: Path):
     """(line number, text) for each line added relative to HEAD."""
@@ -67,9 +71,27 @@ def added_lines(path: Path):
     return out
 
 
+def headline_misses(path: Path):
+    """Line numbers of bullets in HEADLINE_SECTIONS that don't open with a bold result."""
+    misses, depth_needed = set(), None
+    for lineno, text in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if text.startswith("## "):
+            depth_needed = HEADLINE_SECTIONS.get(text[3:].strip())
+            continue
+        m = re.match(r"^( *)[-*]\s+(.*)", text)
+        if depth_needed is None or not m:
+            continue
+        if len(m.group(1)) // 2 == depth_needed and not m.group(2).startswith("**"):
+            misses.add(lineno)
+    return misses
+
+
 def check(path: Path):
     problems = []
+    misses = headline_misses(path) if path.name == "RESUME.md" else set()
     for lineno, text in added_lines(path):
+        if lineno in misses:
+            problems.append(f"{path.name}:{lineno} [두괄식 누락] 결과를 '**라벨**: 설명'처럼 굵게 먼저 쓴다")
         for name, pattern, fix in RULES:
             m = pattern.search(text)
             if m:
