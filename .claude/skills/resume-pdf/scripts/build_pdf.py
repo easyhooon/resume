@@ -46,14 +46,14 @@ MASKS = [
 ]
 
 PRINT_CSS = """
-@page { size: A4; margin: 14mm 13mm 14mm 13mm; }
+@page { size: A4; margin: 10mm 10mm 10mm 10mm; }
 html, body { background: #fff; }
 .markdown-body {
   font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", sans-serif;
   font-size: 13px; line-height: 1.55; max-width: none; margin: 0; padding: 0;
 }
 .markdown-body h1 { font-size: 26px; }
-.markdown-body h2 { font-size: 20px; margin-top: 20px; }
+.markdown-body h2 { font-size: 20px; margin-top: 14px; margin-bottom: 10px; }
 .markdown-body h3 { font-size: 16px; margin-top: 16px; }
 .markdown-body h4 { font-size: 14px; }
 .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 {

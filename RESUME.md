@@ -78,8 +78,6 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 - **Health Connect 연동**: 걸음 수·소모 칼로리·평균 심박수·수면시간 데이터 수집 경로 통합
 - **CI/CD GitHub Actions 전환**: Bamboo 기반 레거시 CI/CD를 옮겨 빌드 넘버 관리를 자동화하고 충돌 문제 해결
 
-<span style="font-size: 0.9em; color: #6b7280;">각 프로젝트의 문제 해결 과정은 [포트폴리오](https://github.com/easyhooon/resume/blob/main/PORTFOLIO.md)의 Company Troubleshooting에 정리했습니다.</span>
-
 ## Side Projects
 
 ### 반다라트 - 부담 없는 만다라트 계획표 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2023.07 ~</span>
@@ -107,13 +105,14 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 ## Open Source
 
 - **[Dari](https://github.com/easyhooon/dari): [Android Weekly #748](https://androidweekly.net/issues/issue-748) 소개** (2026.10.11), 사내 앱 4종 적용
-  - 웹뷰 브릿지 메시지가 Chrome inspector에 안 보여 IDE 연결 없이는 볼 수 없던 문제를 해결하려고 만든 라이브러리
-  - Hi-me·세컨드 윈드·브리시드·마이밸런스에서 Logcat으로 요청·응답을 짝짓는 대신 기기·PC 화면에서 바로 확인하고, QA(STG) 빌드의 버그는 테스트 기기에 남은 로그를 프론트엔드 개발자에게 넘겨 웹·앱 중 어느 쪽 실패인지 함께 판단
-  - adb로 연결해 PC에서 메시지를 보는 Desktop 앱을 macOS·Windows·Linux용으로 배포. ProGuard·아키텍처별 네이티브 라이브러리 정리와 LZFSE 압축 전환으로 macOS DMG를 70.7 MB → 45.4 MB(35.7% 감소, 2.5.2 기준)로 축소
-  - Desktop 앱의 유휴 heap 반환과 이벤트 일괄 처리로 committed heap 128 MB → 34 MB(73% 감소)
-  - 브릿지마다 직접 넣던 Interceptor 호출을 debug 빌드에서 자동 삽입하는 Gradle 플러그인(ASM) 개발
+  - **IDE 연결 없이 브릿지 메시지 확인**: 웹뷰 브릿지 메시지가 Chrome inspector에 안 보여 IDE 연결 없이는 볼 수 없던 문제를 해결하려고 만든 라이브러리
+  - **웹·앱 실패 지점 공동 판단**: Hi-me·세컨드 윈드·브리시드·마이밸런스에서 Logcat으로 요청·응답을 짝짓는 대신 기기·PC 화면에서 바로 확인하고, QA(STG) 빌드의 버그는 테스트 기기에 남은 로그를 프론트엔드 개발자에게 넘겨 웹·앱 중 어느 쪽 실패인지 함께 판단
+  - **Desktop 앱 DMG 35.7%·committed heap 73% 감소**: adb로 연결해 PC에서 메시지를 보는 macOS·Windows·Linux용 앱 배포. ProGuard·아키텍처별 네이티브 라이브러리 정리와 LZFSE 압축 전환으로 macOS DMG 70.7 MB → 45.4 MB(2.5.2 기준), 유휴 heap 반환과 이벤트 일괄 처리로 128 MB → 34 MB
+  - **Interceptor 호출 자동 삽입**: 브릿지마다 직접 넣던 Interceptor 호출을 debug 빌드에서 자동 삽입하는 Gradle 플러그인(ASM) 개발
 - **[windowinsets.info](https://windowinsets.info/): [Android Weekly #747](https://androidweekly.net/issues/issue-747) 소개** (2026.10.04)
   - Galaxy·Pixel 기기별 WindowInsets·DisplayCutout을 측정해 디바이스 프리뷰와 수치로 확인하도록 지원
+
+<span style="font-size: 0.9em; color: #6b7280;">회사·사이드 프로젝트·오픈소스의 문제 해결 과정은 [포트폴리오](https://github.com/easyhooon/resume/blob/main/PORTFOLIO.md)에 정리했습니다.</span>
 
 ## Other Experience
 
