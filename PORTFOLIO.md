@@ -268,7 +268,7 @@ Web ↔ App JavaScript Bridge 메시지의 요청·응답·상태를 기기에�
 
 [Skiko 중복 제거 PR](https://github.com/easyhooon/dari/pull/146) · [ProGuard 적용 PR](https://github.com/easyhooon/dari/pull/148) · [DMG 압축 형식 PR](https://github.com/easyhooon/dari/pull/150)
 
-#### Dari Desktop이 쓰지 않는 힙을 붙잡고 있던 문제 해결
+#### Dari Desktop의 늘어난 heap이 유휴 상태에서 줄지 않던 문제 해결
 
 - **문제**: 브릿지 메시지가 몰린 뒤 Desktop 앱의 committed Java heap이 약 146 MB까지 커진 채 줄지 않음. 실제로 살아 있는 데이터는 약 20 MB였고, 메시지 요약 2,000건은 약 145 KB에 불과
 - **원인 분석**: G1 GC가 메시지가 몰릴 때 늘린 heap을 유휴 상태에서도 OS에 돌려주지 않았음. 또 observe 이벤트가 올 때마다 메시지 맵 전체를 복사하고, 화면이 매 프레임 같은 목록을 세 번씩 다시 계산
