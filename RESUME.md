@@ -117,7 +117,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 ## Other Experience
 
 - 메디플러스솔루션 [브리시드 심리상담센터](https://play.google.com/store/apps/details?id=com.mediplussolution.mentalcounsel) 앱(React Native): 미사용 SDK 등 18개 의존성 제거·pnpm 전환으로 iOS 시뮬레이터 Debug 빌드 **238.7초 → 195.8초(18.0% 단축)**, 동일 Mac·빈 DerivedData에서 각 3회 측정 중앙값
-  - **HotUpdater + Supabase 기반 OTA 업데이트 환경 구축**: 고객사 요청 1건을 스토어 심사 없이 반영, 연말 해당 요건 롤백도 OTA로 반영 예정. Prod/Dev DB 분리, GitHub Actions 배포·롤백·이전 번들 정리 workflow, 강제 업데이트(`force_update`) 플래그 적용
+  - **HotUpdater + Supabase 기반 OTA 업데이트 환경 구축**: 고객사 요청 1건을 스토어 심사 없이 반영, 연말 해당 요건 롤백도 OTA로 반영 예정. Prod/Dev DB 분리, GitHub Actions 배포·롤백·이전 번들 정리 workflow, 강제 업데이트 플래그 적용
 - YAPP 26기: Reed 프로젝트 Android 파트 리드로 구조 설계·기술 스택 검토·코드 리뷰 담당, Android Manifest Interview 도서/기술 블로그 작성 스터디 운영, 최우수상 수상, 27·28기 Android 개발자 선발 면접 참여
 - Nexters 23·24·26기: 반다라트, I'lab, Ziine 프로젝트 Android 구조 설계·기술 스택 선정·코드 리뷰, 출시 후 리팩터링과 성능 병목 분석 담당
 
