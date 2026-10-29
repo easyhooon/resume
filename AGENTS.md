@@ -1,6 +1,6 @@
 # AGENTS.md
 
-이 저장소는 이지훈(easyhooon)의 이력서·포트폴리오다. `RESUME.md`, `PORTFOLIO.md`, `RESUME_PRODUCT_ENGINEER.md`를 고치는 에이전트는 아래 규칙을 따른다.
+이 저장소는 이지훈(easyhooon)의 이력서·포트폴리오다. `RESUME.md`, `PORTFOLIO.md`, `RESUME_PRODUCT_ENGINEER.md`, `CAREER.md`를 고치는 에이전트는 아래 규칙을 따른다.
 
 Owner: easyhooon · Last review: 2026-10-23
 
@@ -9,7 +9,7 @@ Owner: easyhooon · Last review: 2026-10-23
 - 요청받은 문장만 고친다. 사용자가 원래 쓴 문장을 다듬거나 바꾸지 않는다. 고칠 만한 곳이 보이면 바꾸지 말고 알려준다.
   - 이유: 이력서는 본인의 말이어야 한다. 요청하지 않은 수정은 사용자가 diff를 다시 검토하게 만든다.
 - PDF는 `resume-pdf` skill로만 다시 만든다. 이력서는 A4 3쪽이 기본값이다. 넘치면 `build_pdf.py`의 `PRINT_CSS`(글자 크기, 여백, 제목 간격)를 건드리지 말고, 뺄 줄을 제안해서 사용자가 고르게 한다.
-  - 이유: 지금 값(여백 10mm, 본문 13px, h2 간격 14px/10px)은 2026-10-23에 사용자가 정한 기준이다. 더 줄이면 읽기 어려워지고, 세 PDF가 모두 바뀐다. 사용자가 요청할 때만 바꾼다.
+  - 이유: 지금 값(여백 10mm, 본문 13px, h2 간격 14px/10px)은 2026-10-23에 사용자가 정한 기준이다. 더 줄이면 읽기 어려워지고, 모든 PDF가 바뀐다. 사용자가 요청할 때만 바꾼다.
 
 ## 사실 확인
 
@@ -36,18 +36,20 @@ Owner: easyhooon · Last review: 2026-10-23
 
 검사하지 못하는 것도 지킨다.
 - 같은 내용을 이력서와 포트폴리오에 다른 숫자로 쓰지 않는다.
+- `CAREER.md`(경력기술서)는 `RESUME.md`의 회사 경력 부분을 같은 문장으로 옮긴 문서다. `RESUME.md`의 Work Experience나 사내 업무 줄을 고치면 `CAREER.md`도 같이 고친다.
 - 트러블슈팅은 포트폴리오에만 두고, 이력서에서는 "포트폴리오에 정리"로 안내만 한다.
 - 문서를 읽고 적용하면 되는 수준의 기능은 이력서 성과로 내세우지 않는다. 직접 설계했거나 문제를 해결한 부분이 있을 때만 그 부분을 쓴다.
 
 ## 강제 방식
 
-- `.claude/settings.json`의 PostToolUse 훅이 Edit·Write로 위 세 파일을 고칠 때마다 `lint_resume.py --hook`을 실행한다. 위반이 있으면 결과가 에이전트에게 바로 돌아간다.
+- `.claude/settings.json`의 PostToolUse 훅이 Edit·Write로 위 네 파일을 고칠 때마다 `lint_resume.py --hook`을 실행한다. 위반이 있으면 결과가 에이전트에게 바로 돌아간다.
 - `build_pdf.py`는 PDF를 만들기 전에 같은 검사를 돌리고, 위반이 있으면 멈춘다. Bash로 파일을 고쳐서 훅을 거치지 않은 경우도 여기서 걸린다.
 - 검사는 마지막 커밋 이후 새로 추가된 줄만 본다. 사용자가 이미 커밋한 문장은 걸리지 않는다.
 - 사용자가 위반을 알고도 그 표현을 쓰겠다고 하면 `build_pdf.py --skip-lint`로 우회한다. 에이전트가 스스로 우회하지 않는다.
 
 ## 변경 기록
 
+- 2026-10-29: 경력기술서 `CAREER.md`를 추가했다. 지원처가 이력서와 별도로 경력기술서를 요구해서, `RESUME.md`에서 Introduce·Side Projects·Open Source·대외활동·Awards·Education을 빼고 회사 경력만 남겼다.
 - 2026-10-23: 사용자가 PDF 여백을 10mm로, h2 간격을 줄였다(4efcc33). "글자 크기를 줄이지 않는다"를 "`PRINT_CSS`의 지금 값을 유지한다"로 바꿨다.
 - 2026-10-23: 두괄식 누락 규칙과 lint 검사를 추가했다. 피드백 반영(14dd2c1) 때 Open Source 절이 빠졌고, 이후 커밋이 그 모양을 따라 썼는데 lint가 잡지 못했다.
 - 2026-10-17: 긴 대시(—) 금지 규칙과 lint 검사를 추가했다. 사용자가 AI가 자주 쓰는 표현이라 지양하자고 했다.

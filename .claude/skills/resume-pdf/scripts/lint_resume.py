@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[4]
-TARGETS = ("RESUME.md", "PORTFOLIO.md", "RESUME_PRODUCT_ENGINEER.md")
+TARGETS = ("RESUME.md", "PORTFOLIO.md", "RESUME_PRODUCT_ENGINEER.md", "CAREER.md")
 
 # (name, pattern, what to do instead)
 RULES = [
@@ -88,7 +88,7 @@ def headline_misses(path: Path):
 
 def check(path: Path):
     problems = []
-    misses = headline_misses(path) if path.name == "RESUME.md" else set()
+    misses = headline_misses(path) if path.name in ("RESUME.md", "CAREER.md") else set()
     for lineno, text in added_lines(path):
         if lineno in misses:
             problems.append(f"{path.name}:{lineno} [두괄식 누락] 결과를 '**라벨**: 설명'처럼 굵게 먼저 쓴다")

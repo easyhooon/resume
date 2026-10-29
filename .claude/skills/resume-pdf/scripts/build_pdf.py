@@ -38,6 +38,7 @@ TARGETS = {
     "portfolio": ("PORTFOLIO.md", "output/pdf/이지훈_포트폴리오.pdf", 0.8),
     "pe": ("RESUME_PRODUCT_ENGINEER.md",
            "output/pdf/product-engineer/이지훈_Product_Engineer_이력서.pdf", 1.0),
+    "career": ("CAREER.md", "output/pdf/이지훈_경력기술서.pdf", 1.0),
 }
 MASKED_SUFFIX = "_제출용_개인정보마스킹"
 

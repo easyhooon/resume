@@ -16,6 +16,7 @@ Turns the Markdown in the repo root into the PDFs under `output/pdf/`. The scrip
 | `resume` | `RESUME.md` | `output/pdf/이지훈_이력서.pdf` | 3 pages (A4) |
 | `portfolio` | `PORTFOLIO.md` | `output/pdf/이지훈_포트폴리오.pdf` | no fixed budget, currently about 10 |
 | `pe` | `RESUME_PRODUCT_ENGINEER.md` | `output/pdf/product-engineer/이지훈_Product_Engineer_이력서.pdf` | 2–3 pages |
+| `career` | `CAREER.md` | `output/pdf/이지훈_경력기술서.pdf` | 2 pages; company work only, same sentences as `RESUME.md` |
 
 Every build also writes `<name>_제출용_개인정보마스킹.pdf` next to each output, so the submission copy is never older than the public one. `--no-masked` skips it; use that only for throwaway previews, never for `output/pdf/`. It shows the phone as `010-****-3068` and the email as `mraz****@gmail.com`.
 
@@ -24,7 +25,7 @@ Every build also writes `<name>_제출용_개인정보마스킹.pdf` next to eac
 1. **Pick targets.** Build only the Markdown files that changed: `git status --short -- '*.md'`. The masked copies come along automatically.
 2. **Build into a QA folder:**
    ```bash
-   python3 -I .claude/skills/resume-pdf/scripts/build_pdf.py <resume|portfolio|pe|all> --qa <scratchpad>/qa
+   python3 -I .claude/skills/resume-pdf/scripts/build_pdf.py <resume|portfolio|pe|career|all> --qa <scratchpad>/qa
    ```
    Before printing, the script runs `scripts/lint_resume.py` on lines added since the last commit. It stops on any wording that `AGENTS.md` bans. Fix the wording, not the check. Pass `--skip-lint` only when the user has said to keep that wording.
    Each output prints one line: `pages=… links=… bytes=…`. A `MASK-LEAK=[…]` marker or a non-zero exit means the masked PDF still contains the real phone or email. Never send that file. Stop and fix `MASKS` in the script.
@@ -61,6 +62,7 @@ Every build also writes `<name>_제출용_개인정보마스킹.pdf` next to eac
 
 ## Change history
 
+- 2026-10-29: Added the `career` target (`CAREER.md`, 경력기술서). It is `RESUME.md` cut down to company work, and the lint checks its Work Experience bullets for bold-first headlines like the resume's.
 - 2026-10-23: Masked copies are now built on every run (`--masked` became the default, `--no-masked` opts out) and ignored via `.gitignore`. They had been built only on request and were four days and several edits behind the public PDFs when the user noticed. Verified: all three masked PDFs rebuilt with no real phone or email left, and the PE resume got a masked copy for the first time.
 - 2026-10-23: Let a bullet that has sub-bullets split between its children (`li:has(> ul)`); leaf lines still never split. Before, a whole bullet group jumped to the next page and left about five blank lines at the bottom of resume page 1, so the resume overflowed even with room to spare. With it, Awards and Education & Certificates went back to their two-line form and the resume stays at 3 pages. The portfolio and PE resume text and page breaks did not change.
 - 2026-10-23: The user cut the page margins from 14mm/13mm to 10mm and the h2 spacing to 14px/10px (4efcc33). The rule went from "don't shrink fonts or margins" to "keep these values unless the user asks". Rebuilt all three targets with them: resume 3 pages, portfolio 11, PE resume 3.
