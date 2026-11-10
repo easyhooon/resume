@@ -365,6 +365,20 @@ Hi-me를 개발·운영하며 해결한 주요 문제를 원인 분석과 해결
 
 [기술 블로그](https://velog.io/@mraz3068/Android-BLE-Bonding-and-Measurement-Data-Sync-Implementation)
 
+#### 웹 수정 사항을 dev 배포 없이 실기기 웹뷰에서 확인하는 개발 환경 구축
+
+- **문제**: 웹 수정 사항을 앱 웹뷰에서 확인하려면 매번 dev 서버에 배포해야 했고, 확인 중 문제가 나오면 고친 뒤 다시 배포하고 확인함. Jenkins dev 배포는 최근 성공 20건 평균 **2분 30초**(중앙값 2분 20초)
+- **원인 분석**: 웹뷰가 개발 PC의 Vite 서버를 열게 하는 데 걸리는 제약을 하나씩 확인
+  - PC의 IP 주소로 접속하면 카카오 로그인이 KOE006으로 실패. Redirect URI를 접속 주소 기준으로 검사하므로 `localhost`를 유지해야 함
+  - 앱은 허용 도메인의 페이지에만 브릿지를 열고 cleartext http를 막고 있어, 로컬 서버 페이지에서는 네이티브 기능이 동작하지 않음
+  - macOS adb의 기본 mDNS 백엔드(Openscreen)가 사내 Wi-Fi에서 폰의 무선 디버깅 서비스를 찾지 못함
+  - 터미널에 문자로 그린 페어링 QR은 줄 간격 때문에 무선 디버깅 스캐너가 읽지 못함
+- **해결**:
+  - Android에 `local` 빌드를 추가. 패키지명을 분리해 dev 앱과 함께 설치되고, 웹뷰가 `http://localhost:3000`을 열며 API는 dev 서버를 사용. 브릿지와 cleartext 허용은 local 빌드에서 스킴·호스트·포트가 모두 일치하는 origin 하나로 한정하고 단위 테스트로 고정. GitHub Actions로 Firebase App Distribution에 배포
+  - `adb reverse`로 폰의 `localhost:3000`을 PC로 넘겨 localhost를 유지. 웹 API는 Vite 프록시를 거쳐 같은 출처로 호출되므로 CORS 설정 변경 없이 동작
+  - 웹 저장소에 `pnpm dev-android` 스크립트를 추가해 무선 디버깅 연결, `adb reverse`, Vite 실행을 명령 하나로 처리. adb mDNS를 Bonjour로 고정하고, 페어링 QR을 브라우저 이미지로도 띄우며, QR 대신 페어링 코드로도 연결
+- **결과**: 저장 후 실기기 앱 웹뷰에 반영되기까지 평균 **0.46초**(Galaxy S25+, 파일 저장부터 웹뷰 DOM 반영까지 5회 측정, 313~683ms). 카카오·네이버 로그인도 local 앱에서 동작. 스크립트 추가 전후의 dev·staging·production 빌드 결과물이 같은 것을 비교해 배포 영향이 없음을 확인
+
 ### 세컨드 윈드/닥터 - 만성질환자·암 수술 환자 건강관리·재활 서비스 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.05 ~</span>
 
 **Android 개발** · [Play Store](https://play.google.com/store/apps/details?id=com.mediplussolution.android.csmsrenewal.secondwindforpatentkr) · 5종 운영 · 전체 출시 앱 누적 다운로드 합산 **13,000+**
