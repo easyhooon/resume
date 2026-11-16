@@ -304,9 +304,10 @@ Android 기기별 `WindowInsets`, `DisplayCutout`, `RoundedCorner`, `FoldingFeat
 
 아래는 직접 관리하는 Dari·RoutePeek 외에 외부 오픈소스 프로젝트에 병합된 기여입니다.
 
-- [toss/necto](https://github.com/toss/necto) · [Pull Requests](https://github.com/toss/necto/pulls?q=is%3Apr+author%3Aeasyhooon): 토스의 모바일 디버깅 플랫폼에 **Android SDK를 제안([#17](https://github.com/toss/necto/issues/17))하고 3개 PR로 구현**, [Necto 0.3.0](https://github.com/toss/necto/releases/tag/0.3.0)에 포함
-  - **ADB 기반 연결 구조**: 앱이 ADB로 포워딩된 abstract Unix socket에서 adbd uid만 받도록 해 포트를 열거나 권한을 선언하지 않고 연결. 설치된 앱 378개 전체에 `run-as`를 실행하면 5.7초가 걸려, 실행 중인 서드파티 앱만 조회하도록 바꿔 약 0.75초로 단축 ([#30](https://github.com/toss/necto/pull/30))
-  - **기본 플러그인 이식**: Events, Network(OkHttp), Performance, Files, Preferences(DataStore), UI Control 플러그인을 옮기고, 리뷰에서 지적된 4건(중첩 심볼릭 링크를 따라가는 재귀 삭제, `Int` 키의 `Long` 변환 등)을 테스트와 함께 수정 ([#31](https://github.com/toss/necto/pull/31))
+- [toss/necto](https://github.com/toss/necto) · [Pull Requests](https://github.com/toss/necto/pulls?q=is%3Apr+author%3Aeasyhooon): iOS만 연결되던 토스의 모바일 디버깅 플랫폼에 **Android SDK를 제안([#17](https://github.com/toss/necto/issues/17))하고 3개 PR로 구현**, [Necto 0.3.0](https://github.com/toss/necto/releases/tag/0.3.0)에 포함
+  - **동작하는 포트로 제안**: 직접 만든 Android 포트와 시연 영상으로 제안해, 메인테이너가 `feature/android-support` 브랜치를 열고 기여를 요청
+  - **연결 보안과 앱 탐색 시간**: 내 포트의 loopback TCP가 같은 기기의 다른 앱에서도 열린다는 점을 제기해, ADB로 포워딩한 Unix socket에서 adbd uid만 받는 방식으로 합의 후 구현. 설치된 앱 378개 전체에 `run-as`를 실행하면 5.7초가 걸려, 실행 중인 서드파티 앱만 조회하도록 바꿔 약 0.75초로 단축 ([#30](https://github.com/toss/necto/pull/30))
+  - **기본 플러그인 이식**: Events, Network(OkHttp), Performance, Files, Preferences(DataStore), UI Control을 옮기면서, 복사한 cURL 명령이 URL의 따옴표 때문에 뒤의 문자열을 실행할 수 있던 문제와 release 빌드에서도 플러그인이 생성되던 문제를 찾아 수정 ([#31](https://github.com/toss/necto/pull/31))
   - **케이블 재연결 후 세션 복구**: 케이블을 다시 꽂아도 앱을 재시작해야 Necto에 다시 보이던 문제. 런타임이 끊긴 이전 연결을 계속 읽느라 새 연결을 accept하지 못한 것이 원인이어서, 연결마다 코루틴을 분리하고 handshake가 승인된 연결만 기존 세션을 교체하도록 수정. Galaxy S25+에서 재연결 2초 뒤 앱이 다시 목록에 표시되는 것 확인 ([#32](https://github.com/toss/necto/pull/32))
 - [android/cahier](https://github.com/android/cahier) · [Pull Request](https://github.com/android/cahier/pull/26): Android 공식 Compose 노트 앱 샘플에서 Gson 기반 직렬화를 **kotlinx-serialization으로 마이그레이션**해 컴파일 타임 검증과 타입 안정성 강화
 - [DroidKaigi/conference-app-2025](https://github.com/DroidKaigi/conference-app-2025) · [Pull Requests](https://github.com/DroidKaigi/conference-app-2025/pulls?q=is%3Apr+author%3Aeasyhooon): **5개 PR**로 Navigation3 뒤로가기 처리의 back stack 검증, `enableEdgeToEdge` 기반 SystemBar 구성, `vectorResource` 전환, `FlowRow` 적용
