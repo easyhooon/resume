@@ -111,6 +111,7 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
   - **웹·앱 실패 지점 공동 판단**: Hi-me·세컨드 윈드·브리시드·마이밸런스에서 Logcat으로 요청·응답을 짝짓는 대신 기기·PC 화면에서 바로 확인하고, QA(STG) 빌드의 버그는 테스트 기기에 남은 로그를 프론트엔드 개발자에게 넘겨 웹·앱 중 어느 쪽 실패인지 함께 판단
   - **Desktop 앱 DMG 35.7%·committed heap 73% 감소**: adb로 연결해 PC에서 메시지를 보는 macOS·Windows·Linux용 앱 배포. ProGuard·아키텍처별 네이티브 라이브러리 정리와 LZFSE 압축 전환으로 macOS DMG 70.7 MB → 45.4 MB(2.5.2 기준), 유휴 heap 반환과 이벤트 일괄 처리로 128 MB → 34 MB
   - **Interceptor 호출 자동 삽입**: 브릿지마다 직접 넣던 Interceptor 호출을 debug 빌드에서 자동 삽입하는 Gradle 플러그인(ASM) 개발
+- **[toss/necto](https://github.com/toss/necto) Android SDK 제안·구현**: 토스 모바일 디버깅 플랫폼에 ADB 기반 연결과 기본 플러그인 6종을 3개 PR로 기여, [Necto 0.3.0](https://github.com/toss/necto/releases/tag/0.3.0)에 포함
 - **[windowinsets.info](https://windowinsets.info/): [Android Weekly #747](https://androidweekly.net/issues/issue-747) 소개** (2026.10.04)
   - Galaxy·Pixel 기기별 WindowInsets·DisplayCutout을 측정해 디바이스 프리뷰와 수치로 확인하도록 지원
 
@@ -130,5 +131,4 @@ HD현대 그룹사 임직원 대상 건강관리 헬스케어 서비스 · [Goog
 
 ## Education & Certificates
 
-- 건국대학교 컴퓨터 공학부 학사 졸업 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.02</span>
-- 정보처리기사 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2022.09</span>
+- 건국대학교 컴퓨터 공학부 학사 졸업 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2024.02</span> · 정보처리기사 <span style="margin-left: 0.75em; font-size: 0.85em; color: #9ca3af; font-weight: normal;">2022.09</span>
